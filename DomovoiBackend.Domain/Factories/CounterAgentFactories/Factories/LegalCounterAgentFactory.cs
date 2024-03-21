@@ -6,8 +6,7 @@ using DomovoiBackend.Domain.Factories.CounterAgentFactories.Interfaces;
 
 namespace DomovoiBackend.Domain.Factories.CounterAgentFactories.Factories;
 
-public class LegalCounterAgentFactory : ICounterAgentFactory<LegalCounterAgentInfo, LegalCounterAgent>,
-    ICounterAgentFactory<BaseCounterAgentInfo, CounterAgent>
+public class LegalCounterAgentFactory : ICounterAgentFactory<LegalCounterAgentInfo, LegalCounterAgent>
 {
     public LegalCounterAgent Generate(LegalCounterAgentInfo info)
     {
@@ -19,12 +18,5 @@ public class LegalCounterAgentFactory : ICounterAgentFactory<LegalCounterAgentIn
             Tin = info.Tin,
             Trc = info.Trc
         };
-    }
-
-    CounterAgent ICounterAgentFactory<BaseCounterAgentInfo, CounterAgent>.Generate(BaseCounterAgentInfo info)
-    {
-        if (info is LegalCounterAgentInfo legalCounterInfo)
-            return Generate(legalCounterInfo);
-        throw new ArgumentException();
     }
 }

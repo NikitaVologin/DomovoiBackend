@@ -7,14 +7,14 @@ namespace DomovoiBackend.Domain.Factories.CounterAgentFactories;
 
 public class BaseCounterAgentFactory : ICounterAgentFactory
 {
-    private static readonly Dictionary<Type, ICounterAgentFactory<BaseCounterAgentInfo, CounterAgent>> 
+    private static readonly Dictionary<Type, ICounterAgentFactory> 
         CurrentFactories = GetCounterAgentFactory(Assembly.GetExecutingAssembly());
     
     
     public CounterAgent Generate(BaseCounterAgentInfo info) =>
         CurrentFactories[info.GetType()].Generate(info);
 
-    private static Dictionary<Type, ICounterAgentFactory<BaseCounterAgentInfo, CounterAgent>> GetCounterAgentFactory(Assembly assembly)
+    private static Dictionary<Type, ICounterAgentFactory> GetCounterAgentFactory(Assembly assembly)
     {
         var factoryTypes = assembly
             .GetTypes()
@@ -23,6 +23,6 @@ public class BaseCounterAgentFactory : ICounterAgentFactory
                                                          typeof(ICounterAgentFactory<,>)));
         return factoryTypes.ToDictionary(
             type => type.GetInterfaces()[0].GetGenericArguments()[0],
-            type => (ICounterAgentFactory<BaseCounterAgentInfo, CounterAgent>)Activator.CreateInstance(type, [])!);
+            type => (ICounterAgentFactory)Activator.CreateInstance(type, [])!);
     }
 }

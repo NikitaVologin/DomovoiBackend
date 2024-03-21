@@ -1,6 +1,4 @@
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace DomovoiBackend.Domain.Entities.Announcements.Deals.Types.Sell.Addiction;
+namespace DomovoiBackend.Domain.Entities.Deals.Types.Sell.Addiction;
 
 public class SellFeatures
 {

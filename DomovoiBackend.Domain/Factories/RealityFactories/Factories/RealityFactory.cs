@@ -5,6 +5,8 @@ using DomovoiBackend.Domain.Factories.CommercialBuildingsFactories.Infos.Abstrac
 using DomovoiBackend.Domain.Factories.CommercialBuildingsFactories.Interfaces;
 using DomovoiBackend.Domain.Factories.LivingBuildingFactories;
 using DomovoiBackend.Domain.Factories.LivingBuildingFactories.Infos.Abstraction;
+using DomovoiBackend.Domain.Factories.OtherBuildingsFactories;
+using DomovoiBackend.Domain.Factories.OtherBuildingsFactories.Infos.Abstraction;
 using DomovoiBackend.Domain.Factories.RealityFactories.Abstraction;
 using DomovoiBackend.Domain.Factories.RealityFactories.Interfaces;
 
@@ -15,7 +17,8 @@ public class RealityFactory : IRealityFactory
     private static readonly Dictionary<Type, Func<BaseRealityInfo, Reality>> GeneratorsDictionary = new()
     {
         { typeof(BaseCommercialBuildingInfo), info => new BaseCommercialFactory().Generate((BaseCommercialBuildingInfo)info)  },
-        { typeof(BaseLivingBuildingInfo), info => new BaseLivingBuildingFactory().Generate((BaseLivingBuildingInfo)info) }
+        { typeof(BaseLivingBuildingInfo), info => new BaseLivingBuildingFactory().Generate((BaseLivingBuildingInfo)info) },
+        { typeof(BaseOtherBuildingInfo), info => new BaseOtherBuildingFactory().Generate((BaseOtherBuildingInfo)info)}
     };
     
     public Reality GenerateReality(BaseRealityInfo info)

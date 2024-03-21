@@ -6,8 +6,7 @@ using DomovoiBackend.Domain.Factories.LivingBuildingFactories.Interfaces;
 
 namespace DomovoiBackend.Domain.Factories.LivingBuildingFactories.Factories;
 
-public class HouseFactory : ILivingBuildingFactory<HouseInfo, House>,
-    ILivingBuildingFactory<BaseLivingBuildingInfo, LivingBuilding>
+public class HouseFactory : ILivingBuildingFactory<HouseInfo, House>
 {
     public House Generate(HouseInfo info)
     {
@@ -28,12 +27,5 @@ public class HouseFactory : ILivingBuildingFactory<HouseInfo, House>,
             Bathroom = info.Bathroom,
             HouseArea = info.HouseArea
         };
-    }
-    
-    LivingBuilding ILivingBuildingFactory<BaseLivingBuildingInfo, LivingBuilding>.Generate(BaseLivingBuildingInfo info)
-    {
-        if (info is HouseInfo houseInfo)
-            return Generate(houseInfo);
-        throw new ArgumentException();
     }
 }

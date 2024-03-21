@@ -6,8 +6,7 @@ using DomovoiBackend.Domain.Factories.CounterAgentFactories.Interfaces;
 
 namespace DomovoiBackend.Domain.Factories.CounterAgentFactories.Factories;
 
-public class PhysicalCounterAgentFactory : ICounterAgentFactory<PhysicalCounterAgentInfo, PhysicalCounterAgent>,
-    ICounterAgentFactory<BaseCounterAgentInfo, CounterAgent>
+public class PhysicalCounterAgentFactory : ICounterAgentFactory<PhysicalCounterAgentInfo, PhysicalCounterAgent>
 {
     public PhysicalCounterAgent Generate(PhysicalCounterAgentInfo info)
     {
@@ -18,12 +17,5 @@ public class PhysicalCounterAgentFactory : ICounterAgentFactory<PhysicalCounterA
             FIO = info.FIO,
             PassportData = info.PassportData
         };
-    }
-
-    CounterAgent ICounterAgentFactory<BaseCounterAgentInfo, CounterAgent>.Generate(BaseCounterAgentInfo info)
-    {
-        if (info is PhysicalCounterAgentInfo physicalCounterAgentInfo)
-            return Generate(physicalCounterAgentInfo);
-        throw new ArgumentException();
     }
 }

@@ -7,14 +7,14 @@ namespace DomovoiBackend.Domain.Factories.LivingBuildingFactories;
 
 public class BaseLivingBuildingFactory : ILivingBuildingFactory
 {
-    private static readonly Dictionary<Type, ILivingBuildingFactory<BaseLivingBuildingInfo, LivingBuilding>>
+    private static readonly Dictionary<Type, ILivingBuildingFactory>
         CurrentFactories = GetLivingBuildingFactory(Assembly.GetExecutingAssembly());
     
     
     public LivingBuilding Generate(BaseLivingBuildingInfo info) =>
         CurrentFactories[info.GetType()].Generate(info);
 
-    private static Dictionary<Type, ILivingBuildingFactory<BaseLivingBuildingInfo, LivingBuilding>> GetLivingBuildingFactory(Assembly assembly)
+    private static Dictionary<Type, ILivingBuildingFactory> GetLivingBuildingFactory(Assembly assembly)
     {
         var factoryTypes = assembly
             .GetTypes()
@@ -23,6 +23,6 @@ public class BaseLivingBuildingFactory : ILivingBuildingFactory
                                                          typeof(ILivingBuildingFactory<,>)));
         return factoryTypes.ToDictionary(
             type => type.GetInterfaces()[0].GetGenericArguments()[0],
-            type => (ILivingBuildingFactory<BaseLivingBuildingInfo, LivingBuilding>)Activator.CreateInstance(type, [])!);
+            type => (ILivingBuildingFactory)Activator.CreateInstance(type, [])!);
     }
 }

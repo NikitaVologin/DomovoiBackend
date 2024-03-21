@@ -8,6 +8,8 @@ using DomovoiBackend.Domain.Entities.Announcements.Deals.Types.Sell.Addiction;
 using DomovoiBackend.Domain.Entities.Common;
 using DomovoiBackend.Domain.Entities.CounterAgents;
 using DomovoiBackend.Domain.Entities.CounterAgents.Types;
+using DomovoiBackend.Domain.Entities.Deals.Types.Sell;
+using DomovoiBackend.Domain.Entities.Deals.Types.Sell.Addiction;
 using DomovoiBackend.Domain.Entities.Realities;
 using DomovoiBackend.Domain.Entities.Realities.Areas;
 using DomovoiBackend.Domain.Entities.Realities.CommercialBuildings;
