@@ -6,8 +6,7 @@ using DomovoiBackend.Domain.Factories.CommercialBuildingsFactories.Interfaces;
 
 namespace DomovoiBackend.Domain.Factories.CommercialBuildingsFactories.Factories;
 
-public class OfficeFactory : ICommercialBuildingFactory<OfficeBuildingInfo, Office>, 
-    ICommercialBuildingFactory<BaseCommercialBuildingInfo, CommercialBuilding>
+public class OfficeFactory : ICommercialBuildingFactory<OfficeBuildingInfo, Office>
 {
     public Office Generate(OfficeBuildingInfo info)
     {
@@ -23,13 +22,5 @@ public class OfficeFactory : ICommercialBuildingFactory<OfficeBuildingInfo, Offi
             Name = info.Name,
             RoomsCount = info.RoomsCount
         };
-    }
-
-    CommercialBuilding ICommercialBuildingFactory<BaseCommercialBuildingInfo, CommercialBuilding>.Generate(
-        BaseCommercialBuildingInfo info)
-    {
-        if (info is OfficeBuildingInfo officeInfo)
-            return Generate(officeInfo); 
-        throw new ArgumentException($"{info} not office building");
     }
 }

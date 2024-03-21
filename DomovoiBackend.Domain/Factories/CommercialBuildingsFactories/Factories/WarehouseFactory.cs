@@ -1,13 +1,10 @@
-using DomovoiBackend.Domain.Entities.Realities.CommercialBuildings;
 using DomovoiBackend.Domain.Entities.Realities.CommercialBuildings.Types;
 using DomovoiBackend.Domain.Factories.CommercialBuildingsFactories.Infos;
-using DomovoiBackend.Domain.Factories.CommercialBuildingsFactories.Infos.Abstraction;
 using DomovoiBackend.Domain.Factories.CommercialBuildingsFactories.Interfaces;
 
 namespace DomovoiBackend.Domain.Factories.CommercialBuildingsFactories.Factories;
 
-public class WarehouseFactory : ICommercialBuildingFactory<WarehouseBuildingInfo, Warehouse>,
-    ICommercialBuildingFactory<BaseCommercialBuildingInfo, CommercialBuilding>
+public class WarehouseFactory : ICommercialBuildingFactory<WarehouseBuildingInfo, Warehouse>
 {
     public Warehouse Generate(WarehouseBuildingInfo info)
     {
@@ -23,14 +20,4 @@ public class WarehouseFactory : ICommercialBuildingFactory<WarehouseBuildingInfo
             Infrastructure = info.Infrastructure
         };
     }
-
-    CommercialBuilding ICommercialBuildingFactory<BaseCommercialBuildingInfo, CommercialBuilding>.Generate(
-        BaseCommercialBuildingInfo info)
-    {
-        if (info is WarehouseBuildingInfo warehouseInfo)
-            return Generate(warehouseInfo); 
-        throw new ArgumentException($"{info} not warehouse building");
-    }
-    
-    
 }

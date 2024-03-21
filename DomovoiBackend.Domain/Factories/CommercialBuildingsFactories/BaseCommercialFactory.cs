@@ -7,13 +7,13 @@ namespace DomovoiBackend.Domain.Factories.CommercialBuildingsFactories;
 
 public class BaseCommercialFactory : ICommercialBuildingFactory
 {
-    public static readonly Dictionary<Type, ICommercialBuildingFactory<BaseCommercialBuildingInfo, CommercialBuilding>>
+    private static readonly Dictionary<Type, ICommercialBuildingFactory>
         CurrentFactories = GetCommercialFactories(Assembly.GetExecutingAssembly());
 
     public CommercialBuilding Generate(BaseCommercialBuildingInfo info) =>
         CurrentFactories[info.GetType()].Generate(info);
 
-    private static Dictionary<Type, ICommercialBuildingFactory<BaseCommercialBuildingInfo, CommercialBuilding>> GetCommercialFactories(Assembly assembly)
+    private static Dictionary<Type, ICommercialBuildingFactory> GetCommercialFactories(Assembly assembly)
     {
         var factoryTypes = assembly
             .GetTypes()
@@ -22,6 +22,6 @@ public class BaseCommercialFactory : ICommercialBuildingFactory
                                                          typeof(ICommercialBuildingFactory<,>)));
         return factoryTypes.ToDictionary(
             type => type.GetInterfaces()[0].GetGenericArguments()[0],
-            type => (ICommercialBuildingFactory<BaseCommercialBuildingInfo, CommercialBuilding>)Activator.CreateInstance(type, [])!);
+            type => (ICommercialBuildingFactory)Activator.CreateInstance(type, [])!);
     }
 }
