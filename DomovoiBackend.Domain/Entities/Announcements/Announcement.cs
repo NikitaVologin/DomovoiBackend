@@ -1,7 +1,6 @@
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using DomovoiBackend.Domain.Entities.Announcements.CounterAgents;
 using DomovoiBackend.Domain.Entities.Announcements.Deals;
+using DomovoiBackend.Domain.Entities.CounterAgents;
 using DomovoiBackend.Domain.Entities.Realities;
 
 namespace DomovoiBackend.Domain.Entities.Announcements;

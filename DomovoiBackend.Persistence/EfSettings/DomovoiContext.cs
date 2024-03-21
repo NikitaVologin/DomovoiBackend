@@ -1,13 +1,13 @@
 using System.Reflection;
 using DomovoiBackend.Domain.Entities.Announcements;
-using DomovoiBackend.Domain.Entities.Announcements.CounterAgents;
-using DomovoiBackend.Domain.Entities.Announcements.CounterAgents.Types;
 using DomovoiBackend.Domain.Entities.Announcements.Deals;
 using DomovoiBackend.Domain.Entities.Announcements.Deals.Types.Rent;
 using DomovoiBackend.Domain.Entities.Announcements.Deals.Types.Rent.Addiction;
 using DomovoiBackend.Domain.Entities.Announcements.Deals.Types.Sell;
 using DomovoiBackend.Domain.Entities.Announcements.Deals.Types.Sell.Addiction;
 using DomovoiBackend.Domain.Entities.Common;
+using DomovoiBackend.Domain.Entities.CounterAgents;
+using DomovoiBackend.Domain.Entities.CounterAgents.Types;
 using DomovoiBackend.Domain.Entities.Realities;
 using DomovoiBackend.Domain.Entities.Realities.Areas;
 using DomovoiBackend.Domain.Entities.Realities.CommercialBuildings;
@@ -54,7 +54,7 @@ public class DomovoiContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseNpgsql("Host=178.72.89.163;Port=5432;Database=test_db;Username=postgres;Password=DIO_admin");
+        optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=test_db;Username=postgres;Password=123");
         base.OnConfiguring(optionsBuilder);
     }
 
