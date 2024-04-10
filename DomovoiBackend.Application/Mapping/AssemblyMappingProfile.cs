@@ -15,13 +15,15 @@ public class AssemblyMappingProfile : Profile
             .GetTypes()
             .Where(t => t.GetInterfaces()
                 .Any(i => i.IsGenericType &&
-                          i.GetGenericTypeDefinition() == typeof(IMapTo<>)))
+                          (i.GetGenericTypeDefinition() == typeof(IMapTo<>) ||
+                           i.GetGenericTypeDefinition() == typeof(IMapFrom<>))))
             .ToList();
 
         foreach (var type in types)
         {
-            var instance = (IMapTo)Activator.CreateInstance(type)!;
-            instance.Mapping(this);
+            var instance = Activator.CreateInstance(type)!;
+            (instance as IMapTo)?.Mapping(this);
+            (instance as IMapFrom)?.Mapping(this);
         }
     }
 }

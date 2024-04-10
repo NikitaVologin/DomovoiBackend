@@ -1,0 +1,45 @@
+﻿services:
+  domovoibackend.api:
+    image: domovoibackend.api
+    build:
+      context: .
+      dockerfile: DomovoiBackend.API/Dockerfile
+    ports:
+      - "8080:80"
+    depends_on:
+      - postgres.db
+    environment:
+      - ConnectionStrings__DatabaseConnection=Host=postgres.db;Database=domovoi-main;Username=postgres;Password=123
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+      - ASPNETCORE_HTTP_PORT=8080
+    networks:
+      - domovoi.network
+      
+  postgres.db:
+    restart: always
+    image: postgres:latest
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=123
+      - POSTGRES_DB=domovoi-main
+    ports:
+      - "5433:5433"
+    networks:
+      - domovoi.network
+        
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: 123
+    ports:
+      - "5051:80"
+    depends_on:
+      - postgres.db
+    networks:
+      - domovoi.network
+  
+networks:
+  domovoi.network:

@@ -1,3 +1,4 @@
+using DomovoiBackend.Application.Persistence.Exceptions;
 using DomovoiBackend.Application.Persistence.Interfaces;
 using DomovoiBackend.Domain.Entities.CounterAgents;
 using DomovoiBackend.Persistence.EfSettings;
@@ -22,6 +23,25 @@ public class EfCounterAgentRepository : ICounterAgentRepository
     {
         var counterAgent = await _context.CounterAgents.FirstOrDefaultAsync(
             counterAgent => counterAgent.Id == id, cancellationToken);
+
+        if (counterAgent == null) throw new DbNotFoundException(typeof(CounterAgent), id);
+        
+        return counterAgent;
+    }
+
+    public async Task<CounterAgent> GetCounterAgentByAuthDataAsync(string email, string password, CancellationToken cancellationToken)
+    {
+        var counterAgent = await _context.CounterAgents.FirstOrDefaultAsync(
+            counterAgent => counterAgent.Email == email && counterAgent.Password == password,
+            cancellationToken);
+
+        if (counterAgent == null)
+            throw new DbNotFoundException(typeof(CounterAgent), new
+            {
+                Email = email,
+                Password = password
+            });
+
         return counterAgent;
     }
 }

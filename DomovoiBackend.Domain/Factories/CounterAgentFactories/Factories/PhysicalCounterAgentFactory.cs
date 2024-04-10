@@ -15,7 +15,9 @@ public class PhysicalCounterAgentFactory : ICounterAgentFactory<PhysicalCounterA
             Id = Guid.NewGuid(),
             ContactNumber = info.ContactNumber,
             FIO = info.FIO,
-            PassportData = info.PassportData
+            PassportData = info.PassportData,
+            Password = info.Password,
+            Email = info.Email
         };
     }
 }

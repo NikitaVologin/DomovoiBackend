@@ -6,7 +6,8 @@ using DomovoiBackend.Application.Models.Announcements.RequestInfos.Deals.SellInf
 using DomovoiBackend.Application.Models.Announcements.RequestInfos.Realities;
 using DomovoiBackend.Application.Models.Announcements.RequestInfos.Realities.CommercialRealities.TypesRequest;
 using DomovoiBackend.Application.Models.CounterAgents;
-using DomovoiBackend.Application.Models.CounterAgents.ConcreteRequests;
+using DomovoiBackend.Application.Models.CounterAgents.RequestInfos;
+using DomovoiBackend.Application.Models.CounterAgents.RequestInfos.Base;
 using DomovoiBackend.Persistence;
 using JsonSubTypes;
 using Microsoft.OpenApi.Models;
@@ -34,9 +35,9 @@ builder.Services.AddControllers().AddNewtonsoftJson(
     {
         options.SerializerSettings.Converters.Add(
             JsonSubtypesConverterBuilder
-                .Of(typeof(CounterAgentRequestInfo), "counterAgentType")
-                .RegisterSubtype<PhysicalCounterAgentRequestInfo>("PhysicalCounterAgent")
-                .RegisterSubtype<LegalCounterAgentRequestInfo>("LegalCounterAgent")
+                .Of(typeof(CounterAgentInformation), "counterAgentType")
+                .RegisterSubtype<PhysicalCounterAgentInformation>("Physical")
+                .RegisterSubtype<LegalCounterAgentInformation>("Legal")
                 .SerializeDiscriminatorProperty()
                 .Build());
         
@@ -58,7 +59,8 @@ builder.Services.AddControllers().AddNewtonsoftJson(
 
 // TODO: Доделать ApplicationLayer и PersistenceLayer (RUD);
 builder.Services.AddApplicationLayer()
-    .AddPersistence(builder.Configuration);
+    .AddPersistence(builder.Configuration)
+    .CreateDatabase();
 
 
 builder.Services.AddCors(options =>

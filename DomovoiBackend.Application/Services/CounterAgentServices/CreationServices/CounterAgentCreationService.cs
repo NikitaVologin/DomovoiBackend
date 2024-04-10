@@ -3,6 +3,7 @@ using System.Reflection;
 using AutoMapper;
 using AutoMapper.Internal;
 using DomovoiBackend.Application.Models.CounterAgents;
+using DomovoiBackend.Application.Models.CounterAgents.RequestInfos.Base;
 using DomovoiBackend.Application.Services.CounterAgentServices.CreationServices.Interfaces;
 using DomovoiBackend.Domain.Entities.CounterAgents;
 using DomovoiBackend.Domain.Factories.CounterAgentFactories;
@@ -18,10 +19,10 @@ public class CounterAgentCreationService : ICounterAgentCreationService
 
     public CounterAgentCreationService(IMapper mapper) => _mapper = mapper;
     
-    public CounterAgent CreateCounterAgent(CounterAgentRequestInfo requestInfo)
+    public CounterAgent CreateCounterAgent(CounterAgentInformation information)
     {
-        var service = _serviceConstructorsDictionary[requestInfo.GetType()](_mapper);
-        var realityInfo =  service.CreateCounterAgent(requestInfo);
+        var service = _serviceConstructorsDictionary[information.GetType()](_mapper);
+        var realityInfo =  service.CreateCounterAgent(information);
         return new BaseCounterAgentFactory().Generate(realityInfo);
     }
 

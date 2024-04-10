@@ -53,4 +53,9 @@ public class AnnouncementService : IAnnouncementService
         await _unitOfWork.SaveChangesAsync(cancellationToken);
         return announcement;
     }
+
+    public async Task<Announcement> GetAnnouncementAsync(Guid id, CancellationToken cancellationToken)
+    {
+        return await _announcementRepository.GetAnnouncementAsync(id, cancellationToken);
+    }
 }
