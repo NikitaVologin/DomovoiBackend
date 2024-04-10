@@ -19,4 +19,12 @@ public static class DependencyInjection
         services.AddScoped<ICounterAgentRepository, EfCounterAgentRepository>();
         return services;
     }
+
+    public static IServiceCollection CreateDatabase(this IServiceCollection services)
+    {
+        var dbContext = services.BuildServiceProvider()
+            .GetRequiredService<DomovoiContext>();
+        dbContext.Database.EnsureCreated();
+        return services;
+    }
 }

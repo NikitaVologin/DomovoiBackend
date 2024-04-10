@@ -30,11 +30,13 @@ public class AnnouncementRouteTransformerMiddleware
             return;
         }
 
+        var endpoint = context.GetEndpoint();
+        
         var announcementRouteAttributes = controllerActionDescriptor
             .EndpointMetadata
             .OfType<RouteAttribute>()
             .FirstOrDefault();
-
+        
         if (announcementRouteAttributes == null)
         {
             await _next(context);
@@ -68,7 +70,7 @@ public class AnnouncementRouteTransformerMiddleware
             updatedBody.Seek(0, SeekOrigin.Begin);
 
             context.Request.ContentLength = updatedRequestBodyBytes.Length;
-
+            
             await _next(context);
         }
         finally

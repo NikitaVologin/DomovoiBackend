@@ -1,6 +1,8 @@
+using DomovoiBackend.Application.Models.CounterAgents.RequestInfos.Base;
+
 namespace DomovoiBackend.Application.Models.CounterAgents;
 
 public class AddCounterAgentRequest
 {
-    public CounterAgentRequestInfo CounterAgentInfo { get; set; } = null!;
+    public CounterAgentInformation CounterAgentInfo { get; set; } = null!;
 }

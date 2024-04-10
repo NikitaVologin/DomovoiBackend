@@ -21,4 +21,10 @@ public class AnnouncementController : ControllerBase
     {
         return await _service.AddAnnouncementAsync(request, cancellationToken);
     }
+    
+    [HttpGet("{id}")]
+    public async Task<Announcement> RentGet(Guid id, CancellationToken cancellationToken)
+    {
+        return await _service.GetAnnouncementAsync(id, cancellationToken);
+    }
 }

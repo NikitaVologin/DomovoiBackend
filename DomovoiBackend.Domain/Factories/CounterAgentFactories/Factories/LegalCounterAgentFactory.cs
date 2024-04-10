@@ -16,7 +16,9 @@ public class LegalCounterAgentFactory : ICounterAgentFactory<LegalCounterAgentIn
             ContactNumber = info.ContactNumber,
             Name = info.Name,
             Tin = info.Tin,
-            Trc = info.Trc
+            Trc = info.Trc,
+            Password = info.Password,
+            Email = info.Email
         };
     }
 }

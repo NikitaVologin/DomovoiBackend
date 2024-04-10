@@ -1,13 +1,17 @@
 ﻿FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 USER $APP_UID
 WORKDIR /app
-EXPOSE 8080
-EXPOSE 8081
+
+EXPOSE 80
+EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["DomovoiBackend.API/DomovoiBackend.API.csproj", "DomovoiBackend.API/"]
+COPY ["DomovoiBackend.Application/DomovoiBackend.Application.csproj", "DomovoiBackend.Application/"]
+COPY ["DomovoiBackend.Domain/DomovoiBackend.Domain.csproj", "DomovoiBackend.Domain/"]
+COPY ["DomovoiBackend.Persistence/DomovoiBackend.Persistence.csproj", "DomovoiBackend.Persistence/"]
 RUN dotnet restore "DomovoiBackend.API/DomovoiBackend.API.csproj"
 COPY . .
 WORKDIR "/src/DomovoiBackend.API"
