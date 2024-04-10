@@ -1,11 +1,12 @@
 using AutoMapper;
 using DomovoiBackend.Application.Models.CounterAgents;
+using DomovoiBackend.Application.Models.CounterAgents.RequestInfos.Base;
 using DomovoiBackend.Domain.Factories.CounterAgentFactories.Infos.Abstraction;
 
 namespace DomovoiBackend.Application.Services.CounterAgentServices.CreationServices.Interfaces;
 
 public class ConcreteMapCounterAgentServiceBase<TRequestInfo, TInfo> : IConcreteMapCounterAgentService
-    where TRequestInfo : CounterAgentRequestInfo
+    where TRequestInfo : CounterAgentInformation
     where TInfo : BaseCounterAgentInfo
 {
     private readonly IMapper _mapper;
@@ -15,7 +16,7 @@ public class ConcreteMapCounterAgentServiceBase<TRequestInfo, TInfo> : IConcrete
     private TInfo CreateCounterAgent(TRequestInfo requestInfo) =>
         _mapper.Map<TInfo>(requestInfo);
 
-    BaseCounterAgentInfo IConcreteMapCounterAgentService.CreateCounterAgent(CounterAgentRequestInfo info)
+    BaseCounterAgentInfo IConcreteMapCounterAgentService.CreateCounterAgent(CounterAgentInformation info)
     {
         if (info is TRequestInfo requestInfo)
         {
