@@ -1,5 +1,6 @@
 using System.Reflection;
 using DomovoiBackend.Domain.Entities.Announcements.Deals;
+using DomovoiBackend.Domain.Entities.Deals;
 using DomovoiBackend.Domain.Factories.DealsFactories.Infos.Abstraction;
 using DomovoiBackend.Domain.Factories.DealsFactories.Interfaces;
 
@@ -11,8 +12,8 @@ public class BaseDealFactory : IDealFactory
         CurrentFactories = GetOtherBuildingFactory(Assembly.GetExecutingAssembly());
     
     
-    public Deal Generate(BaseDealInfo info) =>
-        CurrentFactories[info.GetType()].Generate(info);
+    public Deal Generate(BaseDealInfo info, Guid announcementId) =>
+        CurrentFactories[info.GetType()].Generate(info, announcementId);
 
     private static Dictionary<Type, IDealFactory> GetOtherBuildingFactory(Assembly assembly)
     {
@@ -20,7 +21,7 @@ public class BaseDealFactory : IDealFactory
             .GetTypes()
             .Where(type => type.GetInterfaces().Any(i => i.IsGenericType &&
                                                          i.GetGenericTypeDefinition() ==
-                                                         typeof(IDealFactory)));
+                                                         typeof(IDealFactory<,>)));
         return factoryTypes.ToDictionary(
             type => type.GetInterfaces()[0].GetGenericArguments()[0],
             type => (IDealFactory)Activator.CreateInstance(type, [])!);

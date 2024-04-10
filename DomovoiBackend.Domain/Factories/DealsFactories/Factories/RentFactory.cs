@@ -1,5 +1,5 @@
-using DomovoiBackend.Domain.Entities.Announcements.Deals.Types.Rent;
-using DomovoiBackend.Domain.Entities.Announcements.Deals.Types.Rent.Addiction;
+using DomovoiBackend.Domain.Entities.Deals.Types.Rent;
+using DomovoiBackend.Domain.Entities.Deals.Types.Rent.Addiction;
 using DomovoiBackend.Domain.Factories.DealsFactories.Infos.RentInfos;
 using DomovoiBackend.Domain.Factories.DealsFactories.Interfaces;
 
@@ -7,18 +7,17 @@ namespace DomovoiBackend.Domain.Factories.DealsFactories.Factories;
 
 public class RentFactory : IDealFactory<RentInfo, Rent>
 {
-    public Rent Generate(RentInfo info)
+    public Rent Generate(RentInfo info, Guid announcementId)
     {
-        var guid = Guid.NewGuid();
-        var rentConditions = info.ConditionInfo;
-        var rentRules = info.RulesInfo;
+        var rentConditions = info.RentConditionInfo;
+        var rentRules = info.RentRulesInfo;
 
         return new Rent
         {
-            Id = guid,
+            Id = announcementId,
             RentConditions = new RentConditions
             {
-                Id = guid,
+                Id = announcementId,
                 CommunalPays = rentConditions.CommunalPays,
                 Deposit = rentConditions.Deposit,
                 Period = rentConditions.Period,
@@ -27,7 +26,7 @@ public class RentFactory : IDealFactory<RentInfo, Rent>
             },
             RentRules = new RentRules
             {
-                Id = guid,
+                Id = announcementId,
                 CanSmoke = rentRules.CanSmoke,
                 Facilities = rentRules.Facilities,
                 WithAnimals = rentRules.WithAnimals,

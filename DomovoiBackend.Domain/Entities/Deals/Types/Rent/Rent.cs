@@ -1,7 +1,7 @@
-using System.ComponentModel.DataAnnotations.Schema;
-using DomovoiBackend.Domain.Entities.Announcements.Deals.Types.Rent.Addiction;
+using DomovoiBackend.Domain.Entities.Announcements.Deals;
+using DomovoiBackend.Domain.Entities.Deals.Types.Rent.Addiction;
 
-namespace DomovoiBackend.Domain.Entities.Announcements.Deals.Types.Rent;
+namespace DomovoiBackend.Domain.Entities.Deals.Types.Rent;
 
 public class Rent : Deal
 {

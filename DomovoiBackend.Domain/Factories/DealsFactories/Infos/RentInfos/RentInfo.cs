@@ -2,6 +2,8 @@ using DomovoiBackend.Domain.Factories.DealsFactories.Infos.Abstraction;
 
 namespace DomovoiBackend.Domain.Factories.DealsFactories.Infos.RentInfos;
 
-public record RentInfo(
-    RentConditionInfo ConditionInfo,
-    RentRulesInfo RulesInfo) : BaseDealInfo;
+public class RentInfo : BaseDealInfo
+{
+    public RentConditionInfo RentConditionInfo { get; init; }
+    public RentRulesInfo RentRulesInfo { get; init; }
+}

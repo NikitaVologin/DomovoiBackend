@@ -12,7 +12,6 @@ public class HouseFactory : ILivingBuildingFactory<HouseInfo, House>
     {
         return new House
         {
-            Id = Guid.NewGuid(),
             Area = info.Area,
             Type = info.Type,
             Floor = info.Floor,

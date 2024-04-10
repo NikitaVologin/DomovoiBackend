@@ -1,5 +1,3 @@
-using System.ComponentModel.DataAnnotations.Schema;
-
 namespace DomovoiBackend.Domain.Entities.Realities.CommercialBuildings;
 
 public class CommercialBuilding : Reality

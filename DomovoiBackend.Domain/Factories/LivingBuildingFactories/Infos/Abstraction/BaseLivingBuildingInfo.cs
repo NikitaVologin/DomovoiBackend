@@ -5,4 +5,4 @@ namespace DomovoiBackend.Domain.Factories.LivingBuildingFactories.Infos.Abstract
 public record BaseLivingBuildingInfo(
     double Area,
     string Type,
-    int Floor) : BaseRealityInfo(Area, Type);
+    int Floor); //: BaseRealityInfo(Area, Type);

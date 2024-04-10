@@ -1,7 +1,6 @@
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace DomovoiBackend.Domain.Entities.Announcements.Deals;
+namespace DomovoiBackend.Domain.Entities.Deals;
 
 public class Deal
 {

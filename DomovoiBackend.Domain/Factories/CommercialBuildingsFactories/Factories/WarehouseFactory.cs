@@ -10,7 +10,6 @@ public class WarehouseFactory : ICommercialBuildingFactory<WarehouseBuildingInfo
     {
         return new Warehouse
         {
-            Id = Guid.NewGuid(),
             FloorsCount = info.FloorsCount,
             Entry = info.Entry,
             Address = info.Address,

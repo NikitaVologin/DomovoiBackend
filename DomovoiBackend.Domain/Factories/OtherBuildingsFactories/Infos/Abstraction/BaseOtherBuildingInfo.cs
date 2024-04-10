@@ -4,4 +4,4 @@ namespace DomovoiBackend.Domain.Factories.OtherBuildingsFactories.Infos.Abstract
 
 public record BaseOtherBuildingInfo(
     double Area,
-    string Type) : BaseRealityInfo(Area, Type);
+    string Type); //: BaseRealityInfo(Area, Type);

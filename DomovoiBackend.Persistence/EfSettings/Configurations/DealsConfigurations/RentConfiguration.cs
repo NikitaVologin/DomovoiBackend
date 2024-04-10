@@ -1,4 +1,4 @@
-using DomovoiBackend.Domain.Entities.Announcements.Deals.Types.Rent;
+using DomovoiBackend.Domain.Entities.Deals.Types.Rent;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

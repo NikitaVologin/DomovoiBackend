@@ -3,13 +3,7 @@ using DomovoiBackend.Domain.Factories.CommercialBuildingsFactories.Infos.Abstrac
 
 namespace DomovoiBackend.Domain.Factories.CommercialBuildingsFactories.Infos;
 
-public record WarehouseBuildingInfo(
-    double Area,
-    string Type,
-    int FloorsCount,
-    bool Entry,
-    string Address,
-    bool InUse,
-    bool IsAccess,
-    Building Building,
-    bool Infrastructure) : BaseCommercialBuildingInfo(Area, Type, FloorsCount, Entry, Address, InUse, IsAccess, Building);
+public class WarehouseBuildingInfo : BaseCommercialBuildingInfo
+{
+    public bool Infrastructure { get; init; }
+}

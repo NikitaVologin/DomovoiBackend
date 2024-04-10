@@ -3,8 +3,9 @@ using DomovoiBackend.Domain.Factories.CounterAgentFactories.Infos.Abstraction;
 
 namespace DomovoiBackend.Domain.Factories.CounterAgentFactories.Infos;
 
-public record LegalCounterAgentInfo(
-    string ContactNumber,
-    string Name, 
-    string Tin,
-    string Trc) : BaseCounterAgentInfo(ContactNumber);
+public class LegalCounterAgentInfo : BaseCounterAgentInfo
+{
+    public string Name { get; init; }
+    public string Tin { get; init; }
+    public string Trc { get; init; }
+}

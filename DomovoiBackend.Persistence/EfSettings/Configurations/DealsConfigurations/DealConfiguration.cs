@@ -1,4 +1,5 @@
 using DomovoiBackend.Domain.Entities.Announcements.Deals;
+using DomovoiBackend.Domain.Entities.Deals;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

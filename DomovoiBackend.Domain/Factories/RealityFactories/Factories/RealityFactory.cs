@@ -17,14 +17,16 @@ public class RealityFactory : IRealityFactory
     private static readonly Dictionary<Type, Func<BaseRealityInfo, Reality>> GeneratorsDictionary = new()
     {
         { typeof(BaseCommercialBuildingInfo), info => new BaseCommercialFactory().Generate((BaseCommercialBuildingInfo)info)  },
-        { typeof(BaseLivingBuildingInfo), info => new BaseLivingBuildingFactory().Generate((BaseLivingBuildingInfo)info) },
-        { typeof(BaseOtherBuildingInfo), info => new BaseOtherBuildingFactory().Generate((BaseOtherBuildingInfo)info)}
+    //    { typeof(BaseLivingBuildingInfo), info => new BaseLivingBuildingFactory().Generate((BaseLivingBuildingInfo)info) },
+    //    { typeof(BaseOtherBuildingInfo), info => new BaseOtherBuildingFactory().Generate((BaseOtherBuildingInfo)info)}
     };
     
-    public Reality GenerateReality(BaseRealityInfo info)
+    public Reality GenerateReality(BaseRealityInfo info, Guid announcementId)
     {
         var baseType = info.GetType().BaseType;
-        if (baseType != null) return GeneratorsDictionary[baseType](info);
-        throw new ArgumentException();
+        if (baseType == null) throw new ArgumentException();
+        var reality = GeneratorsDictionary[baseType](info);
+        reality.Id = announcementId;
+        return reality;
     }
 }

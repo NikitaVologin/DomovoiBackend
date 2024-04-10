@@ -5,5 +5,5 @@ namespace DomovoiBackend.Domain.Factories.RealityFactories.Interfaces;
 
 public interface IRealityFactory
 {
-    Reality GenerateReality(BaseRealityInfo info);
+    Reality GenerateReality(BaseRealityInfo info, Guid announcementId);
 }

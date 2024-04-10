@@ -1,6 +1,4 @@
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace DomovoiBackend.Domain.Entities.Announcements.Deals.Types.Rent.Addiction;
+namespace DomovoiBackend.Domain.Entities.Deals.Types.Rent.Addiction;
 
 public class RentConditions
 {

@@ -9,24 +9,23 @@ namespace DomovoiBackend.Domain.Factories.DealsFactories.Factories;
 
 public class SellFactory : IDealFactory<SellInfo, Sell>
 {
-    public Sell Generate(SellInfo info)
+    public Sell Generate(SellInfo info, Guid announcementId)
     {
-        var guid = Guid.NewGuid();
         var sellConditions = info.SellConditionInfo;
         var sellFeatures = info.SellFeaturesInfo;
 
         return new Sell
         {
-            Id = guid,
+            Id = announcementId,
             SellConditions = new SellConditions()
             {
-                Id = guid,
+                Id = announcementId,
                 Price = sellConditions.Price,
                 Type = sellConditions.Type
             },
             SellFeatures = new SellFeatures
             {
-                Id = guid,
+                Id = announcementId,
                 HaveChildPrescribers = sellFeatures.HaveChildPrescribers,
                 HaveChildOwners = sellFeatures.HaveChildOwners,
                 OwnersCount = sellFeatures.OwnersCount,

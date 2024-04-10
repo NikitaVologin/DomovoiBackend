@@ -1,13 +1,15 @@
 using System.Reflection;
+using DomovoiBackend.Application.Persistence;
 using DomovoiBackend.Domain.Entities.Announcements;
 using DomovoiBackend.Domain.Entities.Announcements.Deals;
-using DomovoiBackend.Domain.Entities.Announcements.Deals.Types.Rent;
-using DomovoiBackend.Domain.Entities.Announcements.Deals.Types.Rent.Addiction;
 using DomovoiBackend.Domain.Entities.Announcements.Deals.Types.Sell;
 using DomovoiBackend.Domain.Entities.Announcements.Deals.Types.Sell.Addiction;
 using DomovoiBackend.Domain.Entities.Common;
 using DomovoiBackend.Domain.Entities.CounterAgents;
 using DomovoiBackend.Domain.Entities.CounterAgents.Types;
+using DomovoiBackend.Domain.Entities.Deals;
+using DomovoiBackend.Domain.Entities.Deals.Types.Rent;
+using DomovoiBackend.Domain.Entities.Deals.Types.Rent.Addiction;
 using DomovoiBackend.Domain.Entities.Deals.Types.Sell;
 using DomovoiBackend.Domain.Entities.Deals.Types.Sell.Addiction;
 using DomovoiBackend.Domain.Entities.Realities;
@@ -22,9 +24,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DomovoiBackend.Persistence.EfSettings;
 
-public class DomovoiContext : DbContext
+public class DomovoiContext : DbContext, IUnitOfWork
 {
-    public DomovoiContext() { }
+    public DomovoiContext(DbContextOptions<DomovoiContext> options) : base(options) { }
     
     public DbSet<Announcement> Announcements { get; set; }
     public DbSet<CounterAgent> CounterAgents { get; set; }
@@ -53,12 +55,6 @@ public class DomovoiContext : DbContext
     public DbSet<Flat> Flats { get; set; }
     public DbSet<ApartmentHouse> ApartmentHouses { get; set; }
     public DbSet<Elevator> Elevators { get; set; }
-
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=test_db;Username=postgres;Password=123");
-        base.OnConfiguring(optionsBuilder);
-    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

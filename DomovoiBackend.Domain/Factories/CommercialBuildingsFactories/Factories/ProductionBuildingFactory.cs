@@ -12,7 +12,6 @@ public class ProductionBuildingFactory : ICommercialBuildingFactory<ProductionBu
     {
         return new Production
         {
-            Id = Guid.NewGuid(),
             FloorsCount = info.FloorsCount,
             Entry = info.Entry,
             Address = info.Address,

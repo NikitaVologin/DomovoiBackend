@@ -12,7 +12,6 @@ public class OfficeFactory : ICommercialBuildingFactory<OfficeBuildingInfo, Offi
     {
         return new Office
         {
-            Id = Guid.NewGuid(),
             FloorsCount = info.FloorsCount,
             Entry = info.Entry,
             Address = info.Address,
