@@ -1,5 +1,4 @@
 using System.Reflection;
-using DomovoiBackend.Domain.Entities.Announcements.Deals;
 using DomovoiBackend.Domain.Entities.Deals;
 using DomovoiBackend.Domain.Factories.DealsFactories.Infos.Abstraction;
 using DomovoiBackend.Domain.Factories.DealsFactories.Interfaces;

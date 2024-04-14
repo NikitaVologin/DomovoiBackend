@@ -1,3 +1,4 @@
+using DomovoiBackend.Domain.Entities.Deals.Rents;
 using DomovoiBackend.Domain.Entities.Deals.Types.Rent;
 using DomovoiBackend.Domain.Entities.Deals.Types.Rent.Addiction;
 using DomovoiBackend.Domain.Factories.DealsFactories.Infos.RentInfos;
@@ -9,8 +10,8 @@ public class RentFactory : IDealFactory<RentInfo, Rent>
 {
     public Rent Generate(RentInfo info, Guid announcementId)
     {
-        var rentConditions = info.RentConditionInfo;
-        var rentRules = info.RentRulesInfo;
+        var rentConditions = info.RentConditions;
+        var rentRules = info.RentRules;
 
         return new Rent
         {

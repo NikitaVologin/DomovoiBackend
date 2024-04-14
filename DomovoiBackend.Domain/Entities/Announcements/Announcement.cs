@@ -1,5 +1,4 @@
 using System.ComponentModel.DataAnnotations;
-using DomovoiBackend.Domain.Entities.Announcements.Deals;
 using DomovoiBackend.Domain.Entities.CounterAgents;
 using DomovoiBackend.Domain.Entities.Deals;
 using DomovoiBackend.Domain.Entities.Realities;

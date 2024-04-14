@@ -1,11 +1,12 @@
-using DomovoiBackend.Application.Models.CounterAgents;
-using DomovoiBackend.Application.Models.CounterAgents.RequestInfos.Base;
+using DomovoiBackend.Application.Information.CounterAgents;
+using DomovoiBackend.Application.Requests.CounterAgents;
+using DomovoiBackend.Application.Requests.CounterAgents.AddRequests.Base;
+using DomovoiBackend.Application.Requests.CounterAgents.AuthorizeRequest;
 
 namespace DomovoiBackend.Application.Services.CounterAgentServices.Interfaces;
 
 public interface ICounterAgentService
 {
-    Task<Guid> AddAsync(AddCounterAgentRequest request, CancellationToken cancellationToken);
-
-    Task<CounterAgentInformation> GetCounterAgentInfoByAuthorizationData(AuthorizationRequest request, CancellationToken cancellationToken);
+    Task<CounterAgentInformation> AddAsync(AddCounterAgentRequest request, CancellationToken cancellationToken);
+    Task<CounterAgentInformation> LoginAsync(AuthorizationRequest request, CancellationToken cancellationToken);
 }

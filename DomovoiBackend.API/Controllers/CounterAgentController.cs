@@ -1,4 +1,6 @@
-using DomovoiBackend.Application.Models.CounterAgents;
+using DomovoiBackend.Application.Requests.CounterAgents;
+using DomovoiBackend.Application.Requests.CounterAgents.AddRequests.Base;
+using DomovoiBackend.Application.Requests.CounterAgents.AuthorizeRequest;
 using DomovoiBackend.Application.Services.CounterAgentServices.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,7 +15,8 @@ public class CounterAgentController : ControllerBase
     public CounterAgentController(ICounterAgentService service) => _service = service;
     
     [HttpPost("{counterAgentType}")]
-    public async Task<IActionResult> Post([FromRoute] string counterAgentType,
+    public async Task<IActionResult> Post(
+        [FromRoute] string counterAgentType,
         [FromBody] AddCounterAgentRequest request,
         CancellationToken cancellationToken)
     {
@@ -34,7 +37,7 @@ public class CounterAgentController : ControllerBase
     {
         try
         {
-            var counterAgent = await _service.GetCounterAgentInfoByAuthorizationData(request, cancellationToken);
+            var counterAgent = await _service.LoginAsync(request, cancellationToken);
             return Ok(counterAgent);
         }
         catch(Exception exception)

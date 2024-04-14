@@ -8,7 +8,7 @@ namespace DomovoiBackend.API.Middlewares;
 
 public class CounterAgentRouteTransformerMiddleware
 {
-       private readonly RequestDelegate _next;
+    private readonly RequestDelegate _next;
     private readonly IActionDescriptorCollectionProvider _actionDescriptorCollectionProvider;
 
     public CounterAgentRouteTransformerMiddleware(RequestDelegate next, IActionDescriptorCollectionProvider
@@ -79,11 +79,8 @@ public class CounterAgentRouteTransformerMiddleware
     private static string GetJsonRequestWithTypes(string requestBody, string counterAgentType)
     {
         var jsonBody = JObject.Parse(requestBody);
-
-        if(!jsonBody.ContainsKey("counterAgentInfo")) return requestBody;
-
-        var jsonRealityInfo = jsonBody["counterAgentInfo"] as JObject;
-        jsonRealityInfo?.Add("counterAgentType", counterAgentType);
+        
+        jsonBody.Add("counterAgentType", counterAgentType);
         
         return jsonBody.ToString();
     }   

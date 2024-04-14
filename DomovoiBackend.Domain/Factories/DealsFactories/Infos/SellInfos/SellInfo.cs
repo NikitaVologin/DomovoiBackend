@@ -4,6 +4,6 @@ namespace DomovoiBackend.Domain.Factories.DealsFactories.Infos.SellInfos;
 
 public class SellInfo : BaseDealInfo
 {
-    public SellConditionInfo SellConditionInfo { get; init; }
-    public SellFeaturesInfo SellFeaturesInfo { get; init; }
+    public SellConditionInfo SellConditions { get; init; }
+    public SellFeaturesInfo SellFeatures { get; init; }
 }

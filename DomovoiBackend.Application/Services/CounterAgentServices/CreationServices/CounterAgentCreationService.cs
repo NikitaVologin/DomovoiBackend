@@ -1,52 +1,40 @@
-using System.Linq.Expressions;
 using System.Reflection;
 using AutoMapper;
-using AutoMapper.Internal;
-using DomovoiBackend.Application.Models.CounterAgents;
-using DomovoiBackend.Application.Models.CounterAgents.RequestInfos.Base;
-using DomovoiBackend.Application.Services.CounterAgentServices.CreationServices.Interfaces;
+using DomovoiBackend.Application.Information.CounterAgents;
+using DomovoiBackend.Application.Mapping.Interfaces;
+using DomovoiBackend.Application.Mapping.Tools;
+using DomovoiBackend.Application.Requests.CounterAgents.AddRequests.Base;
 using DomovoiBackend.Domain.Entities.CounterAgents;
 using DomovoiBackend.Domain.Factories.CounterAgentFactories;
+using DomovoiBackend.Domain.Factories.CounterAgentFactories.Infos.Abstraction;
 
 namespace DomovoiBackend.Application.Services.CounterAgentServices.CreationServices;
 
-public class CounterAgentCreationService : ICounterAgentCreationService
+public class CounterAgentCreationService
 {
-    private readonly IMapper _mapper;
+    private static readonly Dictionary<Type, Func<IMapperBase, object, BaseCounterAgentInfo>> ToDealInfoMap =
+        MapCollector.GetToMappingsFromAssembly<BaseCounterAgentInfo>(Assembly.GetExecutingAssembly());
+    
+    private static readonly Dictionary<Type, Func<IMapperBase, object, CounterAgentInformation>> ToDealInformationMap =
+        MapCollector.GetFromMappingsFromAssembly<CounterAgentInformation>(Assembly.GetExecutingAssembly());
 
-    private readonly Dictionary<Type, Func<IMapper, IConcreteMapCounterAgentService>> _serviceConstructorsDictionary =
-        GetRealityServicesDictionaryFromAssembly(Assembly.GetExecutingAssembly());
+    private readonly IMapper _mapper;
 
     public CounterAgentCreationService(IMapper mapper) => _mapper = mapper;
     
-    public CounterAgent CreateCounterAgent(CounterAgentInformation information)
+    public CounterAgent CreateDealFromRequest(AddCounterAgentRequest info)
     {
-        var service = _serviceConstructorsDictionary[information.GetType()](_mapper);
-        var realityInfo =  service.CreateCounterAgent(information);
-        return new BaseCounterAgentFactory().Generate(realityInfo);
+        var counterAgentFactory = new BaseCounterAgentFactory();
+        var counterAgentTypeInfo = info.GetType();
+        var counterAgentInfo = ToDealInfoMap[counterAgentTypeInfo](_mapper, info);
+        var counterAgent = counterAgentFactory.Generate(counterAgentInfo);
+        return counterAgent;
     }
 
-    private static Dictionary<Type, Func<IMapper, IConcreteMapCounterAgentService>> GetRealityServicesDictionaryFromAssembly(Assembly assembly)
+    public CounterAgentInformation CreateInfoFromEntity(CounterAgent counterAgent)
     {
-        var services = assembly.GetTypes()
-            .Where(type => type.BaseClassesAndInterfaces()
-                .Any(i => i.IsGenericType &&
-                          i.GetGenericTypeDefinition() == typeof(ConcreteMapCounterAgentServiceBase<,>)))
-            .Select(type => (type.BaseType!.GetGenericArguments()[0], type));
-
-        var resultDictionary = new Dictionary<Type, Func<IMapper, IConcreteMapCounterAgentService>>();
-
-        foreach (var (infoType, service) in services)
-        {
-            if(resultDictionary.ContainsKey(infoType)) continue;
-            var mapperParameter = Expression.Parameter(typeof(IMapper), "mapper");
-            var serviceConstructor = service.GetConstructors().First();
-            var constructorExpression = Expression.New(serviceConstructor, mapperParameter);
-            var lambda = Expression.Lambda<Func<IMapper, IConcreteMapCounterAgentService>>(constructorExpression,
-                mapperParameter);
-            resultDictionary[infoType] = lambda.Compile();
-        }
-
-        return resultDictionary;
+        var counterAgentTypeInfo = counterAgent.GetType();
+        var counterAgentInformation = ToDealInformationMap[counterAgentTypeInfo](_mapper, counterAgent);
+        return counterAgentInformation;
     }
 }

@@ -1,7 +1,4 @@
-using DomovoiBackend.Domain.Entities.Announcements.Deals.Types.Sell;
-using DomovoiBackend.Domain.Entities.Announcements.Deals.Types.Sell.Addiction;
-using DomovoiBackend.Domain.Entities.Deals.Types.Sell;
-using DomovoiBackend.Domain.Entities.Deals.Types.Sell.Addiction;
+using DomovoiBackend.Domain.Entities.Deals.Sells;
 using DomovoiBackend.Domain.Factories.DealsFactories.Infos.SellInfos;
 using DomovoiBackend.Domain.Factories.DealsFactories.Interfaces;
 
@@ -11,8 +8,8 @@ public class SellFactory : IDealFactory<SellInfo, Sell>
 {
     public Sell Generate(SellInfo info, Guid announcementId)
     {
-        var sellConditions = info.SellConditionInfo;
-        var sellFeatures = info.SellFeaturesInfo;
+        var sellConditions = info.SellConditions;
+        var sellFeatures = info.SellFeatures;
 
         return new Sell
         {

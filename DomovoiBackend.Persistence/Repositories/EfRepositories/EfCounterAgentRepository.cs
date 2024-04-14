@@ -29,6 +29,12 @@ public class EfCounterAgentRepository : ICounterAgentRepository
         return counterAgent;
     }
 
+    public async Task<bool> IsExistAsync(string email, CancellationToken cancellationToken)
+    {
+        return await _context.CounterAgents.AnyAsync(counterAgent => counterAgent.Email == email,
+            cancellationToken);
+    }
+
     public async Task<CounterAgent> GetCounterAgentByAuthDataAsync(string email, string password, CancellationToken cancellationToken)
     {
         var counterAgent = await _context.CounterAgents.FirstOrDefaultAsync(

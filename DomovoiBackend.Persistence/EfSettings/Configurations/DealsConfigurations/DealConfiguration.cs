@@ -1,9 +1,8 @@
-using DomovoiBackend.Domain.Entities.Announcements.Deals;
 using DomovoiBackend.Domain.Entities.Deals;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace DomovoiBackend.Persistence.EfSettings.Configurations;
+namespace DomovoiBackend.Persistence.EfSettings.Configurations.DealsConfigurations;
 
 public class DealConfiguration : IEntityTypeConfiguration<Deal>
 {

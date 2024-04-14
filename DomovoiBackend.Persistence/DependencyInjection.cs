@@ -13,7 +13,10 @@ public static class DependencyInjection
     public static IServiceCollection AddPersistence(this IServiceCollection services, IConfiguration configuration)
     {
         var connectionString = configuration.GetConnectionString("DatabaseConnection");
-        services.AddDbContext<DomovoiContext>(options => options.UseNpgsql(connectionString));
+        services.AddDbContext<DomovoiContext>(options =>
+        {
+            options.UseNpgsql(connectionString);
+        });
         services.AddScoped<IUnitOfWork, DomovoiContext>();
         services.AddScoped<IAnnouncementRepository, EfAnnouncementRepository>();
         services.AddScoped<ICounterAgentRepository, EfCounterAgentRepository>();
