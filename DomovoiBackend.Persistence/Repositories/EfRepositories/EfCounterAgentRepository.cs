@@ -6,8 +6,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DomovoiBackend.Persistence.Repositories.EfRepositories;
 
+/// <summary>
+/// EF Репозиторий контр-агентов.
+/// </summary>
 public class EfCounterAgentRepository : ICounterAgentRepository
 {
+    /// <summary>
+    /// Контекст БД.
+    /// </summary>
     private readonly DomovoiContext _context;
 
     public EfCounterAgentRepository(DomovoiContext context) => _context = context;
@@ -27,6 +33,12 @@ public class EfCounterAgentRepository : ICounterAgentRepository
         if (counterAgent == null) throw new DbNotFoundException(typeof(CounterAgent), id);
         
         return counterAgent;
+    }
+
+    public async Task<bool> IsExistAsync(string email, CancellationToken cancellationToken)
+    {
+        return await _context.CounterAgents.AnyAsync(counterAgent => counterAgent.Email == email,
+            cancellationToken);
     }
 
     public async Task<CounterAgent> GetCounterAgentByAuthDataAsync(string email, string password, CancellationToken cancellationToken)

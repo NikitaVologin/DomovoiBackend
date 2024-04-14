@@ -1,13 +1,13 @@
 using DomovoiBackend.API.Middlewares;
 using DomovoiBackend.Application;
-using DomovoiBackend.Application.Models.Announcements.RequestInfos.Deals;
-using DomovoiBackend.Application.Models.Announcements.RequestInfos.Deals.RentInformation;
-using DomovoiBackend.Application.Models.Announcements.RequestInfos.Deals.SellInformation;
-using DomovoiBackend.Application.Models.Announcements.RequestInfos.Realities;
-using DomovoiBackend.Application.Models.Announcements.RequestInfos.Realities.CommercialRealities.TypesRequest;
-using DomovoiBackend.Application.Models.CounterAgents;
-using DomovoiBackend.Application.Models.CounterAgents.RequestInfos;
-using DomovoiBackend.Application.Models.CounterAgents.RequestInfos.Base;
+using DomovoiBackend.Application.Information.CounterAgents;
+using DomovoiBackend.Application.Information.Deals;
+using DomovoiBackend.Application.Information.Deals.Rents;
+using DomovoiBackend.Application.Information.Deals.Sells;
+using DomovoiBackend.Application.Information.Realities;
+using DomovoiBackend.Application.Information.Realities.Commercial;
+using DomovoiBackend.Application.Requests.CounterAgents.AddRequests;
+using DomovoiBackend.Application.Requests.CounterAgents.AddRequests.Base;
 using DomovoiBackend.Persistence;
 using JsonSubTypes;
 using Microsoft.OpenApi.Models;
@@ -35,6 +35,14 @@ builder.Services.AddControllers().AddNewtonsoftJson(
     {
         options.SerializerSettings.Converters.Add(
             JsonSubtypesConverterBuilder
+                .Of(typeof(AddCounterAgentRequest), "counterAgentType")
+                .RegisterSubtype<AddPhysicalCounterAgentRequest>("Physical")
+                .RegisterSubtype<AddLegalCounterAgentRequest>("Legal")
+                .SerializeDiscriminatorProperty()
+                .Build());
+        
+        options.SerializerSettings.Converters.Add(
+            JsonSubtypesConverterBuilder
                 .Of(typeof(CounterAgentInformation), "counterAgentType")
                 .RegisterSubtype<PhysicalCounterAgentInformation>("Physical")
                 .RegisterSubtype<LegalCounterAgentInformation>("Legal")
@@ -43,22 +51,23 @@ builder.Services.AddControllers().AddNewtonsoftJson(
         
         options.SerializerSettings.Converters.Add(
             JsonSubtypesConverterBuilder
-                .Of(typeof(RealityRequestInfo), "realityType")
-                .RegisterSubtype<OfficeRequestInfo>("Office")
+                .Of(typeof(RealityInformation), "realityType")
+                .RegisterSubtype<OfficeInformation>("Office")
                 .SerializeDiscriminatorProperty()
                 .Build());
         
         options.SerializerSettings.Converters.Add(
             JsonSubtypesConverterBuilder
-                .Of(typeof(DealRequestInfo), "dealType")
-                .RegisterSubtype<RentRequestInfo>("Rent")
-                .RegisterSubtype<SellRequestInfo>("Sell")
+                .Of(typeof(DealInformation), "dealType")
+                .RegisterSubtype<RentInformation>("Rent")
+                .RegisterSubtype<SellInformation>("Sell")
                 .SerializeDiscriminatorProperty()
                 .Build());
     });
 
 // TODO: Доделать ApplicationLayer и PersistenceLayer (RUD);
 builder.Services.AddApplicationLayer()
+    .AddMappers()
     .AddPersistence(builder.Configuration)
     .CreateDatabase();
 

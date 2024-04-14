@@ -4,6 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace DomovoiBackend.Persistence.EfSettings.Configurations.RealityConfigurations;
 
+/// <summary>
+/// Конфигурация недвижимости.
+/// </summary>
 public class RealityConfiguration : IEntityTypeConfiguration<Reality>
 {
     public void Configure(EntityTypeBuilder<Reality> builder)
