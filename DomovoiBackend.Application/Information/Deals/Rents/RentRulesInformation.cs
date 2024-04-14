@@ -1,13 +1,12 @@
 using DomovoiBackend.Application.Mapping.Interfaces;
-using DomovoiBackend.Domain.Entities.Deals.Types.Rent.Addiction;
-using DomovoiBackend.Domain.Factories.DealsFactories.Infos.RentInfos;
+using DomovoiBackend.Domain.Entities.Deals.Rents;
 
 namespace DomovoiBackend.Application.Information.Deals.Rents;
 
 /// <summary>
 /// Информация о правилах аренды для запроса/ответа.
 /// </summary>
-public class RentRulesInformation : IMapTo<RentRulesInfo>, IMapFrom<RentRules>
+public class RentRulesInformation : IMapTwoSide<RentRules>
 {
     /// <summary>
     /// Удобства.

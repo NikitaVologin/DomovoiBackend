@@ -29,7 +29,7 @@ public static class MapCollector
     /// <returns></returns>
     public static Dictionary<Type, Func<IMapperBase, object, TDestination>> GetToMappingsFromAssembly<TDestination>(Assembly assembly)
     {
-        var mapToInterfaceDefinition = typeof(IMapTo<>);
+        var mapToInterfaceDefinition = typeof(IMapTwoSide<>);
 
         var types = assembly.GetTypes()
             .Where(type => type.GetInterfaces()
@@ -75,7 +75,7 @@ public static class MapCollector
     /// <returns></returns>
     public static Dictionary<Type, Func<IMapperBase, object, TSource>> GetFromMappingsFromAssembly<TSource>(Assembly assembly)
     {
-        var mapToInterfaceDefinition = typeof(IMapFrom<>);
+        var mapToInterfaceDefinition = typeof(IMapTwoSide<>);
 
         var types = assembly.GetTypes()
             .Where(type => type.IsSubclassOf(typeof(TSource)) &&

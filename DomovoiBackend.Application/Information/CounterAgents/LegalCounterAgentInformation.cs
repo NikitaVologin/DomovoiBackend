@@ -6,7 +6,7 @@ namespace DomovoiBackend.Application.Information.CounterAgents;
 /// <summary>
 /// Информация о юридическом контр-агенте для запроса/ответа.
 /// </summary>
-public class LegalCounterAgentInformation : CounterAgentInformation, IMapFrom<LegalCounterAgent>
+public class LegalCounterAgentInformation : CounterAgentInformation, IMapTwoSide<LegalCounterAgent>
 {
     /// <summary>
     /// Название.

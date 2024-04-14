@@ -6,8 +6,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DomovoiBackend.Persistence.Repositories.EfRepositories;
 
+/// <summary>
+/// EF Репозиторий контр-агентов.
+/// </summary>
 public class EfCounterAgentRepository : ICounterAgentRepository
 {
+    /// <summary>
+    /// Контекст БД.
+    /// </summary>
     private readonly DomovoiContext _context;
 
     public EfCounterAgentRepository(DomovoiContext context) => _context = context;

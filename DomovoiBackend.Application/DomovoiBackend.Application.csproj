@@ -16,8 +16,6 @@
 
     <ItemGroup>
       <Folder Include="Information\Realities\Living\" />
-      <Folder Include="Requests\Infos\CounterAgents\Base\" />
-      <Folder Include="Services\CounterAgentServices\CreationServices\Interfaces\" />
     </ItemGroup>
 
 </Project>

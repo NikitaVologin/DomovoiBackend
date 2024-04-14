@@ -3,10 +3,23 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DomovoiBackend.Persistence.Extensions;
 
+/// <summary>
+/// Расширения IQueryable
+/// </summary>
 public static class QueryableExtensions
 {
+    /// <summary>
+    /// Типы из сборки.
+    /// </summary>
     private static IEnumerable<Type> _assemblyTypes = Array.Empty<Type>();
     
+    /// <summary>
+    /// Включить все вложенные сущности включая наследуемые.
+    /// </summary>
+    /// <param name="queryable">Коллеция.</param>
+    /// <param name="context">Контекст БД.</param>
+    /// <typeparam name="T">Тип коллекции.</typeparam>
+    /// <returns>Подгруженная коллекция.</returns>
     public static IQueryable<T> IncludeAll<T>(this IQueryable<T> queryable, DbContext context) where T : class
     {
         var queryableType = typeof(T);
@@ -17,6 +30,13 @@ public static class QueryableExtensions
         return paths.Aggregate(queryable, (current, path) => current.Include(path.TrimEnd('.')));
     }
 
+    /// <summary>
+    /// Получить все возможные навигационные пути.
+    /// </summary>
+    /// <param name="context">Контекст БД.</param>
+    /// <param name="type">Тип, для которого ищется навигационные свойства.</param>
+    /// <param name="navigationPath">Навигационный путь.</param>
+    /// <returns>Дополненный навигационный путь.</returns>
     private static IEnumerable<string> GetNavigationPaths(DbContext context, Type type, string navigationPath = "")
     {
         var assembly = Assembly.GetAssembly(type);

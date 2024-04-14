@@ -1,6 +1,5 @@
 using DomovoiBackend.Application.Mapping.Interfaces;
 using DomovoiBackend.Domain.Entities.Deals.Sells;
-using DomovoiBackend.Domain.Factories.DealsFactories.Infos.SellInfos;
 
 namespace DomovoiBackend.Application.Information.Deals.Sells;
 
@@ -8,7 +7,7 @@ namespace DomovoiBackend.Application.Information.Deals.Sells;
 /// <summary>
 /// Информация о характеристиках продажи для запроса/ответа.
 /// </summary>
-public class SellFeaturesInformation : IMapTo<SellFeaturesInfo>, IMapFrom<SellFeatures>
+public class SellFeaturesInformation : IMapTwoSide<SellFeatures>
 {
     /// <summary>
     /// Лет во владении.

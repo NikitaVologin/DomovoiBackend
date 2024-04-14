@@ -1,3 +1,4 @@
+using DomovoiBackend.Application.Persistence.Exceptions;
 using DomovoiBackend.Application.Persistence.Interfaces;
 using DomovoiBackend.Domain.Entities.Announcements;
 using DomovoiBackend.Persistence.EfSettings;
@@ -6,8 +7,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DomovoiBackend.Persistence.Repositories.EfRepositories;
 
+/// <summary>
+/// EF Репозиторий объявлений.
+/// </summary>
 public class EfAnnouncementRepository : IAnnouncementRepository
 {
+    /// <summary>
+    /// Контекст БД.
+    /// </summary>
     private readonly DomovoiContext _context;
 
     public EfAnnouncementRepository(DomovoiContext context) => _context = context;
@@ -21,8 +28,18 @@ public class EfAnnouncementRepository : IAnnouncementRepository
     
     public async Task<Announcement> GetAnnouncementAsync(Guid id, CancellationToken cancellationToken)
     {
-        return await _context.Announcements
+        var announcement =  await _context.Announcements
             .IncludeAll(_context)
             .FirstOrDefaultAsync(a => a.Id == id, cancellationToken);
+        if (announcement == null) throw new DbNotFoundException(typeof(Announcement), id);
+        return announcement;
+    }
+
+    public async Task<IList<Announcement>> GetAnnouncementsAsync(int count, CancellationToken cancellationToken)
+    {
+        return await _context.Announcements
+            .IncludeAll(_context)
+            .Take(count)
+            .ToListAsync(cancellationToken);
     }
 }

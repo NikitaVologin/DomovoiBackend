@@ -67,6 +67,7 @@ builder.Services.AddControllers().AddNewtonsoftJson(
 
 // TODO: Доделать ApplicationLayer и PersistenceLayer (RUD);
 builder.Services.AddApplicationLayer()
+    .AddMappers()
     .AddPersistence(builder.Configuration)
     .CreateDatabase();
 

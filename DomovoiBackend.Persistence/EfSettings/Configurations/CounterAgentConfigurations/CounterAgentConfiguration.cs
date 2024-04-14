@@ -4,6 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace DomovoiBackend.Persistence.EfSettings.Configurations.CounterAgentConfigurations;
 
+/// <summary>
+/// Конфигурация контр-агента.
+/// </summary>
 public class CounterAgentConfiguration : IEntityTypeConfiguration<CounterAgent>
 {
     public void Configure(EntityTypeBuilder<CounterAgent> builder)

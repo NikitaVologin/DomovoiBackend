@@ -1,7 +1,10 @@
 using DomovoiBackend.Application.Mapping.Interfaces;
 using DomovoiBackend.Application.Requests.CounterAgents.AddRequests.Base;
-using DomovoiBackend.Domain.Factories.CounterAgentFactories.Infos;
+using DomovoiBackend.Domain.Entities.CounterAgents.Types;
 
 namespace DomovoiBackend.Application.Requests.CounterAgents.AddRequests;
 
-public class AddPhysicalCounterAgentRequest : AddCounterAgentRequest, IMapTo<PhysicalCounterAgentInfo> { }
+/// <summary>
+/// Запрос создания физ. контр-агента.
+/// </summary>
+public class AddPhysicalCounterAgentRequest : AddCounterAgentRequest, IMapTwoSide<PhysicalCounterAgent> { }

@@ -6,6 +6,9 @@ using Newtonsoft.Json.Linq;
 
 namespace DomovoiBackend.API.Middlewares;
 
+/// <summary>
+/// Middleware для добавления в тело запроса параметр из пути.
+/// </summary>
 public class AnnouncementRouteTransformerMiddleware
 {
     private readonly RequestDelegate _next;

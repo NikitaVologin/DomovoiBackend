@@ -7,7 +7,7 @@ namespace DomovoiBackend.Application.Information.Other;
 /// <summary>
 /// Информация о здании (для запросов/ответов)
 /// </summary>
-public class BuildingInformation : IMapTo<Building>, IMapFrom<Building>
+public class BuildingInformation : IMapTwoSide<Building>
 {
     /// <summary>
     /// Id строения.

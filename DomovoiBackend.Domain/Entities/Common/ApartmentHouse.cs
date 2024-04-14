@@ -3,6 +3,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DomovoiBackend.Domain.Entities.Common;
 
+/// <summary>
+/// Дом.
+/// </summary>
 public class ApartmentHouse
 {
     [Key]
@@ -14,7 +17,7 @@ public class ApartmentHouse
     public bool HaveGarbageChute { get; set; }
     public bool IsSecurity { get; set; }
     public bool HaveParking { get; set; }
-    public bool IsInfrastructure { get; set; }
+    public List<string> Infrastructures { get; set; }
     public bool IsLandscaping { get; set; }
 
     public virtual IEnumerable<Elevator> Elevators { get; set; } = new List<Elevator>();

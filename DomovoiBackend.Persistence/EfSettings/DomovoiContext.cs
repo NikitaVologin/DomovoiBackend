@@ -1,5 +1,4 @@
 using System.Reflection;
-using DomovoiBackend.Application.Persistence;
 using DomovoiBackend.Domain.Entities.Announcements;
 using DomovoiBackend.Domain.Entities.Common;
 using DomovoiBackend.Domain.Entities.CounterAgents;
@@ -7,8 +6,6 @@ using DomovoiBackend.Domain.Entities.CounterAgents.Types;
 using DomovoiBackend.Domain.Entities.Deals;
 using DomovoiBackend.Domain.Entities.Deals.Rents;
 using DomovoiBackend.Domain.Entities.Deals.Sells;
-using DomovoiBackend.Domain.Entities.Deals.Types.Rent;
-using DomovoiBackend.Domain.Entities.Deals.Types.Rent.Addiction;
 using DomovoiBackend.Domain.Entities.Realities;
 using DomovoiBackend.Domain.Entities.Realities.Areas;
 using DomovoiBackend.Domain.Entities.Realities.CommercialBuildings;
@@ -21,7 +18,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DomovoiBackend.Persistence.EfSettings;
 
-public class DomovoiContext : DbContext, IUnitOfWork
+/// <summary>
+/// Контекст БД.
+/// </summary>
+public class DomovoiContext : DbContext
 {
     public DomovoiContext(DbContextOptions<DomovoiContext> options) : base(options) { }
     

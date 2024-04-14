@@ -1,13 +1,12 @@
 using DomovoiBackend.Application.Mapping.Interfaces;
 using DomovoiBackend.Domain.Entities.Realities.CommercialBuildings.Types;
-using DomovoiBackend.Domain.Factories.CommercialBuildingsFactories.Infos;
 
 namespace DomovoiBackend.Application.Information.Realities.Commercial;
 
 /// <summary>
 /// Информация об офисе для запроса/ответа.
 /// </summary>
-public class OfficeInformation : CommercialRealityInformation, IMapTo<OfficeBuildingInfo>, IMapFrom<Office>
+public class OfficeInformation : CommercialRealityInformation, IMapTwoSide<Office>
 {
     /// <summary>
     /// Имя.
