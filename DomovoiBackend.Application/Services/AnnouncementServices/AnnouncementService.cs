@@ -1,42 +1,59 @@
-using DomovoiBackend.Application.Models.Announcements;
-using DomovoiBackend.Application.Persistence;
+using DomovoiBackend.Application.Information.Announcements;
 using DomovoiBackend.Application.Persistence.Interfaces;
-using DomovoiBackend.Application.Services.AnnouncementServices.DealCreationServices.Interfaces;
+using DomovoiBackend.Application.Requests.Announcements;
 using DomovoiBackend.Application.Services.AnnouncementServices.Interfaces;
-using DomovoiBackend.Application.Services.AnnouncementServices.RealityCreationServices.Interfaces;
+using DomovoiBackend.Application.Services.MappingServices.Interfaces;
 using DomovoiBackend.Domain.Entities.Announcements;
 
 namespace DomovoiBackend.Application.Services.AnnouncementServices;
 
+/// <summary>
+/// Сервис объявлений.
+/// </summary>
 public class AnnouncementService : IAnnouncementService
 {
-    private readonly IRealityCreationService _realityCreationService;
-    private readonly IDealCreationService _dealCreationService;
+    /// <summary>
+    /// Сервис отображений сделок.
+    /// </summary>
+    private readonly IDealMappingService _dealMappingService;
+    
+    /// <summary>
+    /// Сервис отображений недвижимости.
+    /// </summary>
+    private readonly IRealityMappingService _realityMappingService;
+    
+    /// <summary>
+    /// Репозиторий объявлений
+    /// </summary>
     private readonly IAnnouncementRepository _announcementRepository;
+    
+    /// <summary>
+    /// Репозиторий контр-агентов.
+    /// </summary>
     private readonly ICounterAgentRepository _counterAgentRepository;
-    private readonly IUnitOfWork _unitOfWork;
+    
+    /// <summary>
+    /// Сервис отображений контр-агентов.
+    /// </summary>
+    private readonly ICounterAgentMappingService _counterAgentMappingService;
 
-    public AnnouncementService(
-        IRealityCreationService realityCreationService,
-        IDealCreationService dealCreationService,
-        IAnnouncementRepository announcementRepository,
-        ICounterAgentRepository counterAgentRepository,
-        IUnitOfWork unitOfWork)
+    public AnnouncementService(IDealMappingService dealMappingService, IRealityMappingService realityMappingService,
+        IAnnouncementRepository announcementRepository, ICounterAgentRepository counterAgentRepository, ICounterAgentMappingService counterAgentMappingService)
     {
-        _realityCreationService = realityCreationService;
-        _dealCreationService = dealCreationService;
+        _dealMappingService = dealMappingService;
+        _realityMappingService = realityMappingService;
         _announcementRepository = announcementRepository;
         _counterAgentRepository = counterAgentRepository;
-        _unitOfWork = unitOfWork;
+        _counterAgentMappingService = counterAgentMappingService;
     }
-    
-    public async Task<Announcement> AddAnnouncementAsync(AddAnnouncementRequest request, CancellationToken cancellationToken)
+
+    public async Task<Guid> AddAnnouncementAsync(AddAnnouncementRequest request, CancellationToken cancellationToken)
     {
         var announcementGuid = Guid.NewGuid();
         var realityInfo = request.RealityInfo;
         var dealInfo = request.DealInfo;
-        var reality = _realityCreationService.CreateReality(realityInfo, announcementGuid);
-        var deal = _dealCreationService.CreateDeal(dealInfo, announcementGuid);
+        var deal = _dealMappingService.MapEntityFromInformation(dealInfo);
+        var reality = _realityMappingService.MapEntityFromInformation(realityInfo);
         var counterAgent = await _counterAgentRepository.GetAsync(request.CounterAgentId, cancellationToken);
         
         var announcement = new Announcement
@@ -44,18 +61,46 @@ public class AnnouncementService : IAnnouncementService
             Id = announcementGuid,
             Description = request.Description,
             ConnectionType = request.ConnectionType,
-            Reality = reality,
             Deal = deal,
+            Reality = reality,
             CounterAgent = counterAgent
         };
+
+        await _announcementRepository.AddAnnouncementAsync(announcement, cancellationToken);
         
-        var guid = await _announcementRepository.AddAnnouncementAsync(announcement, cancellationToken);
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
-        return announcement;
+        return announcementGuid;
     }
 
-    public async Task<Announcement> GetAnnouncementAsync(Guid id, CancellationToken cancellationToken)
+    public async Task<AnnouncementInformation> GetAnnouncementAsync(Guid id, CancellationToken cancellationToken)
     {
-        return await _announcementRepository.GetAnnouncementAsync(id, cancellationToken);
+        var announcement =  await _announcementRepository.GetAnnouncementAsync(id, cancellationToken);
+        return new AnnouncementInformation
+        {
+            Id = announcement.Id,
+            Description = announcement.Description,
+            ConnectionType = announcement.ConnectionType,
+            CounterAgentInfo = _counterAgentMappingService.MapInformationFromEntity(announcement.CounterAgent),
+            DealInfo = _dealMappingService.MapInformationFromEntity(announcement.Deal),
+            RealityInfo = _realityMappingService.MapInformationFromEntity(announcement.Reality)
+        };
+    }
+
+    public async Task<AnnouncementInformationCollection> GetAnnouncementsAsync(int count, CancellationToken cancellationToken)
+    {
+        var announcements = await 
+            _announcementRepository.GetAnnouncementsAsync(count, cancellationToken);
+
+        var announcementInfos = announcements.Select(announcement =>
+            new AnnouncementInformation
+            {
+                Id = announcement.Id,
+                Description = announcement.Description,
+                ConnectionType = announcement.ConnectionType,
+                CounterAgentInfo = _counterAgentMappingService.MapInformationFromEntity(announcement.CounterAgent),
+                DealInfo = _dealMappingService.MapInformationFromEntity(announcement.Deal),
+                RealityInfo = _realityMappingService.MapInformationFromEntity(announcement.Reality)
+            }).ToList();
+
+        return new AnnouncementInformationCollection { AnnouncementInformation = announcementInfos };
     }
 }

@@ -1,11 +1,37 @@
 namespace DomovoiBackend.Domain.Entities.Realities.CommercialBuildings;
 
+/// <summary>
+/// Комерческая недвижимость.
+/// </summary>
 public class CommercialBuilding : Reality
 {    
+    /// <summary>
+    /// Количество этажей.
+    /// </summary>
     public int FloorsCount { get; set; }
-    public bool Entry { get; set; }
+    
+    /// <summary>
+    /// Вход (общий/отдельный).
+    /// </summary>
+    public string? Entry { get; set; }
+    
+    /// <summary>
+    /// Адрес.
+    /// </summary>
     public string? Address { get; set; }
+    
+    /// <summary>
+    /// В использовании.
+    /// </summary>
     public bool IsUse { get; set; }
-    public bool IsAccess { get; set; }
+    
+    /// <summary>
+    /// Доступ (по пропускам/свободный)
+    /// </summary>
+    public string? Access { get; set; }
+    
+    /// <summary>
+    /// Строение.
+    /// </summary>
     public virtual Building? Building { get; set; }
 }
