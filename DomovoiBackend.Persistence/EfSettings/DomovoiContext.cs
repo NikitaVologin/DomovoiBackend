@@ -32,10 +32,8 @@ public class DomovoiContext : DbContext
     public DbSet<Deal> Deals { get; set; }
     public DbSet<Rent> Rents { get; set; }
     public DbSet<RentConditions> RentConditions { get; set; }
-    public DbSet<RentRules> RentRules { get; set; }
     public DbSet<Sell> Sells { get; set; }
     public DbSet<SellConditions> SellConditions { get; set; }
-    public DbSet<SellFeatures> SellFeatures { get; set; }
     public DbSet<Reality> Realities { get; set; }
     public DbSet<Garage> Garages { get; set; }
     public DbSet<CommercialBuilding> CommercialBuildings { get; set; }

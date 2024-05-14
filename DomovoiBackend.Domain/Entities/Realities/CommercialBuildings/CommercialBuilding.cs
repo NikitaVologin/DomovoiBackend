@@ -16,11 +16,6 @@ public class CommercialBuilding : Reality
     public string? Entry { get; set; }
     
     /// <summary>
-    /// Адрес.
-    /// </summary>
-    public string? Address { get; set; }
-    
-    /// <summary>
     /// В использовании.
     /// </summary>
     public bool IsUse { get; set; }

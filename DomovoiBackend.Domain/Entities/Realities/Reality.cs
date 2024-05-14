@@ -22,4 +22,9 @@ public class Reality
     /// Тип.
     /// </summary>
     public string? Type { get; set; }
+    
+    /// <summary>
+    /// Адрес.
+    /// </summary>
+    public string? Address { get; set; }
 }

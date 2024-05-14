@@ -63,6 +63,8 @@ public class AnnouncementController : ControllerBase
         }
     }
     
+    
+    // TODO: УДАЛИТЬ - УСТАРЕЛО
     /// <summary>
     /// Get - первые N объявлений.
     /// </summary>
@@ -75,6 +77,31 @@ public class AnnouncementController : ControllerBase
         try
         {
             var announcementInformationCollection = await _service.GetAnnouncementsAsync(count, cancellationToken);
+            return Ok(announcementInformationCollection);
+        }
+        catch(Exception exception)
+        {
+            return BadRequest(exception);
+        }
+    }
+    
+    /// <summary>
+    /// Получить объявления.
+    /// </summary>
+    /// <param name="fromIndex">Индекс от.</param>
+    /// <param name="toIndex">Индекс до.</param>
+    /// <param name="cancellationToken">Токен отмены.</param>
+    /// <returns>Ответ.</returns>
+    [HttpGet("take")]
+    public async Task<IActionResult> GetAnnouncements([FromQuery] int? fromIndex, [FromQuery] int? toIndex, CancellationToken cancellationToken)
+    {
+        try
+        {
+            var announcementInformationCollection = (toIndex != null && fromIndex != null)
+                ? await _service.GetLimitedAnnouncementsAsync(fromIndex.Value, toIndex.Value, cancellationToken)
+                : (fromIndex == null && toIndex != null)
+                    ? await _service.GetLimitedAnnouncementsAsync(toIndex.Value, cancellationToken)
+                    : await _service.GetAnnouncementsAsync(cancellationToken);
             return Ok(announcementInformationCollection);
         }
         catch(Exception exception)

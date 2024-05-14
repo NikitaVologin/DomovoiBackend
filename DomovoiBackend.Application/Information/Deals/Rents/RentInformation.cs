@@ -11,10 +11,5 @@ public class RentInformation : DealInformation, IMapTwoSide<Rent>
     /// <summary>
     /// Условия аренды.
     /// </summary>
-    public RentConditionInformation RentConditions { get; set; }
-    
-    /// <summary>
-    /// Правила аренды.
-    /// </summary>
-    public RentRulesInformation RentRules { get; set; }
+    public RentConditionInformation Conditions { get; set; }
 }

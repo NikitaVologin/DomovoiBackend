@@ -27,22 +27,19 @@ public class AnnouncementMockRepository : IAnnouncementRepository
             Deal = new Rent()
             {
                 Id = Guid.Parse("5389cb46-e6ef-42ea-813e-a46df628d39a"),
-                RentRules = new RentRules()
-                {
-                    Id = Guid.Parse("5389cb46-e6ef-42ea-813e-a46df628d39a"),
-                    CanSmoke = true,
-                    Facilities = "Aaaa",
-                    WithKids = true,
-                    WithAnimals = true
-                },
-                RentConditions = new RentConditions()
+
+                Conditions = new RentConditions()
                 {
                     Id = Guid.Parse("5389cb46-e6ef-42ea-813e-a46df628d39a"),
                     CommunalPays = 2525,
                     Deposit = 124214,
                     Period = "Ежесекундно",
                     Prepay = 1234124,
-                    Price = 124321
+                    Price = 124321,
+                    CanSmoke = true,
+                    Facilities = "Aaaa",
+                    WithKids = true,
+                    WithAnimals = true
                 }
             },
             Description = "Миллион рублей стою",
@@ -77,22 +74,18 @@ public class AnnouncementMockRepository : IAnnouncementRepository
             Deal = new Rent()
             {
                 Id = Guid.Parse("5389cb46-e6ef-42ea-813e-a46df628d39a"),
-                RentRules = new RentRules()
-                {
-                    Id = Guid.Parse("5389cb46-e6ef-42ea-813e-a46df628d39a"),
-                    CanSmoke = true,
-                    Facilities = "Aaaa",
-                    WithKids = true,
-                    WithAnimals = true
-                },
-                RentConditions = new RentConditions()
+                Conditions = new RentConditions()
                 {
                     Id = Guid.Parse("5389cb46-e6ef-42ea-813e-a46df628d39a"),
                     CommunalPays = 2525,
                     Deposit = 124214,
                     Period = "Ежесекундно",
                     Prepay = 1234124,
-                    Price = 124321
+                    Price = 124321,
+                    CanSmoke = true,
+                    Facilities = "Aaaa",
+                    WithKids = true,
+                    WithAnimals = true
                 }
             },
             Description = "Миллион рублей стою",
@@ -132,6 +125,23 @@ public class AnnouncementMockRepository : IAnnouncementRepository
     public Task<IList<Announcement>> GetAnnouncementsAsync(int count, CancellationToken cancellationToken)
     {
         var announcement = _mockData.Take(count).ToList();
+        return Task.FromResult((IList<Announcement>)announcement);
+    }
+
+    public Task<IList<Announcement>> GetAnnouncementsAsync(CancellationToken cancellationToken)
+    {
+        return Task.FromResult((IList<Announcement>)_mockData);
+    }
+
+    public Task<IList<Announcement>> GetLimitedAnnouncementsAsync(int toIndex, CancellationToken cancellationToken)
+    {
+        var announcement = _mockData.Take(toIndex).ToList();
+        return Task.FromResult((IList<Announcement>)announcement);
+    }
+
+    public Task<IList<Announcement>> GetLimitedAnnouncementsAsync(int fromIndex, int toIndex, CancellationToken cancellationToken)
+    {
+        var announcement = _mockData.Skip(fromIndex).Take(toIndex - fromIndex + 1).ToList();
         return Task.FromResult((IList<Announcement>)announcement);
     }
 }
