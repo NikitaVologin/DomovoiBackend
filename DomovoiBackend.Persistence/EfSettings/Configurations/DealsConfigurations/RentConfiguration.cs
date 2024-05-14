@@ -12,12 +12,8 @@ public class RentConfiguration : IEntityTypeConfiguration<Rent>
     public void Configure(EntityTypeBuilder<Rent> builder)
     {
         builder.ToTable(nameof(Rent));
-        builder.HasOne(r => r.RentConditions)
+        builder.HasOne(r => r.Conditions)
             .WithOne()
             .HasForeignKey<RentConditions>(rc => rc.Id);
-        
-        builder.HasOne(r => r.RentRules)
-            .WithOne()
-            .HasForeignKey<RentRules>(rr => rr.Id);
     }
 }

@@ -32,4 +32,24 @@ public class RentConditionInformation : IMapTwoSide<RentConditions>
     /// Предоплата.
     /// </summary>
     public double Prepay { get; set; }
+    
+    /// <summary>
+    /// Удобства.
+    /// </summary>
+    public string? Facilities { get; set; }
+    
+    /// <summary>
+    /// Разрешено с детьми.
+    /// </summary>
+    public bool WithKids { get; set; }
+    
+    /// <summary>
+    /// Разрешено с животными.
+    /// </summary>
+    public bool WithAnimals { get; set; }
+    
+    /// <summary>
+    /// Разрешено курить.
+    /// </summary>
+    public bool CanSmoke { get; set; }
 }

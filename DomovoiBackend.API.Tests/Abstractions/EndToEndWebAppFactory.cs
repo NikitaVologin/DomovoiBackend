@@ -24,7 +24,7 @@ public class EndToEndWebAppFactory : WebApplicationFactory<Program>, IAsyncLifet
     {
         builder.ConfigureTestServices(services =>
         {
-            services.RemoveAll(typeof(DomovoiContext));
+            services.RemoveAll(typeof(DbContextOptions<DomovoiContext>));
             services.AddDbContext<DomovoiContext>(options => options.UseNpgsql(_dbContainer.GetConnectionString()));
             services.CreateDatabase();
         });

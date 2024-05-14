@@ -9,4 +9,9 @@ public class RealityInformation
     /// Площадь.
     /// </summary>
     public double Area { get; set; }
+    
+    /// <summary>
+    /// Адрес.
+    /// </summary>
+    public string? Address { get; set; }
 }

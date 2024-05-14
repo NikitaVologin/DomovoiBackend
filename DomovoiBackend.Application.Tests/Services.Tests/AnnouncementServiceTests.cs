@@ -79,20 +79,17 @@ public class AnnouncementServiceTests
             Description = "Обстаятельства",
             DealInfo = new RentInformation()
             {
-                RentRules = new RentRulesInformation()
-                {
-                    CanSmoke = true,
-                    Facilities = "Aaaa",
-                    WithKids = true,
-                    WithAnimals = true
-                },
-                RentConditions = new RentConditionInformation()
+                Conditions = new RentConditionInformation()
                 {
                     CommunalPays = 2525,
                     Deposit = 124214,
                     Period = "Ежесекундно",
                     Prepay = 1234124,
-                    Price = 124321
+                    Price = 124321,
+                    CanSmoke = true,
+                    Facilities = "Aaaa",
+                    WithKids = true,
+                    WithAnimals = true
                 }
             },
             RealityInfo = new OfficeInformation()

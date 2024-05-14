@@ -24,6 +24,7 @@ public interface IAnnouncementService
     /// <returns>Объявление.</returns>
     Task<AnnouncementInformation> GetAnnouncementAsync(Guid id, CancellationToken cancellationToken);
     
+    // TODO: УДАЛИТЬ - УСТАРЕЛО
     /// <summary>
     /// Получить первые N объявлений.
     /// </summary>
@@ -31,4 +32,30 @@ public interface IAnnouncementService
     /// <param name="cancellationToken">Токен отмены.</param>
     /// <returns>Коллекция объявлений.</returns>
     Task<AnnouncementInformationCollection> GetAnnouncementsAsync(int count, CancellationToken cancellationToken);
+    
+    /// <summary>
+    /// Получить все объявления.
+    /// </summary>
+    /// <param name="cancellationToken">Токен отмены.</param>
+    /// <returns>Коллекция объявлений.</returns>
+    Task<AnnouncementInformationCollection> GetAnnouncementsAsync(CancellationToken cancellationToken);
+
+    
+    /// <summary>
+    /// Получить первые N объявлений.
+    /// </summary>
+    /// <param name="toIndex">N</param>
+    /// <param name="cancellationToken">Токен отмены.</param>
+    /// <returns>Коллекция объявлений.</returns>
+    Task<AnnouncementInformationCollection> GetLimitedAnnouncementsAsync(int toIndex, CancellationToken cancellationToken);
+
+    /// <summary>
+    /// Получить от A до B объявления.
+    /// </summary>
+    /// <param name="fromIndex">A</param>
+    /// <param name="toIndex">B</param>
+    /// <param name="cancellationToken">Токен отмены.</param>
+    /// <returns>Коллекция объявлений.</returns>
+    Task<AnnouncementInformationCollection> GetLimitedAnnouncementsAsync(int fromIndex, int toIndex, CancellationToken cancellationToken);
+
 }

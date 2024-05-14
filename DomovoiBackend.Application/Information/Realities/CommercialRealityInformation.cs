@@ -18,11 +18,6 @@ public class CommercialRealityInformation : RealityInformation
     public string Entry { get; set; } = null!;
     
     /// <summary>
-    /// Адрес.
-    /// </summary>
-    public string? Address { get; set; }
-    
-    /// <summary>
     /// В использовании.
     /// </summary>
     public bool IsUse { get; set; }

@@ -42,4 +42,28 @@ public class EfAnnouncementRepository : IAnnouncementRepository
             .Take(count)
             .ToListAsync(cancellationToken);
     }
+
+    public async Task<IList<Announcement>> GetAnnouncementsAsync(CancellationToken cancellationToken)
+    {
+        return await _context.Announcements
+            .IncludeAll(_context)
+            .ToListAsync(cancellationToken);
+    }
+
+    public async Task<IList<Announcement>> GetLimitedAnnouncementsAsync(int toIndex, CancellationToken cancellationToken)
+    {
+        return await _context.Announcements
+            .IncludeAll(_context)
+            .Take(toIndex)
+            .ToListAsync(cancellationToken);
+    }
+
+    public async Task<IList<Announcement>> GetLimitedAnnouncementsAsync(int fromIndex, int toIndex, CancellationToken cancellationToken)
+    {
+        return await _context.Announcements
+            .IncludeAll(_context)
+            .Skip(fromIndex )
+            .Take(toIndex - fromIndex + 1)
+            .ToListAsync(cancellationToken);
+    }
 }
