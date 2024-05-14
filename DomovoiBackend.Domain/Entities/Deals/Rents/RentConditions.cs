@@ -34,4 +34,24 @@ public class RentConditions
     /// Предоплата.
     /// </summary>
     public double Prepay { get; set; }
+    
+    /// <summary>
+    /// Удобства.
+    /// </summary>
+    public string? Facilities { get; set; }
+    
+    /// <summary>
+    /// С детьми.
+    /// </summary>
+    public bool WithKids { get; set; }
+    
+    /// <summary>
+    /// С животными.
+    /// </summary>
+    public bool WithAnimals { get; set; }
+    
+    /// <summary>
+    /// Можно курить.
+    /// </summary>
+    public bool CanSmoke { get; set; }
 }

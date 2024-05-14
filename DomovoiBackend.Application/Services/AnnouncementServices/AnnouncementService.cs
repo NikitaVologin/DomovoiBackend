@@ -77,11 +77,11 @@ public class AnnouncementService : IAnnouncementService
         return new AnnouncementInformation
         {
             Id = announcement.Id,
-            Description = announcement.Description,
-            ConnectionType = announcement.ConnectionType,
-            CounterAgentInfo = _counterAgentMappingService.MapInformationFromEntity(announcement.CounterAgent),
-            DealInfo = _dealMappingService.MapInformationFromEntity(announcement.Deal),
-            RealityInfo = _realityMappingService.MapInformationFromEntity(announcement.Reality)
+            Description = announcement.Description!,
+            ConnectionType = announcement.ConnectionType!,
+            CounterAgentInfo = _counterAgentMappingService.MapInformationFromEntity(announcement.CounterAgent!),
+            DealInfo = _dealMappingService.MapInformationFromEntity(announcement.Deal!),
+            RealityInfo = _realityMappingService.MapInformationFromEntity(announcement.Reality!)
         };
     }
 
@@ -90,17 +90,48 @@ public class AnnouncementService : IAnnouncementService
         var announcements = await 
             _announcementRepository.GetAnnouncementsAsync(count, cancellationToken);
 
-        var announcementInfos = announcements.Select(announcement =>
-            new AnnouncementInformation
-            {
-                Id = announcement.Id,
-                Description = announcement.Description,
-                ConnectionType = announcement.ConnectionType,
-                CounterAgentInfo = _counterAgentMappingService.MapInformationFromEntity(announcement.CounterAgent),
-                DealInfo = _dealMappingService.MapInformationFromEntity(announcement.Deal),
-                RealityInfo = _realityMappingService.MapInformationFromEntity(announcement.Reality)
-            }).ToList();
+        var announcementInfos = announcements.Select(TransformToInformation).ToList();
 
         return new AnnouncementInformationCollection { AnnouncementInformation = announcementInfos };
     }
+
+    public async Task<AnnouncementInformationCollection> GetAnnouncementsAsync(CancellationToken cancellationToken)
+    {
+        var announcements = await 
+            _announcementRepository.GetAnnouncementsAsync(cancellationToken);
+
+        var announcementInfos = announcements.Select(TransformToInformation).ToList();
+
+        return new AnnouncementInformationCollection { AnnouncementInformation = announcementInfos };
+    }
+
+    public async Task<AnnouncementInformationCollection> GetLimitedAnnouncementsAsync(int toIndex, CancellationToken cancellationToken)
+    {
+        var announcements = await 
+            _announcementRepository.GetLimitedAnnouncementsAsync(toIndex, cancellationToken);
+
+        var announcementInfos = announcements.Select(TransformToInformation).ToList();
+
+        return new AnnouncementInformationCollection { AnnouncementInformation = announcementInfos };
+    }
+
+    public async Task<AnnouncementInformationCollection> GetLimitedAnnouncementsAsync(int fromIndex, int toIndex, CancellationToken cancellationToken)
+    {
+        var announcements = await 
+            _announcementRepository.GetLimitedAnnouncementsAsync(fromIndex, toIndex, cancellationToken);
+
+        var announcementInfos = announcements.Select(TransformToInformation).ToList();
+
+        return new AnnouncementInformationCollection { AnnouncementInformation = announcementInfos };
+    }
+
+    private AnnouncementInformation TransformToInformation(Announcement announcement) => new()
+    {
+        Id = announcement.Id,
+        Description = announcement.Description!,
+        ConnectionType = announcement.ConnectionType!,
+        CounterAgentInfo = _counterAgentMappingService.MapInformationFromEntity(announcement.CounterAgent!),
+        DealInfo = _dealMappingService.MapInformationFromEntity(announcement.Deal!),
+        RealityInfo = _realityMappingService.MapInformationFromEntity(announcement.Reality!)
+    };
 }

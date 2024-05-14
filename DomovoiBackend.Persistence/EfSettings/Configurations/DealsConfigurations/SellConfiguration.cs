@@ -12,11 +12,8 @@ public class SellConfiguration : IEntityTypeConfiguration<Sell>
     public void Configure(EntityTypeBuilder<Sell> builder)
     {
         builder.ToTable(nameof(Sell));
-        builder.HasOne(s => s.SellConditions)
+        builder.HasOne(s => s.Conditions)
             .WithOne()
             .HasForeignKey<SellConditions>(sc => sc.Id);
-        builder.HasOne(s => s.SellFeatures)
-            .WithOne()
-            .HasForeignKey<SellFeatures>(sf => sf.Id);
     }
 }

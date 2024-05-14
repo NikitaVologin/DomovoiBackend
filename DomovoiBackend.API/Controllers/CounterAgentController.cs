@@ -11,7 +11,7 @@ namespace DomovoiBackend.API.Controllers;
 /// </summary>
 [Route("[controller]")]
 [ApiController]
-public class CounterAgentController : ControllerBase
+public class  CounterAgentController : ControllerBase
 {
     /// <summary>
     /// Сервис контр-агентов.

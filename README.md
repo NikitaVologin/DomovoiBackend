@@ -18,32 +18,73 @@
 | Квартира                               | In-Process       | In-Process             | Done            |
 
 
-# 2. Информация об контейнерах.
+# 2. Тестирование.
+## 2.1. Модульное тестирование.
+
+### 2.1.1. Слой Application:
+
+| CounterAgentService | Статус Покрытия      |
+|---------------------|----------------------|
+| Add (Регистрация)   | 100% ✅               |
+| Login               | 100% ✅               |
+| Update              | 0% (Функционала нет) |
+
+| AnnouncementService | Статус Покрытия       |
+|---------------------|-----------------------|
+| Add                 | 100% ✅                |
+| Get                 | 100% ✅                |
+| Get Many            | 100% ✅                |
+| Get с ограничениями | 0% (Новый функционал) |
+| Update / Close      | 0% (Функционала нет)  |
+
+### 2.2. Функциональное (end-to-end) тестирование:
+<b>НЕОБХОДИМО:</b> ЗАПУЩЕННЫЙ DOCKER ENGINE!!! (ТЕСТИРОВАНИЕ ИДЁТ НА ОСНОВЕ ОБРАЗА POSTGRESQL)
+
+<b>ВАЖНО:</B> КАЖДЫЙ ТЕСТ ДОЛЖЕН БЫТЬ ЗАПУЩЕН ПО ОТДЕЛЬНОСТИ (ЧТОБЫ НЕ СОЗДАВАТЬ ОШИБКИ-ТЕСТОВ)
+
+КАЖДЫЙ ФУНКЦИОНАЛЬНЫЙ ТЕСТ НАЗЫВАЕТСЯ В ФОРМАТЕ <b>Api_{Name}</b>.
+
+### 2.2.1. Endpoints  - Контрагенты
+| Endpoint                           | Покрытие |
+|------------------------------------|----------|
+| [POST] /CounterAgent (Регистрация) | 100% ✅   |
+| [POST] /CounterAgent/Login         | 100% ✅   |
+
+### 2.2.2. Endpoints - Объявления
+| Endpoint                                                         | Покрытие              |
+|------------------------------------------------------------------|-----------------------|
+| [POST] /Announcement/{RealityType}/{DealType}                    | 100% ✅                |
+| [GET] /Announcement/take/{count}                                 | 100% ✅                |
+| [GET] /Announcement/{id}                                         | 100% ✅                |
+| [GET] /Announcement/take?fromIndex={fromIndex}&toIndex={toIndex} | 0% (Новый функционал) |
+
+
+
+
+# 3. Информация об контейнерах.
 
 | Адрес                                    | Название    |
 |------------------------------------------|-------------|
-| http://localhost:8080/swagger/index.html | swagger     |
-| http://localhost:8080                    | Приложение  |
+| http://localhost:8181/swagger/index.html | swagger     |
+| http://localhost:8181                    | Приложение  |
 | http://localhost:5051                    | pgAdmin     |
 
 pgAdmin:
 1. Email: admin@admin.com
 2. Password: 123
 
-# 3. Информации для запросов/ответов:
-## 3.1. Deals Information (Информация о сделках):
-### 3.1.1. RentInformation ("dealType" = "Rell"):
+# 4. Информации для запросов/ответов:
+## 4.1. Deals Information (Информация о сделках):
+### 4.1.1. RentInformation ("dealType" = "Rell"):
 
 ```json
 {
-  "rentConditions": {
+  "conditions": {
     "price": 0,
     "period": "string",
     "deposit": 0,
     "communalPays": 0,
-    "prepay": 0
-  },
-  "rentRules": {
+    "prepay": 0,
     "facilities": "string",
     "withKids": false,
     "withAnimals": false,
@@ -52,14 +93,12 @@ pgAdmin:
   "dealType": "string" // (В ЗАПРОСАХ, ГДЕ В ROUTE НЕТ ТИПА, НАПРИМЕР ПОЛУЧЕНИЕ ОБЪЯВЛЕНИЯ)
 }
 ```
-### 3.1.2. SellInformation ("dealType" = "Sell"):
+### 4.1.2. SellInformation ("dealType" = "Sell"):
 ```json
 {
-  "sellConditions": {
+  "conditions": {
     "price": 0,
-    "type": "string"
-  },
-  "sellFeatures": {
+    "type": "string",
     "yearsInOwn": 0,
     "ownersCount": 0,
     "prescribersCount": 0,
@@ -69,9 +108,9 @@ pgAdmin:
   "dealType": "string" // (В ЗАПРОСАХ, ГДЕ В ROUTE НЕТ ТИПА, НАПРИМЕР ПОЛУЧЕНИЕ ОБЪЯВЛЕНИЯ)
 }
 ```
-## 3.2. CounterAgent Information(Информация о контр-агентах):
+## 4.2. CounterAgent Information(Информация о контр-агентах):
 
-### 3.2.1 PhysicalCounterAgentInfo ("counterAgentType" = "Physical"):
+### 4.2.1 PhysicalCounterAgentInfo ("counterAgentType" = "Physical"):
 ```json
 {
   "id": "guid",
@@ -81,7 +120,7 @@ pgAdmin:
   "counterAgentType": "string"
 }
 ```
-### 3.2.2. LegalCounterAgentInfo ("counterAgentType" = "Legal")
+### 4.2.2. LegalCounterAgentInfo ("counterAgentType" = "Legal")
 ```json
 {
   "id": "guid",
@@ -92,10 +131,10 @@ pgAdmin:
 }
 ```
 
-## 3.3. Reality Information (Информация о недвижимостях):
-### 3.3.1. Commercial Realities Information (Информация о коммерческих недвижимостях):
+## 4.3. Reality Information (Информация о недвижимостях):
+### 4.3.1. Commercial Realities Information (Информация о коммерческих недвижимостях):
 
-### 3.3.1.1. OfficeInformation ("realityType" = "Office"):
+### 4.3.1.1. OfficeInformation ("realityType" = "Office"):
 ```json
 {
   "area": 0,
@@ -116,7 +155,7 @@ pgAdmin:
 }
 ```
 
-## 3.4. AnnouncementInformation:
+## 4.4. AnnouncementInformation:
 ```json
 {
   "id": "guid",
@@ -134,10 +173,10 @@ pgAdmin:
 }
 ```
 
-# 4. Запросы.
-# 4.1. Контр-агенты:
+# 5. Запросы.
+# 5.1. Контр-агенты:
 
-## 4.1.1. Создание нового контр-агента:
+## 5.1.1. Создание нового контр-агента:
 Endpoint: [POST] /CounterAgent/{counterAgentType} (типы перечислены выше вместе с информацией).
 
 Тело запроса:
@@ -151,7 +190,7 @@ Endpoint: [POST] /CounterAgent/{counterAgentType} (типы перечислен
 Ответ:
 Конкретный Information (перечислены выше);
 
-## 4.1.2. Логин:
+## 5.1.2. Логин:
 Endpoint: [POST] /CounterAgent/Login
 
 Тело запроса:
@@ -163,14 +202,14 @@ Endpoint: [POST] /CounterAgent/Login
 ```
 Конкретный Information (перечислены выше);
 
-# 4.2. Объявления.
+# 5.2. Объявления.
 
-## 4.2.1. Получить объявление по Id
+## 5.2.1. Получить объявление по Id
 Endpoint [GET] /Announcement/{id} (где id - guid)
 
 Ответ: AnnouncementInfo (указано выше).
 
-## 4.2.2. Получить первые N обявлений:
+## 5.2.2. Получить первые N обявлений:
 Endpoint [GET] /Announcement/take/{count} (где count = N)
 
 Ответ:
@@ -183,7 +222,7 @@ Endpoint [GET] /Announcement/take/{count} (где count = N)
 }
 ```
 
-## 4.2.3. Загрузить объявление.
+## 5.2.3. Загрузить объявление.
 Endpoint [POST] /Announcement/{realityType}/{dealType} (Типы перечислены выше вместе с Info);
 
 Запрос:
@@ -197,9 +236,7 @@ Endpoint [POST] /Announcement/{realityType}/{dealType} (Типы перечис�
   "realityInfo": {
     // Тело Конкретного Reality.
   },
-  "counterAgentInfo": {
-    // Тело Конкретного Counter-Agent.
-  }
+  "counterAgentId": "GUID"
 }
 ```
 

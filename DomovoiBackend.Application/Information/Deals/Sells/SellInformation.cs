@@ -11,10 +11,5 @@ public class SellInformation : DealInformation, IMapTwoSide<Sell>
     /// <summary>
     /// Условия продажи.
     /// </summary>
-    public SellConditionInformation SellConditions { get; set; }
-    
-    /// <summary>
-    /// Характеристика продажи.
-    /// </summary>
-    public SellFeaturesInformation SellFeatures { get; set; }
+    public SellConditionInformation Conditions { get; set; }
 }
