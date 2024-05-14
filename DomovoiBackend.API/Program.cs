@@ -72,28 +72,25 @@ builder.Services.AddApplicationLayer()
     .CreateDatabase();
 
 
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy(name: "cors",
-        policy  =>
-        {
-            policy.AllowAnyHeader();
-            policy.AllowAnyMethod();
-            policy.AllowAnyOrigin();
-        });
-});
+builder.Services.AddCors();
 
 
 var app = builder.Build();
 
-app.UseHttpsRedirection();
-app.UseCors("cors");
+app.UseCors(corsBuilder =>
+{
+    corsBuilder.AllowAnyOrigin();
+    corsBuilder.AllowAnyHeader();
+    corsBuilder.AllowAnyMethod();
+});
 
 // TODO: Сделать одно middleware для каждого вида запросов с подтипами.
 app.UseMiddleware<AnnouncementRouteTransformerMiddleware>();
 app.UseMiddleware<CounterAgentRouteTransformerMiddleware>();
 
 app.MapControllers();
+
+app.UseCors();
 
 if (app.Environment.IsDevelopment())
 {
@@ -102,3 +99,5 @@ if (app.Environment.IsDevelopment())
 }
 
 app.Run();
+
+public partial class Program;
