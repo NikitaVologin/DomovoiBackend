@@ -1,4 +1,10 @@
 using DomovoiBackend.Application.Persistence.Interfaces;
+using DomovoiBackend.Domain.Entities.Announcements;
+using DomovoiBackend.Domain.Entities.CounterAgents;
+using DomovoiBackend.Domain.Entities.CounterAgents.Types;
+using DomovoiBackend.Domain.Entities.Deals.Sells;
+using DomovoiBackend.Domain.Entities.Realities.CommercialBuildings;
+using DomovoiBackend.Domain.Entities.Realities.CommercialBuildings.Types;
 using DomovoiBackend.Persistence.EfSettings;
 using DomovoiBackend.Persistence.Repositories.EfRepositories;
 using Microsoft.EntityFrameworkCore;
@@ -41,6 +47,122 @@ public static class DependencyInjection
             .GetRequiredService<DomovoiContext>();
         dbContext.Database.EnsureDeleted();
         dbContext.Database.EnsureCreated();
+        return services;
+    }
+
+    public static IServiceCollection FillDatabase(this IServiceCollection services)
+    {
+        var dbContext = services.BuildServiceProvider()
+            .GetRequiredService<DomovoiContext>();
+
+        CounterAgent[] counterAgents =
+        [
+            new LegalCounterAgent
+            {
+                Id = Guid.NewGuid(),
+                Email = "123@mail.ru",
+                Password = "123456",
+                Trc = "1221",
+                Tin = "1222",
+                ContactNumber = "+7 (228) 228 22-88",
+            },
+            new PhysicalCounterAgent
+            {
+                Id = Guid.NewGuid(),
+                Email = "124@mail.ru",
+                Password = "Pudge",
+                FIO = "Ridge Gidge Alidge",
+                ContactNumber = "+ 7 (228) 229 22-30",
+                PassportData = "PPPP NNNNNN"
+            }
+        ];
+
+        Announcement[] announcements =
+        [
+            new Announcement
+            {
+                Id = Guid.NewGuid(),
+                ConnectionType = "Мысленная",
+                CounterAgent = counterAgents[0],
+                Deal = new Sell()
+                {
+                    Conditions = new SellConditions()
+                    {
+                        HaveChildPrescribers = true,
+                        HaveChildOwners = true,
+                        OwnersCount = 1000,
+                        PrescribersCount = 151151,
+                        Price = 1_000_000_000,
+                        Type = "Ыыыы",
+                        YearInOwn = 2014
+                    }
+                },
+                Reality = new Office()
+                {
+                    Access = "Свободный",
+                    Address = "г. Тюмень ул.Тюмень д.52151",
+                    Area = 1228,
+                    Building = new Building()
+                    {
+                        BuildingYear = 2021,
+                        CenterName = "ТРЦ Ыыыыы",
+                        Class = "Первый классный",
+                        HaveParking = true,
+                        IsEquipment = true
+                    },
+                    Entry = "Общий",
+                    FloorsCount = 525,
+                    IsUse = true,
+                    Name = "Фамилия",
+                    RoomsCount = 6262,
+                },
+                Description = "ПиОСАНИЕ"
+            },
+            new Announcement
+            {
+                Id = Guid.NewGuid(),
+                ConnectionType = "Словесная перепалка",
+                CounterAgent = counterAgents[1],
+                Deal = new Sell()
+                {
+                    Conditions = new SellConditions()
+                    {
+                        HaveChildPrescribers = true,
+                        HaveChildOwners = true,
+                        OwnersCount = 25,
+                        PrescribersCount = 124,
+                        Price = 4_241_241,
+                        Type = "Ыыыы",
+                        YearInOwn = 20000
+                    }
+                },
+                Reality = new Office()
+                {
+                    Access = "Свободный",
+                    Address = "г. Тюмень ул.Тюмень д.214у12",
+                    Area = 44,
+                    Building = new Building()
+                    {
+                        BuildingYear = 2021,
+                        CenterName = "ТРЦ Ааааа",
+                        Class = "Второй прекрасный",
+                        HaveParking = true,
+                        IsEquipment = false
+                    },
+                    Entry = "Общий",
+                    FloorsCount = 214,
+                    IsUse = false,
+                    Name = "Имя",
+                    RoomsCount = 421,
+                },
+                Description = "ОПиСАНИЕ"
+            }
+        ];
+        
+        dbContext.CounterAgents.AddRange(counterAgents);
+        dbContext.Announcements.AddRange(announcements);
+        dbContext.SaveChanges();
+        
         return services;
     }
 }
