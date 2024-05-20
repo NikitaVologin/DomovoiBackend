@@ -1,15 +1,7 @@
+using DomovoiBackend.API.JsonInheritance;
 using DomovoiBackend.API.Middlewares;
 using DomovoiBackend.Application;
-using DomovoiBackend.Application.Information.CounterAgents;
-using DomovoiBackend.Application.Information.Deals;
-using DomovoiBackend.Application.Information.Deals.Rents;
-using DomovoiBackend.Application.Information.Deals.Sells;
-using DomovoiBackend.Application.Information.Realities;
-using DomovoiBackend.Application.Information.Realities.Commercial;
-using DomovoiBackend.Application.Requests.CounterAgents.AddRequests;
-using DomovoiBackend.Application.Requests.CounterAgents.AddRequests.Base;
 using DomovoiBackend.Persistence;
-using JsonSubTypes;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -28,48 +20,24 @@ builder.Services.AddSwaggerGen(options =>
     options.UseOneOfForPolymorphism();
 });
 
+var inheritanceConfigurations =
+    new AssemblyInheritanceConfiguration()
+        .CreateAllConfigurations();
 
 // TODO: Сделать нормальную конфигурацию сериализации подтипов.
 builder.Services.AddControllers().AddNewtonsoftJson(
     options =>
     {
-        options.SerializerSettings.Converters.Add(
-            JsonSubtypesConverterBuilder
-                .Of(typeof(AddCounterAgentRequest), "counterAgentType")
-                .RegisterSubtype<AddPhysicalCounterAgentRequest>("Physical")
-                .RegisterSubtype<AddLegalCounterAgentRequest>("Legal")
-                .SerializeDiscriminatorProperty()
-                .Build());
-        
-        options.SerializerSettings.Converters.Add(
-            JsonSubtypesConverterBuilder
-                .Of(typeof(CounterAgentInformation), "counterAgentType")
-                .RegisterSubtype<PhysicalCounterAgentInformation>("Physical")
-                .RegisterSubtype<LegalCounterAgentInformation>("Legal")
-                .SerializeDiscriminatorProperty()
-                .Build());
-        
-        options.SerializerSettings.Converters.Add(
-            JsonSubtypesConverterBuilder
-                .Of(typeof(RealityInformation), "realityType")
-                .RegisterSubtype<OfficeInformation>("Office")
-                .SerializeDiscriminatorProperty()
-                .Build());
-        
-        options.SerializerSettings.Converters.Add(
-            JsonSubtypesConverterBuilder
-                .Of(typeof(DealInformation), "dealType")
-                .RegisterSubtype<RentInformation>("Rent")
-                .RegisterSubtype<SellInformation>("Sell")
-                .SerializeDiscriminatorProperty()
-                .Build());
+        foreach(var inheritanceConfiguration in inheritanceConfigurations)
+            options.SerializerSettings.Converters.Add(inheritanceConfiguration);
     });
 
 // TODO: Доделать ApplicationLayer и PersistenceLayer (RUD);
 builder.Services.AddApplicationLayer()
     .AddMappers()
     .AddPersistence(builder.Configuration)
-    .CreateDatabase();
+    .CreateDatabase()
+    .FillDatabase();
 
 
 builder.Services.AddCors();

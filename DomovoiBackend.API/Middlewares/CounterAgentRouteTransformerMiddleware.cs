@@ -60,7 +60,7 @@ public class CounterAgentRouteTransformerMiddleware
             using var requestReader = new StreamReader(originalBody);
             var requestBody = await requestReader.ReadToEndAsync();
 
-            var counterAgentType = routeValues["counterAgentType"]?.ToString();
+            var counterAgentType = routeValues["type"]?.ToString();
 
             var updatedRequestBody = GetJsonRequestWithTypes(requestBody, counterAgentType!);
 
@@ -83,7 +83,7 @@ public class CounterAgentRouteTransformerMiddleware
     {
         var jsonBody = JObject.Parse(requestBody);
         
-        jsonBody.Add("counterAgentType", counterAgentType);
+        jsonBody.Add("type", counterAgentType);
         
         return jsonBody.ToString();
     }   
