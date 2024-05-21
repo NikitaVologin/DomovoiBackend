@@ -27,9 +27,8 @@ public class AnnouncementController : ControllerBase
     /// <param name="request">Запрос.</param>
     /// <param name="cancellationToken">Токен отмены.</param>
     /// <returns>Ответ.</returns>
-    [HttpPost("{realityType}/{dealType}")]
-    public async Task<IActionResult> PostAnnouncement(string realityType,
-        string dealType,
+    [HttpPost]
+    public async Task<IActionResult> PostAnnouncement(
         AddAnnouncementRequest request, CancellationToken cancellationToken)
     {
         try

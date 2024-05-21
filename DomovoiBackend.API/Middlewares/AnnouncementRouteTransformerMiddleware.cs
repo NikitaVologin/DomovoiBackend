@@ -62,8 +62,8 @@ public class AnnouncementRouteTransformerMiddleware
             using var requestReader = new StreamReader(originalBody);
             var requestBody = await requestReader.ReadToEndAsync();
 
-            var realityType = routeValues["realityType"]?.ToString();
-            var dealType = routeValues["dealType"]?.ToString();
+            var realityType = routeValues["type"]?.ToString();
+            var dealType = routeValues["type"]?.ToString();
 
             var updatedRequestBody = GetJsonRequestWithTypes(requestBody, realityType!, dealType!);
 
@@ -89,10 +89,10 @@ public class AnnouncementRouteTransformerMiddleware
         if(!jsonBody.ContainsKey("realityInfo") && !jsonBody.ContainsKey("dealInfo")) return requestBody;
 
         var jsonRealityInfo = jsonBody["realityInfo"] as JObject;
-        jsonRealityInfo?.Add("realityType", realityType);
+        jsonRealityInfo?.Add("type", realityType);
 
         var jsonDealInfo = jsonBody["dealInfo"] as JObject;
-        jsonDealInfo?.Add("dealType", dealType);
+        jsonDealInfo?.Add("type", dealType);
         
         return jsonBody.ToString();
     }   
