@@ -1,3 +1,5 @@
+using System.Reflection;
+using DomovoiBackend.Application.Parameters;
 using DomovoiBackend.Application.Persistence.Exceptions;
 using DomovoiBackend.Application.Persistence.Interfaces;
 using DomovoiBackend.Domain.Entities.Announcements;
@@ -65,5 +67,20 @@ public class EfAnnouncementRepository : IAnnouncementRepository
             .Skip(fromIndex )
             .Take(toIndex - fromIndex + 1)
             .ToListAsync(cancellationToken);
+    }
+
+    public Task<IList<Announcement>> GetAnnouncementsByFilterAsync(FilterParameters parameters, CancellationToken cancellationToken)
+    {
+        // var dealType = Assembly.GetExecutingAssembly().GetType(parameters.DealType ?? string.Empty);
+        // var realityType = Assembly.GetExecutingAssembly().GetType(parameters.RealityType ?? string.Empty);
+        // var realitySubtype = Assembly.GetExecutingAssembly().GetType(parameters.RealitySubtype ?? string.Empty);
+        //
+        // IQueryable<Announcement> announcements = _context.Announcements;
+        //
+        // if (dealType is not null)
+        //     announcements = announcements.Where(a => a.Deal!.GetType() == dealType);
+        //
+        // if (realityType)
+        throw new NotImplementedException();
     }
 }

@@ -1,3 +1,4 @@
+using DomovoiBackend.Application.Parameters;
 using DomovoiBackend.Application.Persistence.Exceptions;
 using DomovoiBackend.Application.Persistence.Interfaces;
 using DomovoiBackend.Domain.Entities.Announcements;
@@ -143,5 +144,10 @@ public class AnnouncementMockRepository : IAnnouncementRepository
     {
         var announcement = _mockData.Skip(fromIndex).Take(toIndex - fromIndex + 1).ToList();
         return Task.FromResult((IList<Announcement>)announcement);
+    }
+
+    public Task<IList<Announcement>> GetAnnouncementsByFilterAsync(FilterParameters parameters, CancellationToken cancellationToken)
+    {
+        throw new NotImplementedException();
     }
 }
