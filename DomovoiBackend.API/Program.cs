@@ -53,8 +53,8 @@ app.UseCors(corsBuilder =>
 });
 
 // TODO: Сделать одно middleware для каждого вида запросов с подтипами.
-app.UseMiddleware<AnnouncementRouteTransformerMiddleware>();
-app.UseMiddleware<CounterAgentRouteTransformerMiddleware>();
+// app.UseMiddleware<AnnouncementRouteTransformerMiddleware>();
+// app.UseMiddleware<CounterAgentRouteTransformerMiddleware>();
 
 app.MapControllers();
 

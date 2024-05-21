@@ -1,5 +1,4 @@
 using DomovoiBackend.API.JsonInheritance.Abstraction;
-using DomovoiBackend.Application.Information.Announcements;
 using DomovoiBackend.Application.Information.Realities;
 using DomovoiBackend.Application.Information.Realities.Commercial;
 

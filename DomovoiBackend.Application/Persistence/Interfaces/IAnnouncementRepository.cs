@@ -1,3 +1,4 @@
+using DomovoiBackend.Application.Parameters;
 using DomovoiBackend.Domain.Entities.Announcements;
 
 namespace DomovoiBackend.Application.Persistence.Interfaces;
@@ -57,5 +58,5 @@ public interface IAnnouncementRepository
     /// <returns>Коллекция объявлений.</returns>
     Task<IList<Announcement>> GetLimitedAnnouncementsAsync(int fromIndex, int toIndex, CancellationToken cancellationToken);
 
-
+    Task<IList<Announcement>> GetAnnouncementsByFilterAsync(FilterParameters parameters, CancellationToken cancellationToken);
 }
