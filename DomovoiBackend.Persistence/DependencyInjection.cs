@@ -101,6 +101,7 @@ public static class DependencyInjection
                     Access = "Свободный",
                     Address = "г. Тюмень ул.Тюмень д.52151",
                     Area = 1228,
+                    Floor = 14,
                     Building = new Building()
                     {
                         BuildingYear = 2021,
@@ -137,6 +138,7 @@ public static class DependencyInjection
                 },
                 Reality = new Office()
                 {
+                    Floor = 14,
                     Access = "Свободный",
                     Address = "г. Тюмень ул.Тюмень д.214у12",
                     Area = 44,
