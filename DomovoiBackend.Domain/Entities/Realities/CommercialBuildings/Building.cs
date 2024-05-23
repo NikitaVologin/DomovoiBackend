@@ -1,9 +1,9 @@
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using DomovoiBackend.Domain.Abstraction;
 
 namespace DomovoiBackend.Domain.Entities.Realities.CommercialBuildings;
 
-public class Building
+public class Building : UpdatableEntity<Building>
 {
     [Key]
     public Guid Id { get; set; }
@@ -12,4 +12,12 @@ public class Building
     public string? CenterName { get; set; }
     public bool HaveParking { get; set; }
     public bool IsEquipment { get; set; }
+    public override void Update(Building entity)
+    {
+        Class = entity.Class;
+        BuildingYear = entity.BuildingYear;
+        CenterName = entity.CenterName;
+        HaveParking = entity.HaveParking;
+        IsEquipment = entity.IsEquipment;
+    }
 }

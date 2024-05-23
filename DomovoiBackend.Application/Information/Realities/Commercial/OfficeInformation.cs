@@ -17,4 +17,9 @@ public class OfficeInformation : CommercialRealityInformation, IMapTwoSide<Offic
     /// Количество комнат.
     /// </summary>
     public int RoomsCount { get; set; }
+    
+    /// <summary>
+    /// ЭТАЖ. ВРЕМЕНО!!! СНЕСЁМ ВСЕ ОФИСЫ ПОТОМ В МИРЕ!
+    /// </summary>
+    public int Floor { get; set; }
 }

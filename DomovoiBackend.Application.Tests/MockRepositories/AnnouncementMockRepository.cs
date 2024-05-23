@@ -150,4 +150,14 @@ public class AnnouncementMockRepository : IAnnouncementRepository
     {
         throw new NotImplementedException();
     }
+
+    public Task RemoveAnnouncementAsync(Guid counterAgentId, Guid announcementId, CancellationToken cancellationToken)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task UpdateAnnouncementAsync(Guid announcementId, Announcement announcement, CancellationToken cancellationToken)
+    {
+        throw new NotImplementedException();
+    }
 }

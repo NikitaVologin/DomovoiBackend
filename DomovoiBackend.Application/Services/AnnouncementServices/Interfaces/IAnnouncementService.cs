@@ -58,4 +58,21 @@ public interface IAnnouncementService
     /// <returns>Коллекция объявлений.</returns>
     Task<AnnouncementInformationCollection> GetLimitedAnnouncementsAsync(int fromIndex, int toIndex, CancellationToken cancellationToken);
 
+    /// <summary>
+    /// Обновить объявление.
+    /// </summary>
+    /// <param name="request">Информация об объявлении.</param>
+    /// <param name="cancellationToken">Токен отмены.</param>
+    /// <param name="id">Guid объявления.</param>
+    /// <returns>Таска.</returns>
+    Task UpdateAnnouncementAsync(Guid id, UpdateAnnouncementRequest request, CancellationToken cancellationToken);
+    
+    /// <summary>
+    /// Удалить объявление.
+    /// </summary>
+    /// <param name="announcementId">Guid объявления.</param>
+    /// <param name="counterAgentId">Guid контр-агента.</param>
+    /// <param name="cancellationToken">Токен отмены.</param>
+    /// <returns>ТАСКААААААААААА.</returns>
+    Task RemoveAnnouncementAsync(Guid announcementId, Guid counterAgentId, CancellationToken cancellationToken);
 }

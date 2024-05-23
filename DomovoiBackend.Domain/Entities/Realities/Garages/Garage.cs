@@ -12,4 +12,8 @@ public class Garage : Reality
     public bool Heating {get; set;}
     public bool WaterSupply {get; set;}
     public bool Infrastructure {get; set;}
+    public override void Update(Reality entity)
+    {
+        throw new NotImplementedException();
+    }
 }
