@@ -39,4 +39,20 @@ public interface ICounterAgentRepository
     /// <param name="cancellationToken">Токен отмены.</param>
     /// <returns>Истина - существует, Ложь - не существует.</returns>
     Task<bool> IsExistAsync(string email, CancellationToken cancellationToken);
+
+    /// <summary>
+    /// Обновить контр-агента.
+    /// </summary>
+    /// <param name="counterAgent">Обновлённый контр-агент.</param>
+    /// <param name="cancellationToken">Токен отмены.</param>
+    /// <returns>Пустой вызов.</returns>
+    Task UpdateCounterAgentAsync(CounterAgent counterAgent, CancellationToken cancellationToken);
+
+    /// <summary>
+    /// Удалить контр-агента по ID;
+    /// </summary>
+    /// <param name="id">Id объект.</param>
+    /// <param name="cancellationToken">Токен отмены.</param>
+    /// <returns>Пустой вызов.</returns>
+    Task RemoveCounterAgentAsync(Guid id, CancellationToken cancellationToken);
 }

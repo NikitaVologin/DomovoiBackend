@@ -59,16 +59,15 @@ public static class DependencyInjection
         [
             new LegalCounterAgent
             {
-                Id = Guid.NewGuid(),
+                Id = Guid.Parse("0715a242-e05a-4906-a508-b28cd96ac474"),
                 Email = "123@mail.ru",
                 Password = "123456",
-                Trc = "1221",
                 Tin = "1222",
                 ContactNumber = "+7 (228) 228 22-88",
             },
             new PhysicalCounterAgent
             {
-                Id = Guid.NewGuid(),
+                Id = Guid.Parse("31518932-1c49-4397-8b2d-63bab308fd12"),
                 Email = "124@mail.ru",
                 Password = "Pudge",
                 FIO = "Ridge Gidge Alidge",

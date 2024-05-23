@@ -3,6 +3,7 @@ using DomovoiBackend.Application.Information.CounterAgents;
 using DomovoiBackend.Application.Persistence.Interfaces;
 using DomovoiBackend.Application.Requests.CounterAgents.AddRequests.Base;
 using DomovoiBackend.Application.Requests.CounterAgents.AuthorizeRequest;
+using DomovoiBackend.Application.Requests.CounterAgents.UpdateRequests;
 using DomovoiBackend.Application.Services.CounterAgentServices.Interfaces;
 using DomovoiBackend.Application.Services.MappingServices.Interfaces;
 
@@ -46,4 +47,14 @@ public class CounterAgentService : ICounterAgentService
             await _repository.GetCounterAgentByAuthDataAsync(request.Email, request.Password, cancellationToken);
         return _mappingService.MapInformationFromEntity(counterAgent);
     }
+
+    public async Task UpdateAsync(Guid id, CounterAgentUpdateRequest information, CancellationToken cancellationToken)
+    {
+        var counterAgent = _mappingService.MapEntityFromRequest(information);
+        counterAgent.Id = id;
+        await _repository.UpdateCounterAgentAsync(counterAgent, cancellationToken);
+    }
+
+    public async Task RemoveAsync(Guid id, CancellationToken cancellationToken) =>
+        await _repository.RemoveCounterAgentAsync(id, cancellationToken);
 }

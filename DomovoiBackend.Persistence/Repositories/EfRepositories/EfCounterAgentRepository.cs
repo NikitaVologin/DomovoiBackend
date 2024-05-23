@@ -41,6 +41,20 @@ public class EfCounterAgentRepository : ICounterAgentRepository
             cancellationToken);
     }
 
+    public async Task UpdateCounterAgentAsync(CounterAgent counterAgent, CancellationToken cancellationToken)
+    {
+        var counterAgentOld = await GetAsync(counterAgent.Id, cancellationToken);
+        counterAgentOld.Update(counterAgent); 
+        await _context.SaveChangesAsync(cancellationToken);
+    }
+
+    public async Task RemoveCounterAgentAsync(Guid id, CancellationToken cancellationToken)
+    {
+        var concreteCounterAgent = await GetAsync(id, cancellationToken);
+        _context.CounterAgents.Remove(concreteCounterAgent);
+        await _context.SaveChangesAsync(cancellationToken);
+    }
+
     public async Task<CounterAgent> GetCounterAgentByAuthDataAsync(string email, string password, CancellationToken cancellationToken)
     {
         var counterAgent = await _context.CounterAgents.FirstOrDefaultAsync(

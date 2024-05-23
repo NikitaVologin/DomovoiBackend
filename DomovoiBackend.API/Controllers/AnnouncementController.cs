@@ -70,7 +70,7 @@ public class AnnouncementController : ControllerBase
     /// <param name="count">N.</param>
     /// <param name="cancellationToken">Токен отмены.</param>
     /// <returns>Ответ.</returns>
-    [HttpGet("take/{count:int}")]
+    [HttpGet("Take/{count:int}")]
     public async Task<IActionResult> GetAnnouncements(int count, CancellationToken cancellationToken)
     {
         try
@@ -91,7 +91,7 @@ public class AnnouncementController : ControllerBase
     /// <param name="toIndex">Индекс до.</param>
     /// <param name="cancellationToken">Токен отмены.</param>
     /// <returns>Ответ.</returns>
-    [HttpGet("take")]
+    [HttpGet("Take")]
     public async Task<IActionResult> GetAnnouncements([FromQuery] int? fromIndex, [FromQuery] int? toIndex, CancellationToken cancellationToken)
     {
         try

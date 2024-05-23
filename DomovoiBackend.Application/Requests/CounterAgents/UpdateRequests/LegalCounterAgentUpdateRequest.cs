@@ -1,12 +1,9 @@
 using DomovoiBackend.Application.Mapping.Interfaces;
 using DomovoiBackend.Domain.Entities.CounterAgents.Types;
 
-namespace DomovoiBackend.Application.Information.CounterAgents;
+namespace DomovoiBackend.Application.Requests.CounterAgents.UpdateRequests;
 
-/// <summary>
-/// Информация о юридическом контр-агенте для запроса/ответа.
-/// </summary>
-public class LegalCounterAgentInformation : CounterAgentInformation, IMapTwoSide<LegalCounterAgent>
+public class LegalCounterAgentUpdateRequest : CounterAgentUpdateRequest, IMapTwoSide<LegalCounterAgent>
 {
     /// <summary>
     /// Название.
