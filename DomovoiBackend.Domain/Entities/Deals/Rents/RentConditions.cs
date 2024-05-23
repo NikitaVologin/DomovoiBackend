@@ -13,11 +13,6 @@ public class RentConditions : UpdatableEntity<RentConditions>
     public Guid Id { get; set; }
     
     /// <summary>
-    /// Сумма.
-    /// </summary>
-    public double Price { get; set; }
-    
-    /// <summary>
     /// Период оплаты.
     /// </summary>
     public string? Period { get; set; }
@@ -59,7 +54,6 @@ public class RentConditions : UpdatableEntity<RentConditions>
 
     public override void Update(RentConditions entity)
     {
-        Price = entity.Price;
         Period = entity.Period;
         Deposit = entity.Deposit;
         CommunalPays = entity.CommunalPays;

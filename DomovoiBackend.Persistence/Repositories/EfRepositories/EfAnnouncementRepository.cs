@@ -3,6 +3,9 @@ using DomovoiBackend.Application.Parameters;
 using DomovoiBackend.Application.Persistence.Exceptions;
 using DomovoiBackend.Application.Persistence.Interfaces;
 using DomovoiBackend.Domain.Entities.Announcements;
+using DomovoiBackend.Domain.Entities.Deals;
+using DomovoiBackend.Domain.Entities.Realities;
+using DomovoiBackend.Domain.Entities.Realities.CommercialBuildings.Types;
 using DomovoiBackend.Persistence.EfSettings;
 using DomovoiBackend.Persistence.Extensions;
 using Microsoft.EntityFrameworkCore;
@@ -69,19 +72,40 @@ public class EfAnnouncementRepository : IAnnouncementRepository
             .ToListAsync(cancellationToken);
     }
 
-    public Task<IList<Announcement>> GetAnnouncementsByFilterAsync(FilterParameters parameters, CancellationToken cancellationToken)
+    public async Task<IList<Announcement>> GetAnnouncementsByFilterAsync(FilterParameters parameters, CancellationToken cancellationToken)
     {
-        // var dealType = Assembly.GetExecutingAssembly().GetType(parameters.DealType ?? string.Empty);
-        // var realityType = Assembly.GetExecutingAssembly().GetType(parameters.RealityType ?? string.Empty);
-        // var realitySubtype = Assembly.GetExecutingAssembly().GetType(parameters.RealitySubtype ?? string.Empty);
-        //
-        // IQueryable<Announcement> announcements = _context.Announcements;
-        //
-        // if (dealType is not null)
-        //     announcements = announcements.Where(a => a.Deal!.GetType() == dealType);
-        //
-        // if (realityType)
-        throw new NotImplementedException();
+        IQueryable<Announcement> announcements = _context.Announcements.IncludeAll(_context);
+
+        if (parameters.PriceStart is not null)
+            announcements = announcements.Where(a => a.Deal!.Price >= parameters.PriceStart);
+        
+        if (parameters.PriceEnd is not null)
+            announcements = announcements.Where(a => a.Deal!.Price <= parameters.PriceEnd);
+
+        announcements = parameters.FloorFilter switch
+        {
+            FloorSelectMode.NotLast => announcements.Where(a =>
+                ((Office)a.Reality).Floor != ((Office)a.Reality).FloorsCount),
+            FloorSelectMode.NotFirst => announcements.Where(a => ((Office)a.Reality).Floor != 1),
+            FloorSelectMode.Both => announcements.Where(a =>
+                ((Office)a.Reality).Floor != ((Office)a.Reality).FloorsCount && ((Office)a.Reality).Floor != 1),
+            _ => announcements
+        };
+
+        IEnumerable<Announcement> listOfAnnouncements = await announcements.ToListAsync(cancellationToken);
+
+
+        if (parameters.DealType != null)
+        {
+            var dealType = typeof(Deal).Assembly.GetTypes().First(t => t.Name == parameters.DealType);
+            listOfAnnouncements = listOfAnnouncements.Where(a => a.Deal!.GetType() == dealType);
+        }
+
+        if (parameters.RealityType == null) return listOfAnnouncements.ToList();
+        var realityType = typeof(Reality).Assembly.GetTypes().First(t => t.Name == parameters.RealityType);
+        if (realityType != null) listOfAnnouncements = listOfAnnouncements.Where(a => a.Deal!.GetType().IsSubclassOf(realityType));
+
+        return listOfAnnouncements.ToList();
     }
 
     public async Task RemoveAnnouncementAsync(Guid counterAgentId, Guid announcementId, CancellationToken cancellationToken)

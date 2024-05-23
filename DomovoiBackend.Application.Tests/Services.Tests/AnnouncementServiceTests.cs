@@ -79,13 +79,13 @@ public class AnnouncementServiceTests
             Description = "Обстаятельства",
             DealInfo = new RentInformation()
             {
+                Price = 124321,
                 Conditions = new RentConditionInformation()
                 {
                     CommunalPays = 2525,
                     Deposit = 124214,
                     Period = "Ежесекундно",
                     Prepay = 1234124,
-                    Price = 124321,
                     CanSmoke = true,
                     Facilities = "Aaaa",
                     WithKids = true,

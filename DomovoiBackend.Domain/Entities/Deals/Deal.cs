@@ -13,4 +13,10 @@ public abstract class Deal : UpdatableEntity<Deal>
     /// </summary>
     [Key]
     public Guid Id { get; set; }
+    
+        
+    /// <summary>
+    /// Цена.
+    /// </summary>
+    public double Price { get; set; }
 }

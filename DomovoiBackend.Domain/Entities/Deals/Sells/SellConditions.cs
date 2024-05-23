@@ -13,11 +13,6 @@ public class SellConditions : UpdatableEntity<SellConditions>
     public Guid Id { get; set; }
     
     /// <summary>
-    /// Цена.
-    /// </summary>
-    public double Price { get; set; }
-    
-    /// <summary>
     /// Тип.
     /// </summary>
     public string? Type { get; set; }
@@ -49,7 +44,6 @@ public class SellConditions : UpdatableEntity<SellConditions>
 
     public override void Update(SellConditions entity)
     {
-        Price = entity.Price;
         Type = entity.Type;
         YearInOwn = entity.YearInOwn;
         OwnersCount = entity.OwnersCount;

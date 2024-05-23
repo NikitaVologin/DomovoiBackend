@@ -143,8 +143,8 @@ public class AnnouncementController : ControllerBase
     {
         try
         {
-            Console.WriteLine("ФИЛЬТРАЦИЯ!!!!!!!");
-            return Ok();
+            var announcements = await _service.GetFilteredAnnouncements(filter, cancellationToken);
+            return Ok(announcements);
         }
         catch(Exception exception)
         {

@@ -9,11 +9,6 @@ namespace DomovoiBackend.Application.Information.Deals.Sells;
 public class SellConditionInformation : IMapTwoSide<SellConditions>
 {
     /// <summary>
-    /// Цена.
-    /// </summary>
-    public double Price { get; set; }
-    
-    /// <summary>
     /// Тип сделки.
     /// </summary>
     public string Type { get; set; } = null!;

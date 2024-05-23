@@ -1,4 +1,5 @@
 using DomovoiBackend.Application.Information.Announcements;
+using DomovoiBackend.Application.Parameters;
 using DomovoiBackend.Application.Persistence.Interfaces;
 using DomovoiBackend.Application.Requests.Announcements;
 using DomovoiBackend.Application.Services.AnnouncementServices.Interfaces;
@@ -148,6 +149,16 @@ public class AnnouncementService : IAnnouncementService
 
     public async Task RemoveAnnouncementAsync(Guid announcementId, Guid counterAgentId, CancellationToken cancellationToken) =>
         await _announcementRepository.RemoveAnnouncementAsync(counterAgentId, announcementId, cancellationToken);
+
+    public async Task<AnnouncementInformationCollection> GetFilteredAnnouncements(FilterParameters parameters, CancellationToken cancellationToken)
+    {
+        var announcements = await 
+            _announcementRepository.GetAnnouncementsByFilterAsync(parameters, cancellationToken);
+
+        var announcementInfos = announcements.Select(TransformToInformation).ToList();
+
+        return new AnnouncementInformationCollection { AnnouncementInformation = announcementInfos };
+    }
 
     private AnnouncementInformation TransformToInformation(Announcement announcement) => new()
     {

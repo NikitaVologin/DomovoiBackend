@@ -9,11 +9,6 @@ namespace DomovoiBackend.Application.Information.Deals.Rents;
 public class RentConditionInformation : IMapTwoSide<RentConditions>
 {
     /// <summary>
-    /// Величина платежа.
-    /// </summary>
-    public double Price { get; set; }
-    
-    /// <summary>
     /// Период платежа.
     /// </summary>
     public string? Period { get; set; }
