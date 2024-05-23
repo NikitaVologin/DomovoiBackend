@@ -1,6 +1,8 @@
+using DomovoiBackend.Application.Information.CounterAgents;
 using DomovoiBackend.Application.Requests.CounterAgents;
 using DomovoiBackend.Application.Requests.CounterAgents.AddRequests.Base;
 using DomovoiBackend.Application.Requests.CounterAgents.AuthorizeRequest;
+using DomovoiBackend.Application.Requests.CounterAgents.UpdateRequests;
 using DomovoiBackend.Application.Services.CounterAgentServices.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -60,6 +62,35 @@ public class  CounterAgentController : ControllerBase
             return Ok(counterAgent);
         }
         catch(Exception exception)
+        {
+            return BadRequest(exception);
+        }
+    }
+    
+    
+    [HttpDelete("{id:guid}")]
+    public async Task<IActionResult> RemoveCounterAgentAsync(Guid id, CancellationToken cancellationToken)
+    {
+        try
+        {
+            await _service.RemoveAsync(id, cancellationToken);
+            return Ok();
+        }
+        catch (Exception exception)
+        {
+            return BadRequest(exception);
+        }
+    }
+
+    [HttpPut("{id:guid}")]
+    public async Task<IActionResult> PutCounterAgentAsync(Guid id, CounterAgentUpdateRequest information, CancellationToken cancellationToken)
+    {
+        try
+        {
+            await _service.UpdateAsync(id, information, cancellationToken);
+            return Ok();
+        }
+        catch (Exception exception)
         {
             return BadRequest(exception);
         }

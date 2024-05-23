@@ -1,11 +1,12 @@
 using System.ComponentModel.DataAnnotations;
+using DomovoiBackend.Domain.Abstraction;
 
 namespace DomovoiBackend.Domain.Entities.CounterAgents;
 
 /// <summary>
 /// Контр-агент (базовая сущность).
 /// </summary>
-public class CounterAgent
+public abstract class CounterAgent : UpdatableEntity<CounterAgent>
 {
     /// <summary>
     /// Id.

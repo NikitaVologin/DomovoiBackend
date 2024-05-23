@@ -3,6 +3,7 @@ using AutoMapper;
 using DomovoiBackend.Application.Information.CounterAgents;
 using DomovoiBackend.Application.Mapping.Tools;
 using DomovoiBackend.Application.Requests.CounterAgents.AddRequests.Base;
+using DomovoiBackend.Application.Requests.CounterAgents.UpdateRequests;
 using DomovoiBackend.Application.Services.MappingServices.Interfaces;
 using DomovoiBackend.Domain.Entities.CounterAgents;
 
@@ -47,6 +48,13 @@ public class CounterAgentMappingService : ICounterAgentMappingService
     }
 
     public CounterAgent MapEntityFromRequest(AddCounterAgentRequest request)
+    {
+        var requestType = request.GetType();
+        var counterAgent = ToCounterAgentMapDictionary[requestType](_mapper, request);
+        return counterAgent;
+    }
+
+    public CounterAgent MapEntityFromRequest(CounterAgentUpdateRequest request)
     {
         var requestType = request.GetType();
         var counterAgent = ToCounterAgentMapDictionary[requestType](_mapper, request);

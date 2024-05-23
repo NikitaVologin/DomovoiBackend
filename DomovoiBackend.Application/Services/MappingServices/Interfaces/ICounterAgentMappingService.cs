@@ -1,5 +1,6 @@
 using DomovoiBackend.Application.Information.CounterAgents;
 using DomovoiBackend.Application.Requests.CounterAgents.AddRequests.Base;
+using DomovoiBackend.Application.Requests.CounterAgents.UpdateRequests;
 using DomovoiBackend.Domain.Entities.CounterAgents;
 
 namespace DomovoiBackend.Application.Services.MappingServices.Interfaces;
@@ -29,4 +30,11 @@ public interface ICounterAgentMappingService
     /// <param name="request">Контр-агент.</param>
     /// <returns>Информация о контр-агенте.</returns>
     CounterAgent MapEntityFromRequest(AddCounterAgentRequest request);
+    
+    /// <summary>
+    /// Создать контр-агента из запроса.
+    /// </summary>
+    /// <param name="request">Контр-агент.</param>
+    /// <returns>Информация о контр-агенте.</returns>
+    CounterAgent MapEntityFromRequest(CounterAgentUpdateRequest request);
 }

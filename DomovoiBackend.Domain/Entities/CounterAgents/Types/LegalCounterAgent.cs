@@ -14,9 +14,14 @@ public class LegalCounterAgent : CounterAgent
     /// ИНН.
     /// </summary>
     public string? Tin { get; set; }
-    
-    /// <summary>
-    /// КПП.
-    /// </summary>
-    public string? Trc { get; set; }
+
+    public override void Update(CounterAgent entity)
+    {
+        if (entity is not LegalCounterAgent legalEntity) return;
+        Email = entity.Email;
+        Password = entity.Password;
+        ContactNumber = entity.ContactNumber;
+        Tin = legalEntity.Tin;
+        Name = legalEntity.Name;
+    }
 }
