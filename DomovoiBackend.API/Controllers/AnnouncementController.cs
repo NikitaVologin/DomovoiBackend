@@ -108,4 +108,32 @@ public class AnnouncementController : ControllerBase
             return BadRequest(exception);
         }
     }
+    
+    [HttpDelete("{counterAgentId:guid}/{id:guid}")]
+    public async Task<IActionResult> RemoveCounterAgentAsync(Guid id, Guid counterAgentId, CancellationToken cancellationToken)
+    {
+        try
+        {
+            await _service.RemoveAnnouncementAsync(id, counterAgentId, cancellationToken);
+            return Ok();
+        }
+        catch (Exception exception)
+        {
+            return BadRequest(exception);
+        }
+    }
+
+    [HttpPut("{id:guid}")]
+    public async Task<IActionResult> PutCounterAgentAsync(Guid id, UpdateAnnouncementRequest information, CancellationToken cancellationToken)
+    {
+        try
+        {
+            await _service.UpdateAnnouncementAsync(id, information, cancellationToken);
+            return Ok();
+        }
+        catch (Exception exception)
+        {
+            return BadRequest(exception);
+        }
+    }
 }

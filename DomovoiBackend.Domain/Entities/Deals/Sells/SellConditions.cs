@@ -1,9 +1,11 @@
+using DomovoiBackend.Domain.Abstraction;
+
 namespace DomovoiBackend.Domain.Entities.Deals.Sells;
 
 /// <summary>
 /// Условия продажи.
 /// </summary>
-public class SellConditions
+public class SellConditions : UpdatableEntity<SellConditions>
 {
     /// <summary>
     /// Id.
@@ -44,4 +46,15 @@ public class SellConditions
     /// Есть дети подписаны.
     /// </summary>
     public bool HaveChildPrescribers { get; set; }
+
+    public override void Update(SellConditions entity)
+    {
+        Price = entity.Price;
+        Type = entity.Type;
+        YearInOwn = entity.YearInOwn;
+        OwnersCount = entity.OwnersCount;
+        PrescribersCount = entity.PrescribersCount;
+        HaveChildOwners = entity.HaveChildOwners;
+        HaveChildPrescribers = entity.HaveChildPrescribers;
+    }
 }

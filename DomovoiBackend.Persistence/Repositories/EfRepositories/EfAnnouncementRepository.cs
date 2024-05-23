@@ -83,4 +83,22 @@ public class EfAnnouncementRepository : IAnnouncementRepository
         // if (realityType)
         throw new NotImplementedException();
     }
+
+    public async Task RemoveAnnouncementAsync(Guid counterAgentId, Guid announcementId, CancellationToken cancellationToken)
+    {
+        var announcement = await _context.Announcements.FirstOrDefaultAsync(a => a.Id == announcementId &&
+            a.CounterAgent!.Id == counterAgentId, cancellationToken);
+        if (announcement == null) throw new DbNotFoundException(typeof(Announcement), new {Id = announcementId, CounterAgentId = counterAgentId});
+        _context.Announcements.Remove(announcement);
+        await _context.SaveChangesAsync(cancellationToken);
+    }
+
+    public async Task UpdateAnnouncementAsync(Guid announcementId, Announcement announcement, CancellationToken cancellationToken)
+    {
+        var oldAnnouncement = await _context.Announcements.IncludeAll(_context)
+            .FirstOrDefaultAsync(a => a.Id == announcementId, cancellationToken);
+        if (oldAnnouncement == null) throw new DbNotFoundException(typeof(Announcement), new {Id = announcementId });
+        oldAnnouncement.Update(announcement);
+        await _context.SaveChangesAsync(cancellationToken);
+    }
 }
