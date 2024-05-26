@@ -29,9 +29,8 @@ public class  CounterAgentController : ControllerBase
     /// <param name="request">Запрос.</param>
     /// <param name="cancellationToken">Токен отмены.</param>
     /// <returns>Ответ.</returns>
-    [HttpPost("{type}")]
+    [HttpPost]
     public async Task<IActionResult> Post(
-        [FromRoute] string type,
         [FromBody] AddCounterAgentRequest request,
         CancellationToken cancellationToken)
     {
