@@ -145,7 +145,24 @@ public class AnnouncementMockRepository : IAnnouncementRepository
         return Task.FromResult((IList<Announcement>)announcement);
     }
 
+    public Task<IList<Announcement>> GetAnnouncementsByParametersAsync(FilterParameters filterParameters, OrderParameters orderParameters,
+        CancellationToken cancellationToken)
+    {
+        throw new NotImplementedException();
+    }
+
     public Task<IList<Announcement>> GetAnnouncementsByFilterAsync(FilterParameters parameters, CancellationToken cancellationToken)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<IList<Announcement>> GetAnnouncementsByOrderAsync(OrderParameters parameters, CancellationToken cancellationToken)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<IList<Announcement>> GetAnnouncementsByFilterAndOrderAsync(FilterParameters filterParameters, OrderParameters orderParameters,
+        CancellationToken cancellationToken)
     {
         throw new NotImplementedException();
     }

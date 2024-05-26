@@ -1,4 +1,3 @@
-using System.Reflection;
 using DomovoiBackend.Application.Parameters;
 using DomovoiBackend.Application.Persistence.Exceptions;
 using DomovoiBackend.Application.Persistence.Interfaces;
@@ -72,17 +71,18 @@ public class EfAnnouncementRepository : IAnnouncementRepository
             .ToListAsync(cancellationToken);
     }
 
-    public async Task<IList<Announcement>> GetAnnouncementsByFilterAsync(FilterParameters parameters, CancellationToken cancellationToken)
+    public async Task<IList<Announcement>> GetAnnouncementsByParametersAsync(FilterParameters filterParameters, OrderParameters orderParameters,
+        CancellationToken cancellationToken)
     {
-        IQueryable<Announcement> announcements = _context.Announcements.IncludeAll(_context);
+        var announcements = _context.Announcements.IncludeAll(_context);
 
-        if (parameters.PriceStart is not null)
-            announcements = announcements.Where(a => a.Deal!.Price >= parameters.PriceStart);
+        if (filterParameters.PriceStart is not null)
+            announcements = announcements.Where(a => a.Deal!.Price >= filterParameters.PriceStart);
         
-        if (parameters.PriceEnd is not null)
-            announcements = announcements.Where(a => a.Deal!.Price <= parameters.PriceEnd);
+        if (filterParameters.PriceEnd is not null)
+            announcements = announcements.Where(a => a.Deal!.Price <= filterParameters.PriceEnd);
 
-        announcements = parameters.FloorFilter switch
+        announcements = filterParameters.FloorFilter switch
         {
             FloorSelectMode.NotLast => announcements.Where(a =>
                 ((Office)a.Reality).Floor != ((Office)a.Reality).FloorsCount),
@@ -92,17 +92,30 @@ public class EfAnnouncementRepository : IAnnouncementRepository
             _ => announcements
         };
 
-        IEnumerable<Announcement> listOfAnnouncements = await announcements.ToListAsync(cancellationToken);
-
-
-        if (parameters.DealType != null)
+        if (orderParameters.AreaOrder != null)
         {
-            var dealType = typeof(Deal).Assembly.GetTypes().First(t => t.Name == parameters.DealType);
+            announcements = orderParameters.AreaOrder == OrderValue.Ascending ?
+                announcements.OrderBy(a => a.Reality.Area) :
+                announcements.OrderByDescending(a => a.Reality.Area);
+        }
+
+        if (orderParameters.PriceOrder != null)
+        {
+            announcements = orderParameters.PriceOrder == OrderValue.Ascending ?
+                announcements.OrderBy(a => a.Deal.Price) :
+                announcements.OrderByDescending(a => a.Deal.Price);
+        }
+
+        IEnumerable<Announcement> listOfAnnouncements = await announcements.ToListAsync(cancellationToken);
+        
+        if (filterParameters.DealType != null)
+        {
+            var dealType = typeof(Deal).Assembly.GetTypes().FirstOrDefault(t => t.Name == filterParameters.DealType);
             listOfAnnouncements = listOfAnnouncements.Where(a => a.Deal!.GetType() == dealType);
         }
 
-        if (parameters.RealityType == null) return listOfAnnouncements.ToList();
-        var realityType = typeof(Reality).Assembly.GetTypes().First(t => t.Name == parameters.RealityType);
+        if (filterParameters.RealityType == null) return listOfAnnouncements.ToList();
+        var realityType = typeof(Reality).Assembly.GetTypes().FirstOrDefault(t => t.Name == filterParameters.RealityType);
         if (realityType != null) listOfAnnouncements = listOfAnnouncements.Where(a => a.Deal!.GetType().IsSubclassOf(realityType));
 
         return listOfAnnouncements.ToList();

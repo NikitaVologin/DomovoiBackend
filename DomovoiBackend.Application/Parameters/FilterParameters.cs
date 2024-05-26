@@ -11,7 +11,7 @@ public class FilterParameters
 
 public enum FloorSelectMode
 {
-    Pohuy = 0,
+    Default = 0,
     NotFirst = 1,
     NotLast = 2,
     Both = 3,

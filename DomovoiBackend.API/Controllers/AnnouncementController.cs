@@ -139,11 +139,11 @@ public class AnnouncementController : ControllerBase
     }
     
     [HttpGet("Filtered")]
-    public async Task<IActionResult> GetAnnouncement([FromQuery] FilterParameters filter, CancellationToken cancellationToken)
+    public async Task<IActionResult> GetFilteredAndOrderedAnnouncement([FromQuery] FilterParameters filter, [FromQuery] OrderParameters order, CancellationToken cancellationToken)
     {
         try
         {
-            var announcements = await _service.GetFilteredAnnouncements(filter, cancellationToken);
+            var announcements = await _service.GetFilteredAndOrderedAnnouncementsAsync(filter, order, cancellationToken);
             return Ok(announcements);
         }
         catch(Exception exception)

@@ -150,10 +150,10 @@ public class AnnouncementService : IAnnouncementService
     public async Task RemoveAnnouncementAsync(Guid announcementId, Guid counterAgentId, CancellationToken cancellationToken) =>
         await _announcementRepository.RemoveAnnouncementAsync(counterAgentId, announcementId, cancellationToken);
 
-    public async Task<AnnouncementInformationCollection> GetFilteredAnnouncements(FilterParameters parameters, CancellationToken cancellationToken)
+    public async Task<AnnouncementInformationCollection> GetFilteredAndOrderedAnnouncementsAsync(FilterParameters filterParameters, OrderParameters orderParameters, CancellationToken cancellationToken)
     {
         var announcements = await 
-            _announcementRepository.GetAnnouncementsByFilterAsync(parameters, cancellationToken);
+            _announcementRepository.GetAnnouncementsByParametersAsync(filterParameters, orderParameters, cancellationToken);
 
         var announcementInfos = announcements.Select(TransformToInformation).ToList();
 
