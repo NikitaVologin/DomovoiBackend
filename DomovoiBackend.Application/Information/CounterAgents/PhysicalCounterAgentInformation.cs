@@ -12,9 +12,4 @@ public class PhysicalCounterAgentInformation : CounterAgentInformation, IMapTwoS
     /// ФИО.
     /// </summary>
     public string? FIO { get; set; }
-    
-    /// <summary>
-    /// Пасспортные данные.
-    /// </summary>
-    public string? PassportData { get; set; }
 }
