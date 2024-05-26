@@ -1,8 +1,10 @@
-using System.Reflection;
 using DomovoiBackend.Application.Parameters;
 using DomovoiBackend.Application.Persistence.Exceptions;
 using DomovoiBackend.Application.Persistence.Interfaces;
 using DomovoiBackend.Domain.Entities.Announcements;
+using DomovoiBackend.Domain.Entities.Deals;
+using DomovoiBackend.Domain.Entities.Realities;
+using DomovoiBackend.Domain.Entities.Realities.CommercialBuildings.Types;
 using DomovoiBackend.Persistence.EfSettings;
 using DomovoiBackend.Persistence.Extensions;
 using Microsoft.EntityFrameworkCore;
@@ -69,19 +71,54 @@ public class EfAnnouncementRepository : IAnnouncementRepository
             .ToListAsync(cancellationToken);
     }
 
-    public Task<IList<Announcement>> GetAnnouncementsByFilterAsync(FilterParameters parameters, CancellationToken cancellationToken)
+    public async Task<IList<Announcement>> GetAnnouncementsByParametersAsync(FilterParameters filterParameters, OrderParameters orderParameters,
+        CancellationToken cancellationToken)
     {
-        // var dealType = Assembly.GetExecutingAssembly().GetType(parameters.DealType ?? string.Empty);
-        // var realityType = Assembly.GetExecutingAssembly().GetType(parameters.RealityType ?? string.Empty);
-        // var realitySubtype = Assembly.GetExecutingAssembly().GetType(parameters.RealitySubtype ?? string.Empty);
-        //
-        // IQueryable<Announcement> announcements = _context.Announcements;
-        //
-        // if (dealType is not null)
-        //     announcements = announcements.Where(a => a.Deal!.GetType() == dealType);
-        //
-        // if (realityType)
-        throw new NotImplementedException();
+        var announcements = _context.Announcements.IncludeAll(_context);
+
+        if (filterParameters.PriceStart is not null)
+            announcements = announcements.Where(a => a.Deal!.Price >= filterParameters.PriceStart);
+        
+        if (filterParameters.PriceEnd is not null)
+            announcements = announcements.Where(a => a.Deal!.Price <= filterParameters.PriceEnd);
+
+        announcements = filterParameters.FloorFilter switch
+        {
+            FloorSelectMode.NotLast => announcements.Where(a =>
+                ((Office)a.Reality).Floor != ((Office)a.Reality).FloorsCount),
+            FloorSelectMode.NotFirst => announcements.Where(a => ((Office)a.Reality).Floor != 1),
+            FloorSelectMode.Both => announcements.Where(a =>
+                ((Office)a.Reality).Floor != ((Office)a.Reality).FloorsCount && ((Office)a.Reality).Floor != 1),
+            _ => announcements
+        };
+
+        if (orderParameters.AreaOrder != null)
+        {
+            announcements = orderParameters.AreaOrder == OrderValue.Ascending ?
+                announcements.OrderBy(a => a.Reality.Area) :
+                announcements.OrderByDescending(a => a.Reality.Area);
+        }
+
+        if (orderParameters.PriceOrder != null)
+        {
+            announcements = orderParameters.PriceOrder == OrderValue.Ascending ?
+                announcements.OrderBy(a => a.Deal.Price) :
+                announcements.OrderByDescending(a => a.Deal.Price);
+        }
+
+        IEnumerable<Announcement> listOfAnnouncements = await announcements.ToListAsync(cancellationToken);
+        
+        if (filterParameters.DealType != null)
+        {
+            var dealType = typeof(Deal).Assembly.GetTypes().FirstOrDefault(t => t.Name == filterParameters.DealType);
+            listOfAnnouncements = listOfAnnouncements.Where(a => a.Deal!.GetType() == dealType);
+        }
+
+        if (filterParameters.RealityType == null) return listOfAnnouncements.ToList();
+        var realityType = typeof(Reality).Assembly.GetTypes().FirstOrDefault(t => t.Name == filterParameters.RealityType);
+        if (realityType != null) listOfAnnouncements = listOfAnnouncements.Where(a => a.Deal!.GetType().IsSubclassOf(realityType));
+
+        return listOfAnnouncements.ToList();
     }
 
     public async Task RemoveAnnouncementAsync(Guid counterAgentId, Guid announcementId, CancellationToken cancellationToken)

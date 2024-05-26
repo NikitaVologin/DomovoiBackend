@@ -1,3 +1,4 @@
+using DomovoiBackend.Application.Parameters;
 using DomovoiBackend.Application.Requests.Announcements;
 using DomovoiBackend.Application.Services.AnnouncementServices.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -132,6 +133,20 @@ public class AnnouncementController : ControllerBase
             return Ok();
         }
         catch (Exception exception)
+        {
+            return BadRequest(exception);
+        }
+    }
+    
+    [HttpGet("Filtered")]
+    public async Task<IActionResult> GetFilteredAndOrderedAnnouncement([FromQuery] FilterParameters filter, [FromQuery] OrderParameters order, CancellationToken cancellationToken)
+    {
+        try
+        {
+            var announcements = await _service.GetFilteredAndOrderedAnnouncementsAsync(filter, order, cancellationToken);
+            return Ok(announcements);
+        }
+        catch(Exception exception)
         {
             return BadRequest(exception);
         }

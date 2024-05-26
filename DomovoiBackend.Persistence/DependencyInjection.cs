@@ -85,13 +85,13 @@ public static class DependencyInjection
                 CounterAgent = counterAgents[0],
                 Deal = new Sell()
                 {
+                    Price = 4_241_241,
                     Conditions = new SellConditions()
                     {
                         HaveChildPrescribers = true,
                         HaveChildOwners = true,
                         OwnersCount = 1000,
                         PrescribersCount = 151151,
-                        Price = 1_000_000_000,
                         Type = "Ыыыы",
                         YearInOwn = 2014
                     }
@@ -101,6 +101,7 @@ public static class DependencyInjection
                     Access = "Свободный",
                     Address = "г. Тюмень ул.Тюмень д.52151",
                     Area = 1228,
+                    Floor = 14,
                     Building = new Building()
                     {
                         BuildingYear = 2021,
@@ -124,19 +125,20 @@ public static class DependencyInjection
                 CounterAgent = counterAgents[1],
                 Deal = new Sell()
                 {
+                    Price = 4_241_241,
                     Conditions = new SellConditions()
                     {
                         HaveChildPrescribers = true,
                         HaveChildOwners = true,
                         OwnersCount = 25,
                         PrescribersCount = 124,
-                        Price = 4_241_241,
                         Type = "Ыыыы",
                         YearInOwn = 20000
                     }
                 },
                 Reality = new Office()
                 {
+                    Floor = 14,
                     Access = "Свободный",
                     Address = "г. Тюмень ул.Тюмень д.214у12",
                     Area = 44,

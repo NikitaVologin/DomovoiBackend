@@ -13,6 +13,7 @@ public class Sell : Deal
     public override void Update(Deal entity)
     {
         if (entity is not Sell sell) return;
+        Price = entity.Price;
         Conditions!.Update(sell.Conditions!);
     }
 }

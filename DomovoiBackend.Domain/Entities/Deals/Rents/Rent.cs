@@ -13,6 +13,7 @@ public class Rent : Deal
     public override void Update(Deal entity)
     {
         if (entity is not Rent rent) return;
+        Price = entity.Price;
         Conditions!.Update(rent.Conditions!);
     }
 }

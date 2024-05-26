@@ -28,7 +28,7 @@ public class AnnouncementMockRepository : IAnnouncementRepository
             Deal = new Rent()
             {
                 Id = Guid.Parse("5389cb46-e6ef-42ea-813e-a46df628d39a"),
-
+                Price = 124321,
                 Conditions = new RentConditions()
                 {
                     Id = Guid.Parse("5389cb46-e6ef-42ea-813e-a46df628d39a"),
@@ -36,7 +36,6 @@ public class AnnouncementMockRepository : IAnnouncementRepository
                     Deposit = 124214,
                     Period = "Ежесекундно",
                     Prepay = 1234124,
-                    Price = 124321,
                     CanSmoke = true,
                     Facilities = "Aaaa",
                     WithKids = true,
@@ -74,6 +73,7 @@ public class AnnouncementMockRepository : IAnnouncementRepository
             },
             Deal = new Rent()
             {
+                Price = 124321,
                 Id = Guid.Parse("5389cb46-e6ef-42ea-813e-a46df628d39a"),
                 Conditions = new RentConditions()
                 {
@@ -82,7 +82,6 @@ public class AnnouncementMockRepository : IAnnouncementRepository
                     Deposit = 124214,
                     Period = "Ежесекундно",
                     Prepay = 1234124,
-                    Price = 124321,
                     CanSmoke = true,
                     Facilities = "Aaaa",
                     WithKids = true,
@@ -146,7 +145,24 @@ public class AnnouncementMockRepository : IAnnouncementRepository
         return Task.FromResult((IList<Announcement>)announcement);
     }
 
+    public Task<IList<Announcement>> GetAnnouncementsByParametersAsync(FilterParameters filterParameters, OrderParameters orderParameters,
+        CancellationToken cancellationToken)
+    {
+        throw new NotImplementedException();
+    }
+
     public Task<IList<Announcement>> GetAnnouncementsByFilterAsync(FilterParameters parameters, CancellationToken cancellationToken)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<IList<Announcement>> GetAnnouncementsByOrderAsync(OrderParameters parameters, CancellationToken cancellationToken)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<IList<Announcement>> GetAnnouncementsByFilterAndOrderAsync(FilterParameters filterParameters, OrderParameters orderParameters,
+        CancellationToken cancellationToken)
     {
         throw new NotImplementedException();
     }

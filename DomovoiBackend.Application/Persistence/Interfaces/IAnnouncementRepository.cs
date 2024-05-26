@@ -58,7 +58,8 @@ public interface IAnnouncementRepository
     /// <returns>Коллекция объявлений.</returns>
     Task<IList<Announcement>> GetLimitedAnnouncementsAsync(int fromIndex, int toIndex, CancellationToken cancellationToken);
 
-    Task<IList<Announcement>> GetAnnouncementsByFilterAsync(FilterParameters parameters, CancellationToken cancellationToken);
+    Task<IList<Announcement>> GetAnnouncementsByParametersAsync(FilterParameters filterParameters, OrderParameters orderParameters, CancellationToken cancellationToken);
+
 
     /// <summary>
     /// Удалить объявления.
