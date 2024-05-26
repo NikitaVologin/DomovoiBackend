@@ -1,4 +1,5 @@
 using DomovoiBackend.Application.Information.Announcements;
+using DomovoiBackend.Application.Parameters;
 using DomovoiBackend.Application.Persistence.Interfaces;
 using DomovoiBackend.Application.Requests.Announcements;
 using DomovoiBackend.Application.Services.AnnouncementServices.Interfaces;
@@ -119,6 +120,40 @@ public class AnnouncementService : IAnnouncementService
     {
         var announcements = await 
             _announcementRepository.GetLimitedAnnouncementsAsync(fromIndex, toIndex, cancellationToken);
+
+        var announcementInfos = announcements.Select(TransformToInformation).ToList();
+
+        return new AnnouncementInformationCollection { AnnouncementInformation = announcementInfos };
+    }
+
+    public async Task UpdateAnnouncementAsync(Guid announcementId, UpdateAnnouncementRequest request, CancellationToken cancellationToken)
+    {
+        var realityInfo = request.RealityInfo;
+        var dealInfo = request.DealInfo;
+        var deal = _dealMappingService.MapEntityFromInformation(dealInfo);
+        var reality = _realityMappingService.MapEntityFromInformation(realityInfo);
+        var counterAgent = await _counterAgentRepository.GetAsync(request.CounterAgentId, cancellationToken);
+
+        var announcement = new Announcement
+        {
+            Id = announcementId,
+            Description = request.Description,
+            ConnectionType = request.ConnectionType,
+            Deal = deal,
+            Reality = reality,
+            CounterAgent = counterAgent
+        };
+
+        await _announcementRepository.UpdateAnnouncementAsync(announcementId, announcement, cancellationToken);
+    }
+
+    public async Task RemoveAnnouncementAsync(Guid announcementId, Guid counterAgentId, CancellationToken cancellationToken) =>
+        await _announcementRepository.RemoveAnnouncementAsync(counterAgentId, announcementId, cancellationToken);
+
+    public async Task<AnnouncementInformationCollection> GetFilteredAndOrderedAnnouncementsAsync(FilterParameters filterParameters, OrderParameters orderParameters, CancellationToken cancellationToken)
+    {
+        var announcements = await 
+            _announcementRepository.GetAnnouncementsByParametersAsync(filterParameters, orderParameters, cancellationToken);
 
         var announcementInfos = announcements.Select(TransformToInformation).ToList();
 

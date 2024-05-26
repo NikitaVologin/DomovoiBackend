@@ -1,5 +1,7 @@
 using System.ComponentModel.DataAnnotations;
+using DomovoiBackend.Domain.Abstraction;
 using DomovoiBackend.Domain.Entities.CounterAgents;
+using DomovoiBackend.Domain.Entities.CounterAgents.Types;
 using DomovoiBackend.Domain.Entities.Deals;
 using DomovoiBackend.Domain.Entities.Realities;
 
@@ -8,7 +10,7 @@ namespace DomovoiBackend.Domain.Entities.Announcements;
 /// <summary>
 /// Объявление.
 /// </summary>
-public class Announcement
+public class Announcement : UpdatableEntity<Announcement>
 {
     /// <summary>
     /// Id.
@@ -40,4 +42,12 @@ public class Announcement
     /// Контр-агент.
     /// </summary>
     public virtual CounterAgent? CounterAgent { get; set; }
+
+    public override void Update(Announcement entity)
+    {
+        Description = entity.Description;
+        ConnectionType = entity.ConnectionType;
+        Reality = entity.Reality;
+        Deal = entity.Deal;
+    }
 }

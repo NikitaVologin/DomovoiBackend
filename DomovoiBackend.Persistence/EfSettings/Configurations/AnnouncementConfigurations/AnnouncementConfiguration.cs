@@ -1,4 +1,5 @@
 using DomovoiBackend.Domain.Entities.Announcements;
+using DomovoiBackend.Domain.Entities.CounterAgents;
 using DomovoiBackend.Domain.Entities.Deals;
 using DomovoiBackend.Domain.Entities.Realities;
 using Microsoft.EntityFrameworkCore;
@@ -23,5 +24,10 @@ public class AnnouncementConfiguration : IEntityTypeConfiguration<Announcement>
         builder.HasOne(a => a.Reality)
             .WithOne()
             .HasForeignKey<Reality>(r => r.Id);
+
+        builder.HasOne(a => a.CounterAgent)
+            .WithOne()
+            .HasForeignKey<CounterAgent>(c => c.Id)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

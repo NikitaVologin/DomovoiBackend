@@ -2,7 +2,6 @@ using DomovoiBackend.Application.Persistence.Exceptions;
 using DomovoiBackend.Application.Persistence.Interfaces;
 using DomovoiBackend.Domain.Entities.CounterAgents;
 using DomovoiBackend.Domain.Entities.CounterAgents.Types;
-using Microsoft.VisualBasic;
 
 namespace DomovoiBackend.Application.Tests.MockRepositories;
 
@@ -27,7 +26,6 @@ public class CounterAgentMockRepository : ICounterAgentRepository
             Name = "Cool Company",
             Password = "123",
             Tin = "12456",
-            Trc = "1232131"
         }
     ];
     
@@ -59,5 +57,15 @@ public class CounterAgentMockRepository : ICounterAgentRepository
     public Task<bool> IsExistAsync(string email, CancellationToken cancellationToken)
     {
         return Task.FromResult(_mockData.Exists(c => c.Email == email));
+    }
+
+    public Task UpdateCounterAgentAsync(CounterAgent counterAgent, CancellationToken cancellationToken)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task RemoveCounterAgentAsync(Guid id, CancellationToken cancellationToken)
+    {
+        throw new NotImplementedException();
     }
 }

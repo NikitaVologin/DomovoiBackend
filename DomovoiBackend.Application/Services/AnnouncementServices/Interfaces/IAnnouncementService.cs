@@ -1,4 +1,5 @@
 using DomovoiBackend.Application.Information.Announcements;
+using DomovoiBackend.Application.Parameters;
 using DomovoiBackend.Application.Requests.Announcements;
 
 namespace DomovoiBackend.Application.Services.AnnouncementServices.Interfaces;
@@ -58,4 +59,25 @@ public interface IAnnouncementService
     /// <returns>Коллекция объявлений.</returns>
     Task<AnnouncementInformationCollection> GetLimitedAnnouncementsAsync(int fromIndex, int toIndex, CancellationToken cancellationToken);
 
+    /// <summary>
+    /// Обновить объявление.
+    /// </summary>
+    /// <param name="request">Информация об объявлении.</param>
+    /// <param name="cancellationToken">Токен отмены.</param>
+    /// <param name="id">Guid объявления.</param>
+    /// <returns>Таска.</returns>
+    Task UpdateAnnouncementAsync(Guid id, UpdateAnnouncementRequest request, CancellationToken cancellationToken);
+    
+    /// <summary>
+    /// Удалить объявление.
+    /// </summary>
+    /// <param name="announcementId">Guid объявления.</param>
+    /// <param name="counterAgentId">Guid контр-агента.</param>
+    /// <param name="cancellationToken">Токен отмены.</param>
+    /// <returns>ТАСКААААААААААА.</returns>
+    Task RemoveAnnouncementAsync(Guid announcementId, Guid counterAgentId, CancellationToken cancellationToken);
+
+    Task<AnnouncementInformationCollection> GetFilteredAndOrderedAnnouncementsAsync(FilterParameters filterParameters,
+        OrderParameters orderParameters,
+        CancellationToken cancellationToken);
 }

@@ -1,19 +1,16 @@
+using DomovoiBackend.Domain.Abstraction;
+
 namespace DomovoiBackend.Domain.Entities.Deals.Rents;
 
 /// <summary>
 /// Условия сдачи в аренду.
 /// </summary>
-public class RentConditions
+public class RentConditions : UpdatableEntity<RentConditions>
 {
     /// <summary>
     /// Id.
     /// </summary>
     public Guid Id { get; set; }
-    
-    /// <summary>
-    /// Сумма.
-    /// </summary>
-    public double Price { get; set; }
     
     /// <summary>
     /// Период оплаты.
@@ -54,4 +51,16 @@ public class RentConditions
     /// Можно курить.
     /// </summary>
     public bool CanSmoke { get; set; }
+
+    public override void Update(RentConditions entity)
+    {
+        Period = entity.Period;
+        Deposit = entity.Deposit;
+        CommunalPays = entity.CommunalPays;
+        Prepay = entity.Prepay;
+        Facilities = entity.Facilities;
+        WithKids = entity.WithKids;
+        WithAnimals = entity.WithAnimals;
+        CanSmoke = entity.CanSmoke;
+    }
 }

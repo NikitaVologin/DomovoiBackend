@@ -3,7 +3,7 @@ namespace DomovoiBackend.Domain.Entities.Realities.CommercialBuildings;
 /// <summary>
 /// Комерческая недвижимость.
 /// </summary>
-public class CommercialBuilding : Reality
+public abstract class CommercialBuilding : Reality
 {    
     /// <summary>
     /// Количество этажей.

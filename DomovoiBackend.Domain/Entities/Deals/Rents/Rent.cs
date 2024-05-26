@@ -9,4 +9,11 @@ public class Rent : Deal
     /// Условия аренды.
     /// </summary>
     public virtual RentConditions? Conditions { get; set; }
+
+    public override void Update(Deal entity)
+    {
+        if (entity is not Rent rent) return;
+        Price = entity.Price;
+        Conditions!.Update(rent.Conditions!);
+    }
 }

@@ -9,4 +9,11 @@ public class Sell : Deal
     /// Условия продажи.
     /// </summary>
     public virtual SellConditions? Conditions { get; set; }
+
+    public override void Update(Deal entity)
+    {
+        if (entity is not Sell sell) return;
+        Price = entity.Price;
+        Conditions!.Update(sell.Conditions!);
+    }
 }

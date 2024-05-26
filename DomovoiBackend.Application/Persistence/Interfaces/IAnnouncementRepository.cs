@@ -58,5 +58,24 @@ public interface IAnnouncementRepository
     /// <returns>Коллекция объявлений.</returns>
     Task<IList<Announcement>> GetLimitedAnnouncementsAsync(int fromIndex, int toIndex, CancellationToken cancellationToken);
 
-    Task<IList<Announcement>> GetAnnouncementsByFilterAsync(FilterParameters parameters, CancellationToken cancellationToken);
+    Task<IList<Announcement>> GetAnnouncementsByParametersAsync(FilterParameters filterParameters, OrderParameters orderParameters, CancellationToken cancellationToken);
+
+
+    /// <summary>
+    /// Удалить объявления.
+    /// </summary>
+    /// <param name="counterAgentId">Guid контр-агента.</param>
+    /// <param name="announcementId">Guid объявления.</param>
+    /// <param name="cancellationToken">Токен отмена.</param>
+    /// <returns>Таска</returns>
+    Task RemoveAnnouncementAsync(Guid counterAgentId, Guid announcementId, CancellationToken cancellationToken);
+
+    /// <summary>
+    /// Обновить объявления.
+    /// </summary>
+    /// <param name="announcementId">Guid объявления.</param>
+    /// <param name="announcement">Объвление.</param>
+    /// <param name="cancellationToken">Токен отмены.</param>
+    /// <returns>Таска.</returns>
+    Task UpdateAnnouncementAsync(Guid announcementId, Announcement announcement, CancellationToken cancellationToken);
 }

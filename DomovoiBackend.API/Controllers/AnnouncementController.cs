@@ -1,3 +1,4 @@
+using DomovoiBackend.Application.Parameters;
 using DomovoiBackend.Application.Requests.Announcements;
 using DomovoiBackend.Application.Services.AnnouncementServices.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -70,7 +71,7 @@ public class AnnouncementController : ControllerBase
     /// <param name="count">N.</param>
     /// <param name="cancellationToken">Токен отмены.</param>
     /// <returns>Ответ.</returns>
-    [HttpGet("take/{count:int}")]
+    [HttpGet("Take/{count:int}")]
     public async Task<IActionResult> GetAnnouncements(int count, CancellationToken cancellationToken)
     {
         try
@@ -91,7 +92,7 @@ public class AnnouncementController : ControllerBase
     /// <param name="toIndex">Индекс до.</param>
     /// <param name="cancellationToken">Токен отмены.</param>
     /// <returns>Ответ.</returns>
-    [HttpGet("take")]
+    [HttpGet("Take")]
     public async Task<IActionResult> GetAnnouncements([FromQuery] int? fromIndex, [FromQuery] int? toIndex, CancellationToken cancellationToken)
     {
         try
@@ -102,6 +103,48 @@ public class AnnouncementController : ControllerBase
                     ? await _service.GetLimitedAnnouncementsAsync(toIndex.Value, cancellationToken)
                     : await _service.GetAnnouncementsAsync(cancellationToken);
             return Ok(announcementInformationCollection);
+        }
+        catch(Exception exception)
+        {
+            return BadRequest(exception);
+        }
+    }
+    
+    [HttpDelete("{counterAgentId:guid}/{id:guid}")]
+    public async Task<IActionResult> RemoveCounterAgentAsync(Guid id, Guid counterAgentId, CancellationToken cancellationToken)
+    {
+        try
+        {
+            await _service.RemoveAnnouncementAsync(id, counterAgentId, cancellationToken);
+            return Ok();
+        }
+        catch (Exception exception)
+        {
+            return BadRequest(exception);
+        }
+    }
+
+    [HttpPut("{id:guid}")]
+    public async Task<IActionResult> PutCounterAgentAsync(Guid id, UpdateAnnouncementRequest information, CancellationToken cancellationToken)
+    {
+        try
+        {
+            await _service.UpdateAnnouncementAsync(id, information, cancellationToken);
+            return Ok();
+        }
+        catch (Exception exception)
+        {
+            return BadRequest(exception);
+        }
+    }
+    
+    [HttpGet("Filtered")]
+    public async Task<IActionResult> GetFilteredAndOrderedAnnouncement([FromQuery] FilterParameters filter, [FromQuery] OrderParameters order, CancellationToken cancellationToken)
+    {
+        try
+        {
+            var announcements = await _service.GetFilteredAndOrderedAnnouncementsAsync(filter, order, cancellationToken);
+            return Ok(announcements);
         }
         catch(Exception exception)
         {

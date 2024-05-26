@@ -1,11 +1,12 @@
 using System.ComponentModel.DataAnnotations;
+using DomovoiBackend.Domain.Abstraction;
 
 namespace DomovoiBackend.Domain.Entities.Realities;
 
 /// <summary>
 /// Недвижимость.
 /// </summary>
-public class Reality
+public abstract class Reality : UpdatableEntity<Reality>
 {
     /// <summary>
     /// Id
