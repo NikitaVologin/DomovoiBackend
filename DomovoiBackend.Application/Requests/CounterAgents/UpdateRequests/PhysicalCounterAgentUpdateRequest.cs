@@ -9,9 +9,4 @@ public class PhysicalCounterAgentUpdateRequest : CounterAgentUpdateRequest, IMap
     /// ФИО.
     /// </summary>
     public string? FIO { get; set; }
-    
-    /// <summary>
-    /// Пасспортные данные.
-    /// </summary>
-    public string? PassportData { get; set; }
 }

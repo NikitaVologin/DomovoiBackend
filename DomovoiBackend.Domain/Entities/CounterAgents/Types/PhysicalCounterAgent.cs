@@ -9,11 +9,6 @@ public class PhysicalCounterAgent : CounterAgent
     /// ФИО.
     /// </summary>
     public string? FIO { get; set; }
-    
-    /// <summary>
-    /// Пасспортные данные.
-    /// </summary>
-    public string? PassportData { get; set; }
 
     public override void Update(CounterAgent entity)
     {
@@ -21,7 +16,6 @@ public class PhysicalCounterAgent : CounterAgent
         Email = entity.Email;
         Password = entity.Password;
         ContactNumber = entity.ContactNumber;
-        PassportData = physicalEntity.PassportData;
         FIO = physicalEntity.FIO;
     }
 }

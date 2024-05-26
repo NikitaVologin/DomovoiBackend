@@ -155,7 +155,6 @@ pgAdmin:
   "id": "guid",
   "contactNumber": "string",
   "fio": "string",
-  "passportData": "string",
   "type": "string"
 }
 ```
@@ -254,7 +253,7 @@ Endpoint: [PUT] /CounterAgent/{id:guid}
   "contactNumber": "контактный номер",
   "email": "email",
   "password": "password",
-  // ОСТАЛЬНЫЕ ПОЛЯ АНАЛОГИЧНЫ ПОЛЯМ ИЗ ИНФОРМАЦИИ
+  // ОСТАЛЬНЫЕ ПОЛЯ АНАЛОГИЧНЫ ПОЛЯМ ИЗ ИНФОРМАЦИИ (Включая "type")
 }
 ```
 

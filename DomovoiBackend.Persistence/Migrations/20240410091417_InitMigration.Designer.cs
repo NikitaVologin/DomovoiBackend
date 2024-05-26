@@ -338,9 +338,6 @@ namespace DomovoiBackend.Persistence.Migrations
                     b.Property<string>("FIO")
                         .HasColumnType("text");
 
-                    b.Property<string>("PassportData")
-                        .HasColumnType("text");
-
                     b.ToTable("PhysicalCounterAgent", (string)null);
                 });
 

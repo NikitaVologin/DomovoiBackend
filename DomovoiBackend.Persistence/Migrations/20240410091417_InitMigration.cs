@@ -200,8 +200,7 @@ namespace DomovoiBackend.Persistence.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    FIO = table.Column<string>(type: "text", nullable: true),
-                    PassportData = table.Column<string>(type: "text", nullable: true)
+                    FIO = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {

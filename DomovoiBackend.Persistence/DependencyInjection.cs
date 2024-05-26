@@ -72,7 +72,6 @@ public static class DependencyInjection
                 Password = "Pudge",
                 FIO = "Ridge Gidge Alidge",
                 ContactNumber = "+ 7 (228) 229 22-30",
-                PassportData = "PPPP NNNNNN"
             }
         ];
 
