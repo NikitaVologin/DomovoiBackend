@@ -153,7 +153,7 @@ public class AnnouncementController : ControllerBase
     }
     
     [HttpGet("User/{userId:guid}")]
-    public async Task<IActionResult> GetFAnnouncementByUserId(Guid userId, CancellationToken cancellationToken)
+    public async Task<IActionResult> GetAnnouncementByUserId(Guid userId, CancellationToken cancellationToken)
     {
         try
         {

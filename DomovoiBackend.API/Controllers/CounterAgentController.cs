@@ -80,6 +80,20 @@ public class  CounterAgentController : ControllerBase
             return BadRequest(exception);
         }
     }
+    
+    [HttpGet("{id:guid}")]
+    public async Task<IActionResult> GetCounterAgentAsync(Guid id, CancellationToken cancellationToken)
+    {
+        try
+        {
+            await _service.GetCounterAgentInfoAsync(id, cancellationToken);
+            return Ok();
+        }
+        catch (Exception exception)
+        {
+            return BadRequest(exception);
+        }
+    }
 
     [HttpPut("{id:guid}")]
     public async Task<IActionResult> PutCounterAgentAsync(Guid id, CounterAgentUpdateRequest information, CancellationToken cancellationToken)
