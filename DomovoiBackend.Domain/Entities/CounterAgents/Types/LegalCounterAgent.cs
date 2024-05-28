@@ -19,7 +19,7 @@ public class LegalCounterAgent : CounterAgent
     {
         if (entity is not LegalCounterAgent legalEntity) return;
         Email = entity.Email;
-        Password = entity.Password;
+        if(entity.Password != null) Password = entity.Password;
         ContactNumber = entity.ContactNumber;
         Tin = legalEntity.Tin;
         Name = legalEntity.Name;
