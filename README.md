@@ -1,4 +1,5 @@
 # НАВИГАЦИЯ:
+### - [Список строковых литералов для объявления type (ВАЖНО)](#список-строковых-литералов-для-объявления-type)
 - [1. Таблица реализованного и в процессе (основные действия)](#1-таблица-реализованного-и-в-процессе-основные-действия)
 - [2. Тестирование](#2-тестирование)
   - [2.1. Модульное тестирование.](#21-модульное-тестирование)
@@ -17,6 +18,8 @@
   - [4.3. Reality Information (Информация о недвижимостях).](#43-reality-information-информация-о-недвижимостях)
      - [4.3.1. Commercial Realities Information (Информация о коммерческих недвижимостях).](#431-commercial-realities-information-информация-о-коммерческих-недвижимостях)
        - [4.3.1.1. OfficeInformation ("type" = "Office")](#4311-officeinformation-type--office)
+     - [4.3.2. Living Realities Information (Информация о жилих недвижимостях).](#432-living-realities-information-информация-о-жилих-недвижимостях)
+       - [4.3.2.1. FlatInformation ("type" = "Flat").](#4321-flatinformation-type--flat) 
   - [4.4. AnnouncementInformation.](#44-announcementinformation)
 
 - [5. Запросы.](#5-запросы)
@@ -34,6 +37,16 @@
     - [5.2.6. Обновить объявление.](#526-обновить-объявление)
     - [5.2.7. Получить объявление (с по по).](#527-получить-объявления-по-параметрам-с---по)
 
+# Список строковых литералов для объявления type:
+### Reality (Недвижимость):
+- **"Office"** - офис,
+- **"Flat"** - квартира,
+### Deal (Сделки):
+- **"Rent"** - аренда,
+- **"Sell"** - продажа
+### CounterAgents (Контр-Агенты):
+- **"Legal"** - юр. лицо,
+- **"Physical"** - физ. лицо;
 
 # 1. Таблица реализованного и в процессе (основные действия):
 
@@ -52,7 +65,7 @@
 | Коммерческая недвижимость              |                  |                        |
 | Офис                                   | Done             | Done                   | Done            |
 | Жилая недвижимость                     |                  |                        | 
-| Квартира                               | In-Process       | In-Process             | Done            |
+| Квартира                               | Done             | Done                   | Done            |
 
 
 # 2. Тестирование.
@@ -190,6 +203,39 @@ pgAdmin:
   },
   "name": "string",
   "roomsCount": 0,
+  "type": "string"
+}
+```
+### 4.3.2. Living Realities Information (Информация о жилих недвижимостях):
+
+### 4.3.2.1. FlatInformation ("type" = "Flat"):
+```json
+{
+  "isFresh": true,
+  "roomsCount": 0,
+  "isRepaired": true,
+  "kitchenArea": 0,
+  "balconyType": "string",
+  "viewFromBalcony": "string",
+  "address": "string",
+  "floor": 0,
+  "floorsCount": 0,
+  "area": 0,
+  "building": {
+    "buildingYear": 0,
+    "type": "string",
+    "ceilingHeight": 0,
+    "isGas": true,
+    "haveGarbageChute": true,
+    "isSecurity": true,
+    "haveParking": true,
+    "infrastructures": [
+      "string", "string"
+    ],
+    "landscaping": [
+      "string", "string"
+    ]
+  },
   "type": "string"
 }
 ```

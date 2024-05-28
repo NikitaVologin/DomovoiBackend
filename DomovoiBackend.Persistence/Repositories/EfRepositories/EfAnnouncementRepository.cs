@@ -84,10 +84,10 @@ public class EfAnnouncementRepository : IAnnouncementRepository
             .IncludeAll(_context)
             .FilterByPrices(filterParameters.PriceStart,
                 filterParameters.PriceEnd)
-            .FilterByFloorParams(filterParameters.FloorFilter)
             .CastToEnumerableWithLoadingAsync(cancellationToken);
 
         return announcementsEnumeration
+            .FilterByFloorParams(filterParameters.FloorFilter)
             .FilterByDealType(filterParameters.DealType)
             .FilterByRealityType(filterParameters.RealityType)
             .ToList();

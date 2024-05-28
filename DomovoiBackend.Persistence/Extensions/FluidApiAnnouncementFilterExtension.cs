@@ -9,26 +9,26 @@ namespace DomovoiBackend.Persistence.Extensions;
 
 internal static class FluidApiAnnouncementFilterExtension
 {
-    internal static IQueryable<Announcement> FilterByFloorParams(this IQueryable<Announcement> announcements, FloorSelectMode? floorFilter)
+    internal static IEnumerable<Announcement> FilterByFloorParams(this IEnumerable<Announcement> announcementsEnumerate, FloorSelectMode? floorFilter)
     {
-        if (floorFilter == FloorSelectMode.Default || floorFilter == null) return announcements;
-        announcements = floorFilter switch
+        if (floorFilter == FloorSelectMode.Default || floorFilter == null) return announcementsEnumerate;
+        announcementsEnumerate = floorFilter switch
         {
-            FloorSelectMode.NotLast => announcements.Where(a =>
-                a.Reality is IFloorCountable &&
-                ((IFloorCountable)a.Reality).Floor !=
-                ((IFloorCountable)a.Reality).FloorsCount),
-            FloorSelectMode.NotFirst => announcements.Where(a =>
-                a.Reality is IFloorCountable &&
-                ((IFloorCountable)a.Reality).Floor != 1),
-            FloorSelectMode.Both => announcements.Where(a =>
-                a.Reality is IFloorCountable &&
-                ((IFloorCountable)a.Reality).Floor !=
-                ((IFloorCountable)a.Reality).FloorsCount &&
-                ((IFloorCountable)a.Reality).Floor != 1),
-            _ => announcements
+            FloorSelectMode.NotLast => announcementsEnumerate.Where(a =>
+                a.Reality is IFloorCountable floorCountable &&
+                floorCountable.Floor !=
+                floorCountable.FloorsCount),
+            FloorSelectMode.NotFirst => announcementsEnumerate.Where(a =>
+                a.Reality is IFloorCountable floorCountable &&
+                floorCountable.Floor != 1),
+            FloorSelectMode.Both => announcementsEnumerate.Where(a =>
+                a.Reality is IFloorCountable floorCountable &&
+                floorCountable.Floor !=
+                floorCountable.FloorsCount &&
+                floorCountable.Floor != 1),
+            _ => announcementsEnumerate
         };
-        return announcements;
+        return announcementsEnumerate;
     }
 
     internal static IQueryable<Announcement> FilterByPrices(this IQueryable<Announcement> announcements,

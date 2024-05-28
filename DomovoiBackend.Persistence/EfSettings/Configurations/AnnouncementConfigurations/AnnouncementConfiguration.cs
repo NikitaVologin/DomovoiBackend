@@ -26,8 +26,7 @@ public class AnnouncementConfiguration : IEntityTypeConfiguration<Announcement>
             .HasForeignKey<Reality>(r => r.Id);
 
         builder.HasOne(a => a.CounterAgent)
-            .WithOne()
-            .HasForeignKey<CounterAgent>(c => c.Id)
-            .OnDelete(DeleteBehavior.Cascade);
+            .WithMany()
+            .OnDelete(DeleteBehavior.NoAction);
     }
 }

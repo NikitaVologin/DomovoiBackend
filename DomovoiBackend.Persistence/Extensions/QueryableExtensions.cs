@@ -41,7 +41,7 @@ public static class QueryableExtensions
     {
         var assembly = Assembly.GetAssembly(type);
         if(assembly == null) yield break;
-        var derivedTypes = _assemblyTypes.Where(t => t.IsSubclassOf(type) || t == type);
+        var derivedTypes = _assemblyTypes.Where(t => (t.IsSubclassOf(type) || t == type));
         foreach (var derivedType in derivedTypes)
         {
             var entityType = context.Model.FindEntityType(derivedType);
