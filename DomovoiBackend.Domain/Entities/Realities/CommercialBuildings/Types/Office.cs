@@ -1,6 +1,8 @@
+using DomovoiBackend.Domain.Interfaces;
+
 namespace DomovoiBackend.Domain.Entities.Realities.CommercialBuildings.Types;
 
-public class Office : CommercialBuilding
+public class Office : CommercialBuilding, IFloorCountable
 {
     public string? Name { get; set; }
     public int RoomsCount { get; set; } 

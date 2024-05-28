@@ -1,3 +1,4 @@
+using DomovoiBackend.API.Constants.StringLiterals;
 using DomovoiBackend.API.JsonInheritance.Abstraction;
 using DomovoiBackend.Application.Information.Realities;
 using DomovoiBackend.Application.Information.Realities.Commercial;
@@ -8,6 +9,6 @@ public class AnnouncementInheritanceConfiguration : JsonInheritanceConfiguration
 {
     protected override Dictionary<Type, string> Subtypes { get; set; } = new()
     {
-        { typeof(OfficeInformation), "Office" }
+        { typeof(OfficeInformation), RealityStringLiteral.Office }
     };
 }

@@ -1,3 +1,4 @@
+using DomovoiBackend.API.Constants.StringLiterals;
 using DomovoiBackend.API.JsonInheritance.Abstraction;
 using DomovoiBackend.Application.Information.Deals;
 using DomovoiBackend.Application.Information.Deals.Rents;
@@ -9,7 +10,7 @@ public class DealInheritanceConfiguration : JsonInheritanceConfiguration<DealInf
 {
     protected override Dictionary<Type, string> Subtypes { get; set; } = new()
     {
-        { typeof(SellInformation), "Sell" },
-        { typeof(RentInformation), "Rent" }
+        { typeof(SellInformation), DealStringLiteral.Sell },
+        { typeof(RentInformation), DealStringLiteral.Rent }
     };
 }

@@ -139,11 +139,25 @@ public class AnnouncementController : ControllerBase
     }
     
     [HttpGet("Filtered")]
-    public async Task<IActionResult> GetFilteredAndOrderedAnnouncement([FromQuery] FilterParameters filter, [FromQuery] OrderParameters order, CancellationToken cancellationToken)
+    public async Task<IActionResult> GetFilteredAndOrderedAnnouncement([FromQuery] FilterParameters filter, CancellationToken cancellationToken)
     {
         try
         {
-            var announcements = await _service.GetFilteredAndOrderedAnnouncementsAsync(filter, order, cancellationToken);
+            var announcements = await _service.GetFilteredAndOrderedAnnouncementsAsync(filter, cancellationToken);
+            return Ok(announcements);
+        }
+        catch(Exception exception)
+        {
+            return BadRequest(exception);
+        }
+    }
+    
+    [HttpGet("User/{userId:guid}")]
+    public async Task<IActionResult> GetFilteredAndOrderedAnnouncement(Guid userId, CancellationToken cancellationToken)
+    {
+        try
+        {
+            var announcements = await _service.GetAnnouncementByUserIdAsync(userId, cancellationToken);
             return Ok(announcements);
         }
         catch(Exception exception)

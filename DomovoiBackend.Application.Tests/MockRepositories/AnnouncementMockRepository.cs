@@ -133,6 +133,11 @@ public class AnnouncementMockRepository : IAnnouncementRepository
         return Task.FromResult((IList<Announcement>)_mockData);
     }
 
+    public Task<IList<Announcement>> GetAnnouncementsByUserIdAsync(Guid userId, CancellationToken cancellationToken)
+    {
+        throw new NotImplementedException();
+    }
+
     public Task<IList<Announcement>> GetLimitedAnnouncementsAsync(int toIndex, CancellationToken cancellationToken)
     {
         var announcement = _mockData.Take(toIndex).ToList();
@@ -145,7 +150,7 @@ public class AnnouncementMockRepository : IAnnouncementRepository
         return Task.FromResult((IList<Announcement>)announcement);
     }
 
-    public Task<IList<Announcement>> GetAnnouncementsByParametersAsync(FilterParameters filterParameters, OrderParameters orderParameters,
+    public Task<IList<Announcement>> GetAnnouncementsByParametersAsync(FilterParameters filterParameters,
         CancellationToken cancellationToken)
     {
         throw new NotImplementedException();
