@@ -11,7 +11,7 @@ internal static class FluidApiAnnouncementFilterExtension
 {
     internal static IEnumerable<Announcement> FilterByFloorParams(this IEnumerable<Announcement> announcementsEnumerate, FloorSelectMode? floorFilter)
     {
-        if (floorFilter == FloorSelectMode.Default || floorFilter == null) return announcementsEnumerate;
+        if (floorFilter is null or FloorSelectMode.Default) return announcementsEnumerate;
         announcementsEnumerate = floorFilter switch
         {
             FloorSelectMode.NotLast => announcementsEnumerate.Where(a =>
@@ -67,7 +67,7 @@ internal static class FluidApiAnnouncementFilterExtension
             .Assembly
             .GetTypes()
             .FirstOrDefault(t => t.Name == realityTypeName);
-        
+            
         return realityType == null ?
             announcementsEnumeration :
             announcementsEnumeration.Where(a => a.Reality!.GetType() == realityType);

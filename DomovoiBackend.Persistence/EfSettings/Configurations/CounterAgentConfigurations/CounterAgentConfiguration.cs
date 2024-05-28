@@ -1,3 +1,4 @@
+using DomovoiBackend.Domain.Entities.Announcements;
 using DomovoiBackend.Domain.Entities.CounterAgents;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -13,5 +14,8 @@ public class CounterAgentConfiguration : IEntityTypeConfiguration<CounterAgent>
     {
         builder.HasKey(c => c.Id);
         builder.HasIndex(c => c.Id).IsUnique();
+        builder.HasMany<Announcement>()
+            .WithOne(a => a.CounterAgent)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

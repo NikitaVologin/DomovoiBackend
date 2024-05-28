@@ -85,6 +85,7 @@ public static class DependencyInjection
         [
             new Announcement
             { 
+                Id = Guid.Parse("0715a242-e05a-4906-a508-b28cd96ac474"),
                 ConnectionType = "Мысленная",
                 CounterAgent = counterAgents[0],
                 Deal = new Sell()

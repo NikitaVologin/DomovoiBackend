@@ -14,60 +14,44 @@ public class CounterAgentLoginTests : BaseEndToEndTest
     
     
     [Fact]
-    public async Task Api_LoginCounterAgentTest()
+    public async Task Api_CounterAgentEndPoint_LoginCounterAgentTest()
     {
-        var request = new AddPhysicalCounterAgentRequest
-        {
-            Email = "123@mail.ru",
-            Password = "12321"
-        };
-
-        await HttpClient.PostAsJsonAsync("CounterAgent/Physical", request);
-
         var loginRequest = new AuthorizationRequest
         {
             Email = "123@mail.ru",
-            Password = "12321"
+            Password = "123456"
         };
         
-        HttpResponseMessage response =  await HttpClient.PostAsJsonAsync("CounterAgent/Login", loginRequest);
+        var response =  await HttpClient.PostAsJsonAsync("CounterAgent/Login", loginRequest);
 
         
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
     }
     
     [Fact]
-    public async Task Api_LoginCounterAgentWithIncorrectPasswordTest()
+    public async Task Api_CounterAgentEndPoint_LoginCounterAgentWithIncorrectPasswordTest()
     {
-        var request = new AddPhysicalCounterAgentRequest
-        {
-            Email = "123@mail.ru",
-            Password = "12321"
-        };
-
-        await HttpClient.PostAsJsonAsync("CounterAgent/Physical", request);
-
         var loginRequest = new AuthorizationRequest
         {
             Email = "123@mail.ru",
             Password = "123215"
         };
         
-        HttpResponseMessage response =  await HttpClient.PostAsJsonAsync("CounterAgent/Login", loginRequest);
+        var response =  await HttpClient.PostAsJsonAsync("CounterAgent/Login", loginRequest);
         
         Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
     }
     
     [Fact]
-    public async Task Api_LoginCounterAgentWithNotExistTest()
+    public async Task Api_CounterAgentEndPoint_LoginCounterAgentWithNotExistTest()
     {
         var loginRequest = new AuthorizationRequest
         {
-            Email = "123@mail.ru",
+            Email = "11321321323@mail.ru",
             Password = "123215"
         };
         
-        HttpResponseMessage response =  await HttpClient.PostAsJsonAsync("CounterAgent/Login", loginRequest);
+        var response =  await HttpClient.PostAsJsonAsync("CounterAgent/Login", loginRequest);
         
         Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
     }

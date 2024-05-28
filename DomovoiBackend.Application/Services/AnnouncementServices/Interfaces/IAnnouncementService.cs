@@ -77,7 +77,7 @@ public interface IAnnouncementService
     /// <returns>ТАСКААААААААААА.</returns>
     Task RemoveAnnouncementAsync(Guid announcementId, Guid counterAgentId, CancellationToken cancellationToken);
 
-    Task<AnnouncementInformationCollection> GetFilteredAndOrderedAnnouncementsAsync(FilterParameters filterParameters,
+    Task<AnnouncementInformationCollection> GetFilteredAnnouncementsAsync(FilterParameters filterParameters,
         CancellationToken cancellationToken);
 
     /// <summary>
