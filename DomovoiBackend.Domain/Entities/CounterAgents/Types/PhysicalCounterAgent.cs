@@ -14,7 +14,7 @@ public class PhysicalCounterAgent : CounterAgent
     {
         if (entity is not PhysicalCounterAgent physicalEntity) return;
         Email = entity.Email;
-        Password = entity.Password;
+        if(entity.Password != null) Password = entity.Password;
         ContactNumber = entity.ContactNumber;
         FIO = physicalEntity.FIO;
     }
