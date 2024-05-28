@@ -1,7 +1,7 @@
 using System.Net;
 using System.Net.Http.Json;
+using DomovoiBackend.API.Constants.StringLiterals;
 using DomovoiBackend.API.Tests.Abstractions;
-using DomovoiBackend.Application.Requests.CounterAgents.AddRequests;
 
 namespace DomovoiBackend.API.Tests.CounterAgent;
 
@@ -10,30 +10,32 @@ public class CounterAgentAddTests : BaseEndToEndTest
     public CounterAgentAddTests(EndToEndWebAppFactory factory) : base(factory) { }
 
     [Fact]
-    public async Task Api_CorrectCounterAgentAddTest()
+    public async Task Api_CounterAgentEndPoint_CorrectCounterAgentAddTest()
     {
-        var request = new AddPhysicalCounterAgentRequest()
+        var request = new
         {
-            Email = "123@mail.ru",
-            Password = "12321"
+            Email = "1234321356@mail.ru",
+            Password = "12321",
+            Type = CounterAgentStringLiteral.Legal
         };
 
-        HttpResponseMessage response = await HttpClient.PostAsJsonAsync("CounterAgent/Physical", request);
+        var response = await HttpClient.PostAsJsonAsync("CounterAgent", request);
         
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
     }
     
     [Fact]
-    public async Task Api_ExistedCounterAgentAddTest()
+    public async Task Api_CounterAgentEndpoint_ExistedCounterAgentAddTest()
     {
-        var request = new AddPhysicalCounterAgentRequest
+        var request = new
         {
             Email = "123@mail.ru",
-            Password = "12321"
+            Password = "12321",
+            Type = CounterAgentStringLiteral.Legal
         };
 
-        await HttpClient.PostAsJsonAsync("CounterAgent/Physical", request); 
-        HttpResponseMessage response = await HttpClient.PostAsJsonAsync("CounterAgent/Physical", request);
+        await HttpClient.PostAsJsonAsync("CounterAgent", request); 
+        var response = await HttpClient.PostAsJsonAsync("CounterAgent", request);
 
         
         Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);

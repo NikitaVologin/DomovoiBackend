@@ -22,6 +22,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\DomovoiBackend.API\DomovoiBackend.API.csproj" />
       <ProjectReference Include="..\DomovoiBackend.Application\DomovoiBackend.Application.csproj" />
     </ItemGroup>
 
