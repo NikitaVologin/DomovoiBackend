@@ -148,7 +148,7 @@ public class AnnouncementMockRepository : IAnnouncementRepository
                     Infrastructures = ["Туалет", "Унитаз"],
                     IsSecurity = true,
                     IsGas = false,
-                    Landscaping = ["Жёсткая зелень"],
+                    Landscaping = ["Жёсткая желтень"],
                     Type = "Жёсткий",
                     
                 }
