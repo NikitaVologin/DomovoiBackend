@@ -57,4 +57,11 @@ public class CounterAgentService : ICounterAgentService
 
     public async Task RemoveAsync(Guid id, CancellationToken cancellationToken) =>
         await _repository.RemoveCounterAgentAsync(id, cancellationToken);
+
+    public async Task<CounterAgentInformation> GetCounterAgentInfoAsync(Guid id, CancellationToken cancellationToken)
+    {
+        var counterAgent = await _repository.GetCounterAgentAsync(id, cancellationToken);
+        var counterAgentInformation = _mappingService.MapInformationFromEntity(counterAgent);
+        return counterAgentInformation;
+    }
 }

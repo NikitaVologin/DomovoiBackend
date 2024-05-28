@@ -7,6 +7,8 @@ namespace DomovoiBackend.Application.Tests.MockRepositories;
 
 public class CounterAgentMockRepository : ICounterAgentRepository
 {
+    public int Count => _mockData.Count;
+    
     private readonly List<CounterAgent> _mockData =
     [
         new PhysicalCounterAgent()
@@ -59,13 +61,38 @@ public class CounterAgentMockRepository : ICounterAgentRepository
         return Task.FromResult(_mockData.Exists(c => c.Email == email));
     }
 
-    public Task UpdateCounterAgentAsync(CounterAgent counterAgent, CancellationToken cancellationToken)
+    public Task UpdateCounterAgentAsync(CounterAgent updatedCounterAgent, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var counterAgent = _mockData.FirstOrDefault(counterAgent => counterAgent.Id == updatedCounterAgent.Id);
+
+        if (counterAgent == null) throw new Exception();
+
+        _mockData.Remove(counterAgent);
+        
+        counterAgent.Update(updatedCounterAgent);
+        
+        _mockData.Add(counterAgent);
+
+        return Task.CompletedTask;
     }
 
     public Task RemoveCounterAgentAsync(Guid id, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var counterAgent = _mockData.FirstOrDefault(counterAgent => counterAgent.Id == id);
+
+        if (counterAgent == null) throw new Exception();
+
+        _mockData.Remove(counterAgent);
+
+        return Task.CompletedTask;
+    }
+
+    public Task<CounterAgent> GetCounterAgentAsync(Guid id, CancellationToken cancellationToken)
+    {
+        var counterAgent = _mockData.FirstOrDefault(counterAgent => counterAgent.Id == id);
+
+        if (counterAgent == null) throw new Exception();
+
+        return Task.FromResult(counterAgent);
     }
 }

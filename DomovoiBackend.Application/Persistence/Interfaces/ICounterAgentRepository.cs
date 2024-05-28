@@ -55,4 +55,12 @@ public interface ICounterAgentRepository
     /// <param name="cancellationToken">Токен отмены.</param>
     /// <returns>Пустой вызов.</returns>
     Task RemoveCounterAgentAsync(Guid id, CancellationToken cancellationToken);
+
+    /// <summary>
+    /// Получить контр-агента по ID;
+    /// </summary>
+    /// <param name="id">GUID контр-агента.</param>
+    /// <param name="cancellationToken">Токен отмены.</param>
+    /// <returns>Контр-агент.</returns>
+    Task<CounterAgent> GetCounterAgentAsync(Guid id, CancellationToken cancellationToken);
 }

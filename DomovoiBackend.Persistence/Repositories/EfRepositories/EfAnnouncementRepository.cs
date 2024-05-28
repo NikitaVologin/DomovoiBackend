@@ -104,7 +104,8 @@ public class EfAnnouncementRepository : IAnnouncementRepository
 
     public async Task UpdateAnnouncementAsync(Guid announcementId, Announcement announcement, CancellationToken cancellationToken)
     {
-        var oldAnnouncement = await _context.Announcements.IncludeAll(_context)
+        var oldAnnouncement = await _context.Announcements
+            .IncludeAll(_context)
             .FirstOrDefaultAsync(a => a.Id == announcementId, cancellationToken);
         if (oldAnnouncement == null) throw new DbNotFoundException(typeof(Announcement), new {Id = announcementId });
         oldAnnouncement.Update(announcement);

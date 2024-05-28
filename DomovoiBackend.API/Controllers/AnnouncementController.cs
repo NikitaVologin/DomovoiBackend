@@ -125,7 +125,7 @@ public class AnnouncementController : ControllerBase
     }
 
     [HttpPut("{id:guid}")]
-    public async Task<IActionResult> PutCounterAgentAsync(Guid id, UpdateAnnouncementRequest information, CancellationToken cancellationToken)
+    public async Task<IActionResult> PutAnnouncementAsync(Guid id, UpdateAnnouncementRequest information, CancellationToken cancellationToken)
     {
         try
         {
@@ -143,7 +143,7 @@ public class AnnouncementController : ControllerBase
     {
         try
         {
-            var announcements = await _service.GetFilteredAndOrderedAnnouncementsAsync(filter, cancellationToken);
+            var announcements = await _service.GetFilteredAnnouncementsAsync(filter, cancellationToken);
             return Ok(announcements);
         }
         catch(Exception exception)
@@ -153,7 +153,7 @@ public class AnnouncementController : ControllerBase
     }
     
     [HttpGet("User/{userId:guid}")]
-    public async Task<IActionResult> GetFilteredAndOrderedAnnouncement(Guid userId, CancellationToken cancellationToken)
+    public async Task<IActionResult> GetFAnnouncementByUserId(Guid userId, CancellationToken cancellationToken)
     {
         try
         {

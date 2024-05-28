@@ -43,4 +43,12 @@ public interface ICounterAgentService
     /// <param name="cancellationToken">Токен отмены.</param>
     /// <returns>Таска.</returns>
     Task RemoveAsync(Guid id, CancellationToken cancellationToken);
+
+    /// <summary>
+    /// Получить контр-агента по Id.
+    /// </summary>
+    /// <param name="id">GUID </param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    Task<CounterAgentInformation> GetCounterAgentInfoAsync(Guid id, CancellationToken cancellationToken);
 }

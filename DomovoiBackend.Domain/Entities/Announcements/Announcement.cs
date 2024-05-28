@@ -47,7 +47,7 @@ public class Announcement : UpdatableEntity<Announcement>
     {
         Description = entity.Description;
         ConnectionType = entity.ConnectionType;
-        Reality = entity.Reality;
-        Deal = entity.Deal;
+        Reality!.Update(entity!.Reality!);
+        Deal!.Update(entity!.Deal!);
     }
 }
