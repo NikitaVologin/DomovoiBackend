@@ -55,6 +55,17 @@ public class EfCounterAgentRepository : ICounterAgentRepository
         await _context.SaveChangesAsync(cancellationToken);
     }
 
+    public async Task<CounterAgent> GetCounterAgentAsync(Guid id, CancellationToken cancellationToken)
+    {
+        var counterAgent = await _context.CounterAgents.FirstOrDefaultAsync(
+            counterAgent => counterAgent.Id == id, cancellationToken);
+
+        if (counterAgent == null)
+            throw new DbNotFoundException(typeof(CounterAgent), id);
+
+        return counterAgent;
+    }
+
     public async Task<CounterAgent> GetCounterAgentByAuthDataAsync(string email, string password, CancellationToken cancellationToken)
     {
         var counterAgent = await _context.CounterAgents.FirstOrDefaultAsync(
