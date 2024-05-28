@@ -6,4 +6,8 @@ public class HousePart : LivingBuilding
 {
     public int Part { get; set; }
     public virtual House? House { get; set; }
+    public override void Update(Reality entity)
+    {
+        throw new NotImplementedException();
+    }
 }

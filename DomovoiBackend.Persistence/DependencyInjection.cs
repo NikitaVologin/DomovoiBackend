@@ -1,10 +1,13 @@
 using DomovoiBackend.Application.Persistence.Interfaces;
 using DomovoiBackend.Domain.Entities.Announcements;
+using DomovoiBackend.Domain.Entities.Common;
 using DomovoiBackend.Domain.Entities.CounterAgents;
 using DomovoiBackend.Domain.Entities.CounterAgents.Types;
+using DomovoiBackend.Domain.Entities.Deals.Rents;
 using DomovoiBackend.Domain.Entities.Deals.Sells;
 using DomovoiBackend.Domain.Entities.Realities.CommercialBuildings;
 using DomovoiBackend.Domain.Entities.Realities.CommercialBuildings.Types;
+using DomovoiBackend.Domain.Entities.Realities.LivingBuildings.Types;
 using DomovoiBackend.Persistence.EfSettings;
 using DomovoiBackend.Persistence.Repositories.EfRepositories;
 using Microsoft.EntityFrameworkCore;
@@ -74,12 +77,14 @@ public static class DependencyInjection
                 ContactNumber = "+ 7 (228) 229 22-30",
             }
         ];
-
-        Announcement[] announcements =
+        
+        dbContext.CounterAgents.AddRange(counterAgents);
+        dbContext.SaveChanges();
+        
+         Announcement[] announcements =
         [
             new Announcement
-            {
-                Id = Guid.NewGuid(),
+            { 
                 ConnectionType = "Мысленная",
                 CounterAgent = counterAgents[0],
                 Deal = new Sell()
@@ -119,7 +124,6 @@ public static class DependencyInjection
             },
             new Announcement
             {
-                Id = Guid.NewGuid(),
                 ConnectionType = "Словесная перепалка",
                 CounterAgent = counterAgents[1],
                 Deal = new Sell()
@@ -156,10 +160,53 @@ public static class DependencyInjection
                     RoomsCount = 421,
                 },
                 Description = "ОПиСАНИЕ"
+            },
+            new Announcement
+            {
+                ConnectionType = "Душевная",
+                CounterAgent = counterAgents[0],
+                Deal = new Rent()
+                {
+                    Price = double.Pi,
+                    Conditions = new  RentConditions()
+                    {
+                        CommunalPays = 202,
+                        CanSmoke = true,
+                        Deposit = 1515,
+                        Facilities = "Удобненько",
+                        Period = "Периодично",
+                        Prepay = 1000000,
+                        WithKids = false,
+                        WithAnimals = true
+                    }
+                },
+                Description = "Миллион рублей стою",
+                Reality = new Flat()
+                {
+                    Address = "ул. ХИХИХИХА",
+                    Building = new ApartmentHouse()
+                    {
+                        BuildingYear = 2022,
+                        CeilingHeight = 252,
+                        HaveGarbageChute = true,
+                        HaveParking = true,
+                        Infrastructures = ["Туалет", "Унитаз"],
+                        IsSecurity = true,
+                        IsGas = false,
+                        Landscaping = ["Жёсткая зелень"],
+                        Type = "Жёсткий",
+                    },
+                    Area = 1254125,
+                    BalconyType = "Классный",
+                    Floor = 25,
+                    FloorsCount = 25,
+                    IsFresh = true,
+                    IsRepaired = true,
+                    KitchenArea = 12421412
+                }
             }
         ];
         
-        dbContext.CounterAgents.AddRange(counterAgents);
         dbContext.Announcements.AddRange(announcements);
         dbContext.SaveChanges();
         

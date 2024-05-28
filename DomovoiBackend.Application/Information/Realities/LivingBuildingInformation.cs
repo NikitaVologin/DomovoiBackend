@@ -1,8 +1,6 @@
-using System.ComponentModel.DataAnnotations.Schema;
+namespace DomovoiBackend.Application.Information.Realities;
 
-namespace DomovoiBackend.Domain.Entities.Realities.LivingBuildings;
-
-public abstract class LivingBuilding : Reality
+public class LivingBuildingInformation : RealityInformation
 {
     /// <summary>
     /// Этаж.

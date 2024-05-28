@@ -39,6 +39,14 @@ public interface IAnnouncementRepository
     /// <param name="cancellationToken">Токен отмены.</param>
     /// <returns>Коллекция объявлений.</returns>
     Task<IList<Announcement>> GetAnnouncementsAsync(CancellationToken cancellationToken);
+
+    /// <summary>
+    /// Получить все объявления пользователя;
+    /// </summary>
+    /// <param name="userId">Guid пользователя.</param>
+    /// <param name="cancellationToken">Токен отмены.</param>
+    /// <returns>Коллекция объявлений.</returns>
+    Task<IList<Announcement>> GetAnnouncementsByUserIdAsync(Guid userId, CancellationToken cancellationToken);
     
     /// <summary>
     /// Получить первые toIndex объявлений.
@@ -58,7 +66,7 @@ public interface IAnnouncementRepository
     /// <returns>Коллекция объявлений.</returns>
     Task<IList<Announcement>> GetLimitedAnnouncementsAsync(int fromIndex, int toIndex, CancellationToken cancellationToken);
 
-    Task<IList<Announcement>> GetAnnouncementsByParametersAsync(FilterParameters filterParameters, OrderParameters orderParameters, CancellationToken cancellationToken);
+    Task<IList<Announcement>> GetAnnouncementsByParametersAsync(FilterParameters filterParameters, CancellationToken cancellationToken);
 
 
     /// <summary>

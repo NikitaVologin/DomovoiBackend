@@ -2,6 +2,7 @@ using DomovoiBackend.API.JsonInheritance;
 using DomovoiBackend.API.Middlewares;
 using DomovoiBackend.Application;
 using DomovoiBackend.Persistence;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -42,6 +43,14 @@ builder.Services.AddApplicationLayer()
 
 builder.Services.AddCors();
 
+builder.Services
+    .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+        options.SlidingExpiration = true;
+        options.LoginPath = "/CounterAgent/Login";
+    });
 
 var app = builder.Build();
 
@@ -51,6 +60,9 @@ app.UseCors(corsBuilder =>
     corsBuilder.AllowAnyHeader();
     corsBuilder.AllowAnyMethod();
 });
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 // TODO: Сделать одно middleware для каждого вида запросов с подтипами.
 // app.UseMiddleware<AnnouncementRouteTransformerMiddleware>();

@@ -2,10 +2,13 @@ using DomovoiBackend.Application.Parameters;
 using DomovoiBackend.Application.Persistence.Exceptions;
 using DomovoiBackend.Application.Persistence.Interfaces;
 using DomovoiBackend.Domain.Entities.Announcements;
+using DomovoiBackend.Domain.Entities.Common;
 using DomovoiBackend.Domain.Entities.CounterAgents.Types;
 using DomovoiBackend.Domain.Entities.Deals.Rents;
+using DomovoiBackend.Domain.Entities.Deals.Sells;
 using DomovoiBackend.Domain.Entities.Realities.CommercialBuildings;
 using DomovoiBackend.Domain.Entities.Realities.CommercialBuildings.Types;
+using DomovoiBackend.Domain.Entities.Realities.LivingBuildings.Types;
 
 namespace DomovoiBackend.Application.Tests.MockRepositories;
 
@@ -104,6 +107,52 @@ public class AnnouncementMockRepository : IAnnouncementRepository
                     IsEquipment = true
                 }
             }
+        },
+        new Announcement
+        {
+            Id = Guid.Parse("5389cb46-e6ef-42ea-813e-a46df628d34a"),
+            ConnectionType = "Душевная",
+            CounterAgent = new PhysicalCounterAgent()
+            {
+                ContactNumber = "123",
+                Email = "123@mail.ru",
+                FIO = "Alla Pugachevo Zhest",
+                Id = Guid.Parse("a275f7c5-be57-4c52-bfb8-1b12d0fccbbc"),
+                Password = "123"
+            },
+            Deal = new Rent()
+            {
+                Price = double.Pi,
+                Conditions = new  RentConditions()
+                {
+                    CommunalPays = 202,
+                    CanSmoke = true,
+                    Deposit = 1515,
+                    Facilities = "Удобненько",
+                    Period = "Периодично",
+                    Prepay = 1000000,
+                    WithKids = false,
+                    WithAnimals = true
+                }
+            },
+            Description = "Миллион рублей стою",
+            Reality = new Flat()
+            {
+                Address = "ул. ХИХИХИХА",
+                Building = new ApartmentHouse()
+                {
+                    BuildingYear = 2022,
+                    CeilingHeight = 252,
+                    HaveGarbageChute = true,
+                    HaveParking = true,
+                    Infrastructures = ["Туалет", "Унитаз"],
+                    IsSecurity = true,
+                    IsGas = false,
+                    Landscaping = ["Жёсткая желтень"],
+                    Type = "Жёсткий",
+                    
+                }
+            }
         }
     ];
 
@@ -133,6 +182,11 @@ public class AnnouncementMockRepository : IAnnouncementRepository
         return Task.FromResult((IList<Announcement>)_mockData);
     }
 
+    public Task<IList<Announcement>> GetAnnouncementsByUserIdAsync(Guid userId, CancellationToken cancellationToken)
+    {
+        throw new NotImplementedException();
+    }
+
     public Task<IList<Announcement>> GetLimitedAnnouncementsAsync(int toIndex, CancellationToken cancellationToken)
     {
         var announcement = _mockData.Take(toIndex).ToList();
@@ -145,7 +199,7 @@ public class AnnouncementMockRepository : IAnnouncementRepository
         return Task.FromResult((IList<Announcement>)announcement);
     }
 
-    public Task<IList<Announcement>> GetAnnouncementsByParametersAsync(FilterParameters filterParameters, OrderParameters orderParameters,
+    public Task<IList<Announcement>> GetAnnouncementsByParametersAsync(FilterParameters filterParameters,
         CancellationToken cancellationToken)
     {
         throw new NotImplementedException();

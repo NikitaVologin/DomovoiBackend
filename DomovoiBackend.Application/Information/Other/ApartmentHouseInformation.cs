@@ -1,19 +1,10 @@
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using DomovoiBackend.Application.Mapping.Interfaces;
+using DomovoiBackend.Domain.Entities.Common;
 
-namespace DomovoiBackend.Domain.Entities.Common;
+namespace DomovoiBackend.Application.Information.Other;
 
-/// <summary>
-/// Дом.
-/// </summary>
-public class ApartmentHouse
+public class ApartmentHouseInformation : IMapTwoSide<ApartmentHouse>
 {
-    /// <summary>
-    /// GUID дома.
-    /// </summary>
-    [Key]
-    public Guid Id { get; set; }
-    
     /// <summary>
     /// Год постройки.
     /// </summary>
@@ -58,5 +49,4 @@ public class ApartmentHouse
     /// Благоустройства.
     /// </summary>
     public List<string> Landscaping { get; set; } = [];
-
 }
