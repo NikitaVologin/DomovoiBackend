@@ -78,6 +78,13 @@ public interface IAnnouncementService
     Task RemoveAnnouncementAsync(Guid announcementId, Guid counterAgentId, CancellationToken cancellationToken);
 
     Task<AnnouncementInformationCollection> GetFilteredAndOrderedAnnouncementsAsync(FilterParameters filterParameters,
-        OrderParameters orderParameters,
         CancellationToken cancellationToken);
+
+    /// <summary>
+    /// Получить все объявления пользователя.
+    /// </summary>
+    /// <param name="userId">Id пользователя.</param>
+    /// <param name="cancellationToken">Токен отмены.</param>
+    /// <returns>Коллекция объявлений.</returns>
+    Task<AnnouncementInformationCollection> GetAnnouncementByUserIdAsync(Guid userId, CancellationToken cancellationToken);
 }

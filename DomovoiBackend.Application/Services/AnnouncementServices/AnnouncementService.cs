@@ -150,14 +150,24 @@ public class AnnouncementService : IAnnouncementService
     public async Task RemoveAnnouncementAsync(Guid announcementId, Guid counterAgentId, CancellationToken cancellationToken) =>
         await _announcementRepository.RemoveAnnouncementAsync(counterAgentId, announcementId, cancellationToken);
 
-    public async Task<AnnouncementInformationCollection> GetFilteredAndOrderedAnnouncementsAsync(FilterParameters filterParameters, OrderParameters orderParameters, CancellationToken cancellationToken)
+    public async Task<AnnouncementInformationCollection> GetFilteredAndOrderedAnnouncementsAsync(FilterParameters filterParameters, CancellationToken cancellationToken)
     {
         var announcements = await 
-            _announcementRepository.GetAnnouncementsByParametersAsync(filterParameters, orderParameters, cancellationToken);
+            _announcementRepository.GetAnnouncementsByParametersAsync(filterParameters, cancellationToken);
 
         var announcementInfos = announcements.Select(TransformToInformation).ToList();
 
         return new AnnouncementInformationCollection { AnnouncementInformation = announcementInfos };
+    }
+
+    public async Task<AnnouncementInformationCollection> GetAnnouncementByUserIdAsync(Guid userId, CancellationToken cancellationToken)
+    {
+        var announcements = await
+            _announcementRepository.GetAnnouncementsByUserIdAsync(userId, cancellationToken);
+
+        var announcementInfos = announcements.Select(TransformToInformation).ToList();
+
+        return new AnnouncementInformationCollection() { AnnouncementInformation = announcementInfos };
     }
 
     private AnnouncementInformation TransformToInformation(Announcement announcement) => new()

@@ -1,3 +1,4 @@
+using DomovoiBackend.API.Constants.StringLiterals;
 using DomovoiBackend.API.JsonInheritance.Abstraction;
 using DomovoiBackend.Application.Requests.CounterAgents.AddRequests;
 using DomovoiBackend.Application.Requests.CounterAgents.AddRequests.Base;
@@ -8,7 +9,7 @@ public class AddCounterAgentRequestInheritanceConfiguration : JsonInheritanceCon
 {
     protected override Dictionary<Type, string> Subtypes { get; set; } = new()
     {
-        { typeof(AddLegalCounterAgentRequest), "Legal" },
-        { typeof(AddPhysicalCounterAgentRequest), "Physical" }
+        { typeof(AddLegalCounterAgentRequest), CounterAgentStringLiteral.Legal },
+        { typeof(AddPhysicalCounterAgentRequest), CounterAgentStringLiteral.Physical }
     };
 }

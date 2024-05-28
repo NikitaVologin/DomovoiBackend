@@ -1,9 +1,10 @@
-using DomovoiBackend.Domain.Entities.Common;
-using DomovoiBackend.Domain.Interfaces;
+using DomovoiBackend.Application.Information.Other;
+using DomovoiBackend.Application.Mapping.Interfaces;
+using DomovoiBackend.Domain.Entities.Realities.LivingBuildings.Types;
 
-namespace DomovoiBackend.Domain.Entities.Realities.LivingBuildings.Types;
+namespace DomovoiBackend.Application.Information.Realities.Living;
 
-public class Flat : LivingBuilding, IFloorCountable
+public class FlatInformation : LivingBuildingInformation, IMapTwoSide<Flat>
 {
     /// <summary>
     /// "Свежая" (TODO: что это)
@@ -38,22 +39,5 @@ public class Flat : LivingBuilding, IFloorCountable
     /// <summary>
     /// Дома (В котором живёт Джек)
     /// </summary>
-    public virtual ApartmentHouse? Building { get; set; }
-    
-    public override void Update(Reality entity)
-    {
-        if (entity is not Flat flat) return;
-        Building = flat.Building;
-        IsFresh = flat.IsFresh;
-        RoomsCount = flat.RoomsCount;
-        IsRepaired = flat.IsRepaired;
-        KitchenArea = flat.KitchenArea;
-        BalconyType = flat.BalconyType;
-        ViewFromBalcony = flat.ViewFromBalcony;
-        Floor = flat.Floor;
-        FloorsCount = flat.FloorsCount;
-        Area = flat.Area;
-        Address = flat.Address;
-        Type = flat.Type;
-    }
+    public ApartmentHouseInformation? Building { get; set; }
 }
