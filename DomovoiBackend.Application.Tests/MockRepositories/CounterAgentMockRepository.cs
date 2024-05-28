@@ -68,4 +68,9 @@ public class CounterAgentMockRepository : ICounterAgentRepository
     {
         throw new NotImplementedException();
     }
+
+    public Task<CounterAgent> GetCounterAgentAsync(Guid id, CancellationToken cancellationToken)
+    {
+        throw new NotImplementedException();
+    }
 }
