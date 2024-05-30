@@ -4,9 +4,12 @@ using DomovoiBackend.Application;
 using DomovoiBackend.Persistence;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.SignalR;
+using DomovoiBackend.API.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddSignalR();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
@@ -63,6 +66,7 @@ app.UseCors(corsBuilder =>
 
 app.UseAuthentication();
 app.UseAuthorization();
+app.MapHub<ChatHub>("/Chat");
 
 // TODO: Сделать одно middleware для каждого вида запросов с подтипами.
 // app.UseMiddleware<AnnouncementRouteTransformerMiddleware>();
