@@ -4,6 +4,7 @@ using DomovoiBackend.Application.Requests.CounterAgents.AddRequests.Base;
 using DomovoiBackend.Application.Requests.CounterAgents.AuthorizeRequest;
 using DomovoiBackend.Application.Requests.CounterAgents.UpdateRequests;
 using DomovoiBackend.Application.Services.CounterAgentServices.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DomovoiBackend.API.Controllers;
@@ -66,7 +67,7 @@ public class  CounterAgentController : ControllerBase
         }
     }
     
-    
+    [Authorize]
     [HttpDelete("{id:guid}")]
     public async Task<IActionResult> RemoveCounterAgentAsync(Guid id, CancellationToken cancellationToken)
     {
@@ -86,8 +87,8 @@ public class  CounterAgentController : ControllerBase
     {
         try
         {
-            await _service.GetCounterAgentInfoAsync(id, cancellationToken);
-            return Ok();
+            var information = await _service.GetCounterAgentInfoAsync(id, cancellationToken);
+            return Ok(information);
         }
         catch (Exception exception)
         {
@@ -95,6 +96,7 @@ public class  CounterAgentController : ControllerBase
         }
     }
 
+    [Authorize]
     [HttpPut("{id:guid}")]
     public async Task<IActionResult> PutCounterAgentAsync(Guid id, CounterAgentUpdateRequest information, CancellationToken cancellationToken)
     {

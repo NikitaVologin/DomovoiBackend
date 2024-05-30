@@ -1,6 +1,7 @@
+using DomovoiBackend.API.Auth.ServiceDecorators;
 using DomovoiBackend.API.JsonInheritance;
-using DomovoiBackend.API.Middlewares;
 using DomovoiBackend.Application;
+using DomovoiBackend.Application.Services.CounterAgentServices.Interfaces;
 using DomovoiBackend.Persistence;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.OpenApi.Models;
@@ -40,6 +41,14 @@ builder.Services.AddApplicationLayer()
     .CreateDatabase()
     .FillDatabase();
 
+builder.Services.Decorate<ICounterAgentService, AuthCounterAgentService>();
+
+builder.Services.AddHttpContextAccessor();
+
+builder.Services.AddDistributedMemoryCache();
+
+builder.Services.AddAuthorization();
+builder.Services.AddSession();
 
 builder.Services.AddCors();
 
@@ -50,9 +59,18 @@ builder.Services
         options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
         options.SlidingExpiration = true;
         options.LoginPath = "/CounterAgent/Login";
+        options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+        options.Cookie.SameSite = SameSiteMode.Strict;
     });
 
+builder.Services.AddAuthorizationBuilder()
+    .AddPolicy("AuthenticatedCounterAgent", policy => policy.RequireClaim("CounterAgentId"));
+
 var app = builder.Build();
+
+app.UseAuthentication();
+app.UseAuthorization();
+app.UseSession();
 
 app.UseCors(corsBuilder =>
 {
