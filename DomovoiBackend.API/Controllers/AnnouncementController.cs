@@ -1,6 +1,7 @@
 using DomovoiBackend.Application.Parameters;
 using DomovoiBackend.Application.Requests.Announcements;
 using DomovoiBackend.Application.Services.AnnouncementServices.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DomovoiBackend.API.Controllers;

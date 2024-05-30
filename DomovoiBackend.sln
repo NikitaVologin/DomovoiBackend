@@ -31,8 +31,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{AD652D58
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DomovoiBackend.API.Tests", "DomovoiBackend.API.Tests\DomovoiBackend.API.Tests.csproj", "{D8CF39ED-73D6-4D74-AD54-56B180978A8E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DomovoiBackend.AuthService", "DomovoiBackend.AuthService\DomovoiBackend.AuthService.csproj", "{C54A3A78-F957-46A3-8235-A6BCFBFEB8E4}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -50,7 +48,6 @@ Global
 		{00BC4C9B-235E-4C20-9CFF-902418FD160F} = {D49E1785-3177-4110-BA81-6DDC37D991D6}
 		{AD652D58-2D79-4B35-A1C4-C684EE606F4E} = {59E65A17-22BF-4B1A-A559-A5F564C0CDA0}
 		{D8CF39ED-73D6-4D74-AD54-56B180978A8E} = {AD652D58-2D79-4B35-A1C4-C684EE606F4E}
-		{C54A3A78-F957-46A3-8235-A6BCFBFEB8E4} = {59E65A17-22BF-4B1A-A559-A5F564C0CDA0}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{C0288CF6-757C-40F0-A61E-6C3C1B3C51FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -77,9 +74,5 @@ Global
 		{D8CF39ED-73D6-4D74-AD54-56B180978A8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D8CF39ED-73D6-4D74-AD54-56B180978A8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D8CF39ED-73D6-4D74-AD54-56B180978A8E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C54A3A78-F957-46A3-8235-A6BCFBFEB8E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C54A3A78-F957-46A3-8235-A6BCFBFEB8E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C54A3A78-F957-46A3-8235-A6BCFBFEB8E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C54A3A78-F957-46A3-8235-A6BCFBFEB8E4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
