@@ -1,4 +1,5 @@
 using DomovoiBackend.Application.Exceptions.Authorization;
+using DomovoiBackend.Application.Exceptions.Common;
 using DomovoiBackend.Application.Information.CounterAgents;
 using DomovoiBackend.Application.Persistence.Interfaces;
 using DomovoiBackend.Application.Requests.CounterAgents.AddRequests.Base;
@@ -50,6 +51,8 @@ public class CounterAgentService : ICounterAgentService
 
     public async Task UpdateAsync(Guid id, CounterAgentUpdateRequest information, CancellationToken cancellationToken)
     {
+        var isEmailExist = await _repository.IsExistAsync(information.Email!, cancellationToken);
+        if (isEmailExist) throw new SomeEmailUpdateException(information.Email!);
         var counterAgent = _mappingService.MapEntityFromRequest(information);
         counterAgent.Id = id;
         await _repository.UpdateCounterAgentAsync(counterAgent, cancellationToken);
