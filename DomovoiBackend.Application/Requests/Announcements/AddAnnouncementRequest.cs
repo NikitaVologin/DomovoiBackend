@@ -1,5 +1,6 @@
 using DomovoiBackend.Application.Information.Deals;
 using DomovoiBackend.Application.Information.Realities;
+using Microsoft.AspNetCore.Http;
 
 namespace DomovoiBackend.Application.Requests.Announcements;
 
@@ -73,4 +74,6 @@ public class AddAnnouncementRequest
     /// Id Контр-агента.
     /// </summary>
     public Guid CounterAgentId { get; set; }
+    
+    public IFormFile[] Pictures { get; set; }
 }

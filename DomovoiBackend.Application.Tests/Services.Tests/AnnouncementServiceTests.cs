@@ -8,6 +8,7 @@ using DomovoiBackend.Application.Mapping;
 using DomovoiBackend.Application.Parameters;
 using DomovoiBackend.Application.Requests.Announcements;
 using DomovoiBackend.Application.Services.AnnouncementServices;
+using DomovoiBackend.Application.Services.AnnouncementServices.Infrastructure;
 using DomovoiBackend.Application.Services.MappingServices;
 using DomovoiBackend.Application.Tests.MockRepositories;
 
@@ -26,7 +27,8 @@ public class AnnouncementServiceTests
             new RealityMappingService(_mapper),
             new AnnouncementMockRepository(),
             new CounterAgentMockRepository(),
-            new CounterAgentMappingService(_mapper));
+            new CounterAgentMappingService(_mapper),
+            new AnnouncementServiceOptions() { PicturesDirectory = "/Pictures/Announcements/"});
 
         var announcementId = Guid.Parse("5389cb46-e6ef-42ea-813e-a46df628d39a");
 
@@ -43,7 +45,9 @@ public class AnnouncementServiceTests
             new RealityMappingService(_mapper),
             new AnnouncementMockRepository(),
             new CounterAgentMockRepository(),
-            new CounterAgentMappingService(_mapper));
+            new CounterAgentMappingService(_mapper),
+            new AnnouncementServiceOptions() { PicturesDirectory = "/Pictures/Announcements/"});
+
 
         var announcementId = Guid.Parse("2389cb46-e6ef-42ea-813e-a46df638d39a");
 
@@ -60,7 +64,8 @@ public class AnnouncementServiceTests
             new RealityMappingService(_mapper),
             repository,
             new CounterAgentMockRepository(),
-            new CounterAgentMappingService(_mapper));
+            new CounterAgentMappingService(_mapper),
+            new AnnouncementServiceOptions() { PicturesDirectory = "/Pictures/Announcements/"});
 
         var announcements = await service.GetAnnouncementsAsync(int.MaxValue, CancellationToken.None);
 
@@ -75,7 +80,8 @@ public class AnnouncementServiceTests
             new RealityMappingService(_mapper),
             new AnnouncementMockRepository(),
             new CounterAgentMockRepository(),
-            new CounterAgentMappingService(_mapper));
+            new CounterAgentMappingService(_mapper),
+            new AnnouncementServiceOptions() { PicturesDirectory = "/Pictures/Announcements/"});
 
         var addAnnouncementRequest = new AddAnnouncementRequest()
         {
@@ -133,7 +139,9 @@ public class AnnouncementServiceTests
             new RealityMappingService(_mapper),
             new AnnouncementMockRepository(),
             new CounterAgentMockRepository(),
-            new CounterAgentMappingService(_mapper));
+            new CounterAgentMappingService(_mapper),
+            new AnnouncementServiceOptions() { PicturesDirectory = "/Pictures/Announcements/"});
+
 
         var announcements = await service.GetLimitedAnnouncementsAsync(1, CancellationToken.None);
         
@@ -148,7 +156,9 @@ public class AnnouncementServiceTests
             new RealityMappingService(_mapper),
             new AnnouncementMockRepository(),
             new CounterAgentMockRepository(),
-            new CounterAgentMappingService(_mapper));
+            new CounterAgentMappingService(_mapper),
+            new AnnouncementServiceOptions() { PicturesDirectory = "/Pictures/Announcements/"});
+
 
         var announcements = await service.GetLimitedAnnouncementsAsync(2, 0, CancellationToken.None);
         
@@ -163,7 +173,9 @@ public class AnnouncementServiceTests
             new RealityMappingService(_mapper),
             new AnnouncementMockRepository(),
             new CounterAgentMockRepository(),
-            new CounterAgentMappingService(_mapper));
+            new CounterAgentMappingService(_mapper),
+            new AnnouncementServiceOptions() { PicturesDirectory = "/Pictures/Announcements/"});
+
 
         var announcements = await service.GetLimitedAnnouncementsAsync(1, 1, CancellationToken.None);
         
@@ -178,7 +190,8 @@ public class AnnouncementServiceTests
             new RealityMappingService(_mapper),
             new AnnouncementMockRepository(),
             new CounterAgentMockRepository(),
-            new CounterAgentMappingService(_mapper));
+            new CounterAgentMappingService(_mapper),
+            new AnnouncementServiceOptions() { PicturesDirectory = "/Pictures/Announcements/"});
 
         var announcements = await service.GetLimitedAnnouncementsAsync(0, 1, CancellationToken.None);
         
@@ -196,7 +209,8 @@ public class AnnouncementServiceTests
             new RealityMappingService(_mapper),
             repository,
             new CounterAgentMockRepository(),
-            new CounterAgentMappingService(_mapper));
+            new CounterAgentMappingService(_mapper),
+            new AnnouncementServiceOptions() { PicturesDirectory = "/Pictures/Announcements/"});
 
         var announcements = await service.GetAnnouncementByUserIdAsync(Guid.Parse("a275f7c5-be57-4c52-bfb8-1b12d0fccbbc"), CancellationToken.None);
         
@@ -213,7 +227,8 @@ public class AnnouncementServiceTests
             new RealityMappingService(_mapper),
             repository,
             new CounterAgentMockRepository(),
-            new CounterAgentMappingService(_mapper));
+            new CounterAgentMappingService(_mapper),
+            new AnnouncementServiceOptions() { PicturesDirectory = "/Pictures/Announcements/"});
 
         await service.RemoveAnnouncementAsync(Guid.Parse("5389cb46-e6ef-42ea-813e-a46df628d34a"),
             Guid.Parse("a275f7c5-be57-4c52-bfb8-1b12d0fccbbc"),
@@ -232,7 +247,8 @@ public class AnnouncementServiceTests
             new RealityMappingService(_mapper),
             new AnnouncementMockRepository(),
             new CounterAgentMockRepository(),
-            new CounterAgentMappingService(_mapper));
+            new CounterAgentMappingService(_mapper),
+            new AnnouncementServiceOptions() { PicturesDirectory = "/Pictures/Announcements/"});
         
         Assert.CatchAsync(async () => await service.RemoveAnnouncementAsync(Guid.Parse("5389cb46-e6ef-42ea-813e-a46df628d34a"),
             Guid.Parse("a275f7c5-be57-4c52-bfb8-1b12d0fccbbd"), CancellationToken.None));
@@ -246,7 +262,8 @@ public class AnnouncementServiceTests
             new RealityMappingService(_mapper),
             new AnnouncementMockRepository(),
             new CounterAgentMockRepository(),
-            new CounterAgentMappingService(_mapper));
+            new CounterAgentMappingService(_mapper),
+            new AnnouncementServiceOptions() { PicturesDirectory = "/Pictures/Announcements/"});
         
         Assert.CatchAsync(async () => await service.RemoveAnnouncementAsync(Guid.Parse("5389cb46-e6ef-42ea-813e-a46df628d34d"),
             Guid.Parse("a275f7c5-be57-4c52-bfb8-1b12d0fccbbc"), CancellationToken.None));
@@ -262,7 +279,9 @@ public class AnnouncementServiceTests
             new RealityMappingService(_mapper),
             repository,
             new CounterAgentMockRepository(),
-            new CounterAgentMappingService(_mapper));
+            new CounterAgentMappingService(_mapper),
+            new AnnouncementServiceOptions() { PicturesDirectory = "/Pictures/Announcements/"});
+
 
         var id = Guid.Parse("5389cb46-e6ef-42ea-813e-a46df628d34a");
         
@@ -324,7 +343,8 @@ public class AnnouncementServiceTests
             new RealityMappingService(_mapper),
             repository,
             new CounterAgentMockRepository(),
-            new CounterAgentMappingService(_mapper));
+            new CounterAgentMappingService(_mapper),
+            new AnnouncementServiceOptions() { PicturesDirectory = "/Pictures/Announcements/"});
 
         var filter = new FilterParameters()
         {
@@ -350,7 +370,8 @@ public class AnnouncementServiceTests
             new RealityMappingService(_mapper),
             repository,
             new CounterAgentMockRepository(),
-            new CounterAgentMappingService(_mapper));
+            new CounterAgentMappingService(_mapper),
+            new AnnouncementServiceOptions() { PicturesDirectory = "/Pictures/Announcements/"});
 
         var filter = new FilterParameters()
         {
@@ -376,7 +397,9 @@ public class AnnouncementServiceTests
             new RealityMappingService(_mapper),
             repository,
             new CounterAgentMockRepository(),
-            new CounterAgentMappingService(_mapper));
+            new CounterAgentMappingService(_mapper),
+            new AnnouncementServiceOptions() { PicturesDirectory = "/Pictures/Announcements/"});
+
 
         var filter = new FilterParameters()
         {
@@ -406,7 +429,8 @@ public class AnnouncementServiceTests
             new RealityMappingService(_mapper),
             repository,
             new CounterAgentMockRepository(),
-            new CounterAgentMappingService(_mapper));
+            new CounterAgentMappingService(_mapper),
+            new AnnouncementServiceOptions() { PicturesDirectory = "/Pictures/Announcements/"});
 
         var filter = new FilterParameters()
         {
@@ -431,7 +455,8 @@ public class AnnouncementServiceTests
             new RealityMappingService(_mapper),
             repository,
             new CounterAgentMockRepository(),
-            new CounterAgentMappingService(_mapper));
+            new CounterAgentMappingService(_mapper),
+            new AnnouncementServiceOptions() { PicturesDirectory = "/Pictures/Announcements/"});
 
         var filter = new FilterParameters()
         {
@@ -456,7 +481,8 @@ public class AnnouncementServiceTests
             new RealityMappingService(_mapper),
             repository,
             new CounterAgentMockRepository(),
-            new CounterAgentMappingService(_mapper));
+            new CounterAgentMappingService(_mapper),
+            new AnnouncementServiceOptions() { PicturesDirectory = "/Pictures/Announcements/"});
 
         var filter = new FilterParameters()
         {
@@ -487,7 +513,8 @@ public class AnnouncementServiceTests
             new RealityMappingService(_mapper),
             repository,
             new CounterAgentMockRepository(),
-            new CounterAgentMappingService(_mapper));
+            new CounterAgentMappingService(_mapper),
+            new AnnouncementServiceOptions() { PicturesDirectory = "/Pictures/Announcements/"});
 
         var filter = new FilterParameters()
         {
