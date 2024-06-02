@@ -72,11 +72,12 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.UseSession();
 
-app.UseCors(corsBuilder =>
+app.UseCors(policyBuilder =>
 {
-    corsBuilder.AllowAnyOrigin();
-    corsBuilder.AllowAnyHeader();
-    corsBuilder.AllowAnyMethod();
+    policyBuilder.WithOrigins("http://localhost:5173")
+        .AllowAnyHeader()
+        .AllowAnyMethod()
+        .AllowCredentials();
 });
 
 app.UseAuthentication();
@@ -87,14 +88,6 @@ app.UseAuthorization();
 // app.UseMiddleware<CounterAgentRouteTransformerMiddleware>();
 
 app.MapControllers();
-
-app.UseCors(policyBuilder =>
-{
-    policyBuilder.WithOrigins("http://localhost:5173")
-        .AllowAnyHeader()
-        .AllowAnyMethod()
-        .AllowCredentials();
-});
 
 if (app.Environment.IsDevelopment())
 {
