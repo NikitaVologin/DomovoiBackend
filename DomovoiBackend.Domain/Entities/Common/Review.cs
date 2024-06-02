@@ -8,7 +8,7 @@ public class Review : UpdatableEntity<Review>
     public Guid Id { get; set; }
     public Guid DestinationId { get; set; }
     public CounterAgent Author { get; set; } = null!;
-    public byte Rate { get; set; }
+    public int Rate { get; set; }
     public string Header { get; set; } = null!;
     public string Text { get; set; } = null!;
     public DateTime ReviewDate { get; set; }

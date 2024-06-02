@@ -88,7 +88,13 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.UseCors();
+app.UseCors(policyBuilder =>
+{
+    policyBuilder.WithOrigins("http://localhost:5173")
+        .AllowAnyHeader()
+        .AllowAnyMethod()
+        .AllowCredentials();
+});
 
 if (app.Environment.IsDevelopment())
 {
