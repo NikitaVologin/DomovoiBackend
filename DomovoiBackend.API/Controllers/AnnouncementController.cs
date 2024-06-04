@@ -31,7 +31,7 @@ public class AnnouncementController : ControllerBase
     /// <returns>Ответ.</returns>
     [HttpPost]
     public async Task<IActionResult> PostAnnouncement(
-        AddAnnouncementRequest request, CancellationToken cancellationToken)
+        [FromBody] AddAnnouncementRequest request, CancellationToken cancellationToken)
     {
         try
         {

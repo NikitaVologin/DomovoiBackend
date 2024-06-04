@@ -6,6 +6,8 @@ using DomovoiBackend.Application.Services.CounterAgentServices;
 using DomovoiBackend.Application.Services.CounterAgentServices.Interfaces;
 using DomovoiBackend.Application.Services.MappingServices;
 using DomovoiBackend.Application.Services.MappingServices.Interfaces;
+using DomovoiBackend.Application.Services.ReviewServices;
+using DomovoiBackend.Application.Services.ReviewServices.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace DomovoiBackend.Application;
@@ -24,6 +26,7 @@ public static class DependencyInjection
     {
         services.AddScoped<IAnnouncementService, AnnouncementService>();
         services.AddScoped<ICounterAgentService, CounterAgentService>();
+        services.AddScoped<IReviewService, ReviewService>();
         return services;
     }
 
@@ -36,6 +39,7 @@ public static class DependencyInjection
     {
         services.AddAutoMapper(config => config.AddProfile(
             new AssemblyMappingProfile(Assembly.GetExecutingAssembly())));
+        services.AddScoped<IReviewMappingService, ReviewMappingService>();
         services.AddScoped<ICounterAgentMappingService, CounterAgentMappingService>();
         services.AddScoped<IDealMappingService, DealMappingService>();
         services.AddScoped<IRealityMappingService, RealityMappingService>();
