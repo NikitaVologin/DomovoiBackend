@@ -1,5 +1,5 @@
 using DomovoiBackend.API.Auth.ServiceDecorators;
-using DomovoiBackend.API.Controllers;
+using DomovoiBackend.API.Hubs;
 using DomovoiBackend.API.JsonInheritance;
 using DomovoiBackend.Application;
 using DomovoiBackend.Application.Services.CounterAgentServices.Interfaces;
@@ -82,10 +82,7 @@ app.UseCors(policyBuilder =>
         .AllowCredentials();
 });
 
-app.MapHub<ChatHub>("/chat");
-/*
-app.UseAuthentication();
-app.UseAuthorization();*/
+app.MapHub<ChatHub>("Hubs/Chat");
 
 app.UseAuthentication();
 app.UseAuthorization();

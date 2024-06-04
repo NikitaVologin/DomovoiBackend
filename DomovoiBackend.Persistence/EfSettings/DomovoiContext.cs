@@ -1,5 +1,6 @@
 using System.Reflection;
 using DomovoiBackend.Domain.Entities.Announcements;
+using DomovoiBackend.Domain.Entities.ChatEntities;
 using DomovoiBackend.Domain.Entities.Common;
 using DomovoiBackend.Domain.Entities.CounterAgents;
 using DomovoiBackend.Domain.Entities.CounterAgents.Types;
@@ -49,6 +50,7 @@ public class DomovoiContext : DbContext
     public DbSet<Room> Rooms { get; set; }
     public DbSet<Flat> Flats { get; set; }
     public DbSet<ApartmentHouse> ApartmentHouses { get; set; }
+    public DbSet<Message> Messages { get; set; }
     public DbSet<Review> Reviews { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
