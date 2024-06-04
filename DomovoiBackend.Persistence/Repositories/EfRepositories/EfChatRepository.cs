@@ -58,7 +58,7 @@ namespace DomovoiBackend.Persistence.Repositories.EfRepositories
             }
         }
 
-        public async Task<Message> GetMessageById(Guid id, CancellationToken cancellationToken)
+        public async Task<Message> GetMessageByIdAsync(Guid id, CancellationToken cancellationToken)
         {
             try
             {
