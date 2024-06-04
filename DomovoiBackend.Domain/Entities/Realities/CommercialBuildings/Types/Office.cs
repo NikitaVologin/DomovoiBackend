@@ -17,6 +17,8 @@ public class Office : CommercialBuilding, IFloorCountable
         Area = office.Area;
         Building!.Update(office.Building!);
         Entry = office.Entry;
+        Floor = office.Floor;
+        RoomsCount = office.RoomsCount;
         FloorsCount = office.FloorsCount;
         IsUse = office.IsUse;
         Name = office.Name;
