@@ -36,6 +36,7 @@ public static class DependencyInjection
         });
         services.AddScoped<IAnnouncementRepository, EfAnnouncementRepository>();
         services.AddScoped<ICounterAgentRepository, EfCounterAgentRepository>();
+        services.AddScoped<IChatRepository, EfChatRepository>();
         services.AddScoped<IReviewRepository, EfReviewRepository>();
         return services;
     }
