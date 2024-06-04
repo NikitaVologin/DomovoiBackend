@@ -1,7 +1,9 @@
 using DomovoiBackend.API.Auth.ServiceDecorators;
 using DomovoiBackend.API.Hubs;
 using DomovoiBackend.API.JsonInheritance;
+using DomovoiBackend.API.Logging.ServiceDecorators;
 using DomovoiBackend.Application;
+using DomovoiBackend.Application.Services.AnnouncementServices.Interfaces;
 using DomovoiBackend.Application.Services.CounterAgentServices.Interfaces;
 using DomovoiBackend.Persistence;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -36,14 +38,30 @@ builder.Services.AddControllers().AddNewtonsoftJson(
             options.SerializerSettings.Converters.Add(inheritanceConfiguration);
     });
 
-// TODO: Доделать ApplicationLayer и PersistenceLayer (RUD);
 builder.Services.AddApplicationLayer()
     .AddMappers()
     .AddPersistence(builder.Configuration)
     .CreateDatabase()
     .FillDatabase();
 
+builder.Services.AddLogging();
+
 builder.Services.Decorate<ICounterAgentService, AuthCounterAgentService>();
+builder.Services.Decorate<IAnnouncementService, AuthAnnouncementService>();
+
+builder.Services.Decorate<ICounterAgentService>((inner, provider) =>
+{
+    var logger = provider.GetRequiredService<ILogger<ICounterAgentService>>();
+    return new LoggerCounterAgentService(inner, logger);
+});
+
+builder.Services.Decorate<IAnnouncementService>((inner, provider) =>
+{
+    var logger = provider.GetRequiredService<ILogger<IAnnouncementService>>();
+    return new LoggerAnnouncementService(inner, logger);
+});
+
+
 
 builder.Services.AddHttpContextAccessor();
 
@@ -58,9 +76,10 @@ builder.Services
     .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
-        options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+        options.ExpireTimeSpan = TimeSpan.FromHours(2);
         options.SlidingExpiration = true;
         options.LoginPath = "/CounterAgent/Login";
+        options.LogoutPath = "/CounterAgent/Logout";
         options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
         options.Cookie.SameSite = SameSiteMode.Strict;
     });
@@ -72,7 +91,6 @@ builder.Services.AddSingleton<IUserIdProvider, CustomUserIdProvider>();
 builder.Services.AddSignalR();
 
 var app = builder.Build();
-
 
 app.UseCors(policyBuilder =>
 {
@@ -87,10 +105,6 @@ app.MapHub<ChatHub>("Hubs/Chat");
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseSession();
-
-// TODO: Сделать одно middleware для каждого вида запросов с подтипами.
-// app.UseMiddleware<AnnouncementRouteTransformerMiddleware>();
-// app.UseMiddleware<CounterAgentRouteTransformerMiddleware>();
 
 app.MapControllers();
 
