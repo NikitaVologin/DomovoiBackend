@@ -10,9 +10,14 @@ public class CounterAgentInformation
     /// Id Контрагента.
     /// </summary>
     public Guid Id { get; set; }
-    
+
     /// <summary>
     /// Номер для контакта.
     /// </summary>
     public string? ContactNumber { get; set; }
+    
+    /// <summary>
+    /// Email
+    /// </summary>
+    public string? Email { get; set; }
 }

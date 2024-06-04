@@ -2,7 +2,6 @@ using DomovoiBackend.Application.Information.Announcements;
 using DomovoiBackend.Application.Parameters;
 using DomovoiBackend.Application.Persistence.Interfaces;
 using DomovoiBackend.Application.Requests.Announcements;
-using DomovoiBackend.Application.Services.AnnouncementServices.Infrastructure;
 using DomovoiBackend.Application.Services.AnnouncementServices.Interfaces;
 using DomovoiBackend.Application.Services.MappingServices.Interfaces;
 using DomovoiBackend.Domain.Entities.Announcements;
@@ -38,19 +37,15 @@ public class AnnouncementService : IAnnouncementService
     /// Сервис отображений контр-агентов.
     /// </summary>
     private readonly ICounterAgentMappingService _counterAgentMappingService;
-
-    private readonly AnnouncementServiceOptions _options;
-
+    
     public AnnouncementService(IDealMappingService dealMappingService, IRealityMappingService realityMappingService,
-        IAnnouncementRepository announcementRepository, ICounterAgentRepository counterAgentRepository, ICounterAgentMappingService counterAgentMappingService,
-        AnnouncementServiceOptions options)
+        IAnnouncementRepository announcementRepository, ICounterAgentRepository counterAgentRepository, ICounterAgentMappingService counterAgentMappingService)
     {
         _dealMappingService = dealMappingService;
         _realityMappingService = realityMappingService;
         _announcementRepository = announcementRepository;
         _counterAgentRepository = counterAgentRepository;
         _counterAgentMappingService = counterAgentMappingService;
-        _options = options;
     }
 
     public async Task<Guid> AddAnnouncementAsync(AddAnnouncementRequest request, CancellationToken cancellationToken)

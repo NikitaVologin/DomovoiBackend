@@ -52,7 +52,11 @@ public class CounterAgentService : ICounterAgentService
     public async Task UpdateAsync(Guid id, CounterAgentUpdateRequest information, CancellationToken cancellationToken)
     {
         var isEmailExist = await _repository.IsExistAsync(information.Email!, cancellationToken);
-        if (isEmailExist) throw new SomeEmailUpdateException(information.Email!);
+        if (isEmailExist)
+        {
+            var existedCounterAgent = await GetCounterAgentInfoAsync(id, cancellationToken);
+            if(existedCounterAgent.Email != information.Email) throw new SomeEmailUpdateException(information.Email!);
+        }
         var counterAgent = _mappingService.MapEntityFromRequest(information);
         counterAgent.Id = id;
         await _repository.UpdateCounterAgentAsync(counterAgent, cancellationToken);
