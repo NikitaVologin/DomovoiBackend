@@ -45,6 +45,7 @@ public class AnnouncementServiceTests
             new CounterAgentMockRepository(),
             new CounterAgentMappingService(_mapper));
 
+
         var announcementId = Guid.Parse("2389cb46-e6ef-42ea-813e-a46df638d39a");
 
         Assert.CatchAsync(async () => await service.GetAnnouncementAsync(announcementId, CancellationToken.None));
@@ -135,6 +136,7 @@ public class AnnouncementServiceTests
             new CounterAgentMockRepository(),
             new CounterAgentMappingService(_mapper));
 
+
         var announcements = await service.GetLimitedAnnouncementsAsync(1, CancellationToken.None);
         
         Assert.That(announcements.AnnouncementInformation, Has.Count.EqualTo(1));
@@ -150,6 +152,7 @@ public class AnnouncementServiceTests
             new CounterAgentMockRepository(),
             new CounterAgentMappingService(_mapper));
 
+
         var announcements = await service.GetLimitedAnnouncementsAsync(2, 0, CancellationToken.None);
         
         Assert.That(announcements.AnnouncementInformation, Is.Empty);
@@ -164,6 +167,7 @@ public class AnnouncementServiceTests
             new AnnouncementMockRepository(),
             new CounterAgentMockRepository(),
             new CounterAgentMappingService(_mapper));
+
 
         var announcements = await service.GetLimitedAnnouncementsAsync(1, 1, CancellationToken.None);
         
@@ -263,6 +267,7 @@ public class AnnouncementServiceTests
             repository,
             new CounterAgentMockRepository(),
             new CounterAgentMappingService(_mapper));
+
 
         var id = Guid.Parse("5389cb46-e6ef-42ea-813e-a46df628d34a");
         
@@ -378,6 +383,7 @@ public class AnnouncementServiceTests
             new CounterAgentMockRepository(),
             new CounterAgentMappingService(_mapper));
 
+
         var filter = new FilterParameters()
         {
             PriceStart = 6,
@@ -450,7 +456,7 @@ public class AnnouncementServiceTests
         int expectedCountAfterFilter)
     {
         var repository = new AnnouncementMockRepository();
-        
+
         var service = new AnnouncementService(
             new DealMappingService(_mapper),
             new RealityMappingService(_mapper),

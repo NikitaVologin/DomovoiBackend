@@ -37,7 +37,7 @@ public class AnnouncementService : IAnnouncementService
     /// Сервис отображений контр-агентов.
     /// </summary>
     private readonly ICounterAgentMappingService _counterAgentMappingService;
-
+    
     public AnnouncementService(IDealMappingService dealMappingService, IRealityMappingService realityMappingService,
         IAnnouncementRepository announcementRepository, ICounterAgentRepository counterAgentRepository, ICounterAgentMappingService counterAgentMappingService)
     {
