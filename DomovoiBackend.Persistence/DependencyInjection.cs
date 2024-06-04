@@ -37,6 +37,7 @@ public static class DependencyInjection
         services.AddScoped<IAnnouncementRepository, EfAnnouncementRepository>();
         services.AddScoped<ICounterAgentRepository, EfCounterAgentRepository>();
         services.AddScoped<IChatRepository, EfChatRepository>();
+        services.AddScoped<IReviewRepository, EfReviewRepository>();
         return services;
     }
 
@@ -210,6 +211,31 @@ public static class DependencyInjection
         ];
         
         dbContext.Announcements.AddRange(announcements);
+        dbContext.SaveChanges();
+
+        Review[] reviews =
+        [
+            new Review
+            {
+                DestinationId = Guid.Parse("31518932-1c49-4397-8b2d-63bab308fd12"),
+                Author = counterAgents[0],
+                Header = "Ужасно",
+                Text = "Удали аккаунт пожалуйста и больше никогда его не создавай!",
+                Rate = 1,
+                ReviewDate = DateTime.UtcNow
+            },
+            new Review
+            {
+                DestinationId = counterAgents[0].Id,
+                Author = counterAgents[1],
+                Header = "Ужасно",
+                Text = "Удали аккаунт пожалуйста и больше никогда его не создавай!",
+                Rate = 1,
+                ReviewDate = DateTime.UtcNow
+            },
+        ];
+        
+        dbContext.Reviews.AddRange(reviews);
         dbContext.SaveChanges();
         
         return services;

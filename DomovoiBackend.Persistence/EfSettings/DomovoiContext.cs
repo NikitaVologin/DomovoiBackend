@@ -51,6 +51,7 @@ public class DomovoiContext : DbContext
     public DbSet<Flat> Flats { get; set; }
     public DbSet<ApartmentHouse> ApartmentHouses { get; set; }
     public DbSet<Message> Messages { get; set; }
+    public DbSet<Review> Reviews { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
