@@ -1,9 +1,11 @@
 using DomovoiBackend.API.Auth.ServiceDecorators;
+using DomovoiBackend.API.Controllers;
 using DomovoiBackend.API.JsonInheritance;
 using DomovoiBackend.Application;
 using DomovoiBackend.Application.Services.CounterAgentServices.Interfaces;
 using DomovoiBackend.Persistence;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -50,7 +52,7 @@ builder.Services.AddDistributedMemoryCache();
 builder.Services.AddAuthorization();
 builder.Services.AddSession();
 
-builder.Services.AddCors();
+builder.Services.AddCors(); 
 
 builder.Services
     .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
@@ -66,11 +68,11 @@ builder.Services
 builder.Services.AddAuthorizationBuilder()
     .AddPolicy("AuthenticatedCounterAgent", policy => policy.RequireClaim("CounterAgentId"));
 
+builder.Services.AddSingleton<IUserIdProvider, CustomUserIdProvider>();
+builder.Services.AddSignalR();
+
 var app = builder.Build();
 
-app.UseAuthentication();
-app.UseAuthorization();
-app.UseSession();
 
 app.UseCors(policyBuilder =>
 {
@@ -80,8 +82,14 @@ app.UseCors(policyBuilder =>
         .AllowCredentials();
 });
 
+app.MapHub<ChatHub>("/chat");
+/*
+app.UseAuthentication();
+app.UseAuthorization();*/
+
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseSession();
 
 // TODO: Сделать одно middleware для каждого вида запросов с подтипами.
 // app.UseMiddleware<AnnouncementRouteTransformerMiddleware>();
