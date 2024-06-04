@@ -43,7 +43,7 @@ namespace DomovoiBackend.API.Controllers
         /// <param name="userId">Id пользователя, для которого отбираются пользователи</param>
         /// <param name="cancellationToken">Токен отмены.</param>
         /// <returns>Ответ.</returns>
-        [HttpGet("Take/${userId: guid}")]
+        [HttpGet("Take/${userId:guid}")]
         public async Task<IActionResult> GetDialogsAsync(Guid userId, CancellationToken cancellationToken)
         {
             try
