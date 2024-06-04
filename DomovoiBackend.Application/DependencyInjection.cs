@@ -2,6 +2,8 @@ using System.Reflection;
 using DomovoiBackend.Application.Mapping;
 using DomovoiBackend.Application.Services.AnnouncementServices;
 using DomovoiBackend.Application.Services.AnnouncementServices.Interfaces;
+using DomovoiBackend.Application.Services.ChatServices;
+using DomovoiBackend.Application.Services.ChatServices.Interfaces;
 using DomovoiBackend.Application.Services.CounterAgentServices;
 using DomovoiBackend.Application.Services.CounterAgentServices.Interfaces;
 using DomovoiBackend.Application.Services.MappingServices;
@@ -24,6 +26,7 @@ public static class DependencyInjection
     {
         services.AddScoped<IAnnouncementService, AnnouncementService>();
         services.AddScoped<ICounterAgentService, CounterAgentService>();
+        services.AddScoped<IChatService, ChatService>();
         return services;
     }
 
