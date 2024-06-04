@@ -22,10 +22,10 @@ namespace DomovoiBackend.Domain.Entities.ChatEntities
         public Guid IdSender { get; set; }
 
         /// <summary>
-        /// Содержание сообщения.
+        /// Содержание сообщения
         /// </summary>
-        public string Text { get; set; }
-
+        public string Text { get; set; } = "";
+    
         /// <summary>
         /// Статус сообщения.
         /// </summary>
