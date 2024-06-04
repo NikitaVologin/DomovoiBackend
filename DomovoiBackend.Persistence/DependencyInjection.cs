@@ -67,6 +67,7 @@ public static class DependencyInjection
                 Id = Guid.Parse("0715a242-e05a-4906-a508-b28cd96ac474"),
                 Email = "123@mail.ru",
                 Password = "123456",
+                Name = "ООО Золотой Унитаз",
                 Tin = "1222",
                 ContactNumber = "+7 (228) 228 22-88",
             },

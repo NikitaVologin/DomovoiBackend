@@ -30,6 +30,7 @@ public class AnnouncementController : ControllerBase
     /// <param name="cancellationToken">Токен отмены.</param>
     /// <returns>Ответ.</returns>
     [HttpPost]
+    [Authorize]
     public async Task<IActionResult> PostAnnouncement(
         [FromBody] AddAnnouncementRequest request, CancellationToken cancellationToken)
     {
@@ -111,6 +112,7 @@ public class AnnouncementController : ControllerBase
         }
     }
     
+    [Authorize]
     [HttpDelete("{counterAgentId:guid}/{id:guid}")]
     public async Task<IActionResult> RemoveCounterAgentAsync(Guid id, Guid counterAgentId, CancellationToken cancellationToken)
     {
@@ -125,6 +127,7 @@ public class AnnouncementController : ControllerBase
         }
     }
 
+    [Authorize]
     [HttpPut("{id:guid}")]
     public async Task<IActionResult> PutAnnouncementAsync(Guid id, UpdateAnnouncementRequest information, CancellationToken cancellationToken)
     {
