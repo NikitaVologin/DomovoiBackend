@@ -34,6 +34,7 @@ namespace DomovoiBackend.Persistence.Repositories.EfRepositories
                 var ids = await _context.Messages
                     .Where(x => x.IdSender == userId || x.IdReceiver == userId)
                     .Select(x => x.IdSender == userId ? x.IdReceiver : x.IdSender )
+                    .Distinct()
                     .ToListAsync(cancellationToken);
                 return ids;
             }
